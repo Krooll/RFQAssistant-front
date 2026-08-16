@@ -1,0 +1,14 @@
+# Pakiety i wygenerowane pliki
+/node_modules
+/dist
+/.angular
+/coverage
+
+# Pliki lock i logi
+package-lock.json
+npm-debug.log
+
+# Ustawienia IDE i Git
+/.idea
+/.vscode
+/.git
