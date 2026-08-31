@@ -9,3 +9,5 @@ export * from './auth/auth.dto';
 export * from './able/able.dto';
 export * from './ableobject/ableobject.dto';
 export * from './sortobject/sortobject.dto';
+export * from './pageable/spring-pageable';
+export * from './page-request-params/page-request-params';

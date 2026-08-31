@@ -44,6 +44,16 @@ async function generate() {
 
     console.log('📂 Tworzenie czystych struktur domenowych i plików DTO...');
 
+    if (fs.existsSync(baseDtosDir)) {
+      const existingItems = fs.readdirSync(baseDtosDir);
+      for (const item of existingItems) {
+        // Usuwamy wszystko oprócz pliku api-dtos.ts (który i tak za chwilę nadpisujemy)
+        if (item !== 'api-dtos.ts') {
+          fs.rmSync(path.join(baseDtosDir, item), { recursive: true, force: true });
+        }
+      }
+    }
+
     const schemas = schemaJson.components?.schemas || {};
     const schemaNames = Object.keys(schemas);
 
