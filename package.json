@@ -10,6 +10,7 @@
     "test": "ng test",
     "lint": "ng lint --fix",
     "format": "prettier --write \"src/**/*.{ts,html,scss,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,html,scss,json}\"",
     "generate:dtos": "node src/scripts/generate-dtos.mjs"
   },
   "private": true,
