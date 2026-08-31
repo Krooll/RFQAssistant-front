@@ -4,1129 +4,1129 @@
  */
 
 export interface paths {
-    "/user": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAllUsers"];
-        put?: never;
-        post: operations["createUser"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["updateUser"];
-        trace?: never;
+  '/user': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/supplier": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAllSuppliers"];
-        put?: never;
-        post: operations["createSupplier"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["updateSupplier"];
-        trace?: never;
+    get: operations['getAllUsers'];
+    put?: never;
+    post: operations['createUser'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['updateUser'];
+    trace?: never;
+  };
+  '/supplier': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/project": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAllProjects"];
-        put?: never;
-        post: operations["createProject"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["updateProject"];
-        trace?: never;
+    get: operations['getAllSuppliers'];
+    put?: never;
+    post: operations['createSupplier'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['updateSupplier'];
+    trace?: never;
+  };
+  '/project': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/process": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAllProcesses"];
-        put?: never;
-        post: operations["createProcess"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["updateProcess"];
-        trace?: never;
+    get: operations['getAllProjects'];
+    put?: never;
+    post: operations['createProject'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['updateProject'];
+    trace?: never;
+  };
+  '/process': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/component": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAllComponents"];
-        put?: never;
-        post: operations["createComponent"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["updateComponent"];
-        trace?: never;
+    get: operations['getAllProcesses'];
+    put?: never;
+    post: operations['createProcess'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['updateProcess'];
+    trace?: never;
+  };
+  '/component': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/auth/refresh": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["refreshToken"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations['getAllComponents'];
+    put?: never;
+    post: operations['createComponent'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['updateComponent'];
+    trace?: never;
+  };
+  '/auth/refresh': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/auth/login": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["login"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    post: operations['refreshToken'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/auth/login': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/user/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getUserById"];
-        put?: never;
-        post?: never;
-        delete: operations["deleteUser"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    post: operations['login'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/user/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/supplier/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getSupplierById"];
-        put?: never;
-        post?: never;
-        delete: operations["deleteSupplier"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations['getUserById'];
+    put?: never;
+    post?: never;
+    delete: operations['deleteUser'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/supplier/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/project/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getProjectById"];
-        put?: never;
-        post?: never;
-        delete: operations["deleteProject"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations['getSupplierById'];
+    put?: never;
+    post?: never;
+    delete: operations['deleteSupplier'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/project/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/process/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getProcessById"];
-        put?: never;
-        post?: never;
-        delete: operations["deleteProcess"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations['getProjectById'];
+    put?: never;
+    post?: never;
+    delete: operations['deleteProject'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/process/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/component/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getComponentById"];
-        put?: never;
-        post?: never;
-        delete: operations["deleteComponent"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get: operations['getProcessById'];
+    put?: never;
+    post?: never;
+    delete: operations['deleteProcess'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/component/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
+    get: operations['getComponentById'];
+    put?: never;
+    post?: never;
+    delete: operations['deleteComponent'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: {
-        CreateUserRequest: {
-            username: string;
-            password: string;
-            name?: string;
-            surname?: string;
-            email: string;
-            disable: boolean;
-            /** @enum {string} */
-            role: "ROLE_USER" | "ROLE_ADMIN" | "ROLE_MANAGER";
-        };
-        UserDto: {
-            /** Format: int64 */
-            id?: number;
-            /** Format: date-time */
-            creationDate?: string;
-            /** Format: date-time */
-            updateDate?: string;
-            username?: string;
-            name?: string;
-            surname?: string;
-            email?: string;
-            disable?: boolean;
-            /** @enum {string} */
-            role?: "ROLE_USER" | "ROLE_ADMIN" | "ROLE_MANAGER";
-        };
-        CreateSupplierRequest: {
-            name: string;
-            street: string;
-            city: string;
-            province: string;
-            country: string;
-            phoneNumber: string;
-            emailAddress: string;
-            disable: boolean;
-            processesIds?: number[];
-        };
-        ProcessDto: {
-            /** Format: int64 */
-            id?: number;
-            /** Format: date-time */
-            creationDate?: string;
-            /** Format: date-time */
-            updateDate?: string;
-            name?: string;
-            description?: string;
-            disable?: boolean;
-        };
-        SupplierDto: {
-            /** Format: int64 */
-            id?: number;
-            /** Format: date-time */
-            creationDate?: string;
-            /** Format: date-time */
-            updateDate?: string;
-            name?: string;
-            street?: string;
-            city?: string;
-            province?: string;
-            country?: string;
-            phoneNumber?: string;
-            emailAddress?: string;
-            disable?: boolean;
-            processes?: components["schemas"]["ProcessDto"][];
-        };
-        CreateProjectRequest: {
-            /** Format: date-time */
-            validFrom: string;
-            /** Format: date-time */
-            validTo: string;
-            name: string;
-            projectNumber: string;
-            /** Format: date-time */
-            projectSOP: string;
-            description?: string;
-            metrics: components["schemas"]["MetricsDto"][];
-            componentIds: number[];
-        };
-        MetricsDto: {
-            /** Format: date-time */
-            date?: string;
-            basic?: number;
-            basicWithPercent?: number;
-        };
-        ComponentDto: {
-            /** Format: int64 */
-            id?: number;
-            /** Format: date-time */
-            creationDate?: string;
-            /** Format: date-time */
-            updateDate?: string;
-            number?: string;
-            revision?: string;
-            name?: string;
-            material?: string;
-            description?: string;
-            processes?: components["schemas"]["ProcessDto"][];
-        };
-        ProjectDto: {
-            /** Format: int64 */
-            id?: number;
-            /** Format: date-time */
-            creationDate?: string;
-            /** Format: date-time */
-            updateDate?: string;
-            /** Format: date-time */
-            validFrom?: string;
-            /** Format: date-time */
-            validTo?: string;
-            name?: string;
-            projectNumber?: string;
-            /** Format: date-time */
-            projectSOP?: string;
-            description?: string;
-            metricsByDate?: {
-                [key: string]: components["schemas"]["MetricsDto"];
-            };
-            components?: components["schemas"]["ComponentDto"][];
-        };
-        CreateProcessRequest: {
-            name: string;
-            description: string;
-            disable: boolean;
-        };
-        CreateComponentRequest: {
-            number: string;
-            revision: string;
-            name: string;
-            material: string;
-            description?: string;
-            processesIds?: number[];
-        };
-        CreateRefreshTokenRequest: {
-            refreshToken: string;
-        };
-        AuthDto: {
-            accessToken?: string;
-            refreshToken?: string;
-            tokenType?: string;
-            /** Format: int64 */
-            expiresIn?: number;
-            user?: components["schemas"]["UserDto"];
-        };
-        CreateAuthRequest: {
-            login: string;
-            password: string;
-        };
-        UpdateUserRequest: {
-            /** Format: int64 */
-            id: number;
-            username: string;
-            password: string;
-            name?: string;
-            surname?: string;
-            email: string;
-            disable: boolean;
-            /** @enum {string} */
-            role: "ROLE_USER" | "ROLE_ADMIN" | "ROLE_MANAGER";
-        };
-        UpdateSupplierRequest: {
-            /** Format: int64 */
-            id: number;
-            name: string;
-            street: string;
-            city: string;
-            province: string;
-            country: string;
-            phoneNumber: string;
-            emailAddress: string;
-            disable: boolean;
-            processesIds?: number[];
-        };
-        UpdateProjectRequest: {
-            /** Format: int64 */
-            id: number;
-            /** Format: date-time */
-            validFrom: string;
-            /** Format: date-time */
-            validTo: string;
-            name: string;
-            projectNumber: string;
-            /** Format: date-time */
-            projectSOP: string;
-            description?: string;
-            metrics: components["schemas"]["MetricsDto"][];
-            componentIds?: number[];
-        };
-        UpdateProcessRequest: {
-            /** Format: int64 */
-            id: number;
-            name: string;
-            description: string;
-            disable: boolean;
-        };
-        UpdateComponentRequest: {
-            /** Format: int64 */
-            id: number;
-            number: string;
-            revision: string;
-            name: string;
-            material: string;
-            description?: string;
-            processesIds?: number[];
-        };
-        Pageable: {
-            /** Format: int32 */
-            page?: number;
-            /** Format: int32 */
-            size?: number;
-            sort?: string[];
-        };
-        PageUserDto: {
-            /** Format: int32 */
-            totalPages?: number;
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["UserDto"][];
-            /** Format: int32 */
-            number?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            numberOfElements?: number;
-            sort?: components["schemas"]["SortObject"];
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        PageableObject: {
-            /** Format: int64 */
-            offset?: number;
-            paged?: boolean;
-            sort?: components["schemas"]["SortObject"];
-            /** Format: int32 */
-            pageNumber?: number;
-            /** Format: int32 */
-            pageSize?: number;
-            unpaged?: boolean;
-        };
-        SortObject: {
-            empty?: boolean;
-            sorted?: boolean;
-            unsorted?: boolean;
-        };
-        PageSupplierDto: {
-            /** Format: int32 */
-            totalPages?: number;
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["SupplierDto"][];
-            /** Format: int32 */
-            number?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            numberOfElements?: number;
-            sort?: components["schemas"]["SortObject"];
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        PageProjectDto: {
-            /** Format: int32 */
-            totalPages?: number;
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["ProjectDto"][];
-            /** Format: int32 */
-            number?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            numberOfElements?: number;
-            sort?: components["schemas"]["SortObject"];
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        PageProcessDto: {
-            /** Format: int32 */
-            totalPages?: number;
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["ProcessDto"][];
-            /** Format: int32 */
-            number?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            numberOfElements?: number;
-            sort?: components["schemas"]["SortObject"];
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
-        PageComponentDto: {
-            /** Format: int32 */
-            totalPages?: number;
-            /** Format: int64 */
-            totalElements?: number;
-            /** Format: int32 */
-            size?: number;
-            content?: components["schemas"]["ComponentDto"][];
-            /** Format: int32 */
-            number?: number;
-            first?: boolean;
-            last?: boolean;
-            /** Format: int32 */
-            numberOfElements?: number;
-            sort?: components["schemas"]["SortObject"];
-            pageable?: components["schemas"]["PageableObject"];
-            empty?: boolean;
-        };
+  schemas: {
+    CreateUserRequest: {
+      username: string;
+      password: string;
+      name?: string;
+      surname?: string;
+      email: string;
+      disable: boolean;
+      /** @enum {string} */
+      role: 'ROLE_USER' | 'ROLE_ADMIN' | 'ROLE_MANAGER';
     };
-    responses: never;
-    parameters: never;
-    requestBodies: never;
-    headers: never;
-    pathItems: never;
+    UserDto: {
+      /** Format: int64 */
+      id?: number;
+      /** Format: date-time */
+      creationDate?: string;
+      /** Format: date-time */
+      updateDate?: string;
+      username?: string;
+      name?: string;
+      surname?: string;
+      email?: string;
+      disable?: boolean;
+      /** @enum {string} */
+      role?: 'ROLE_USER' | 'ROLE_ADMIN' | 'ROLE_MANAGER';
+    };
+    CreateSupplierRequest: {
+      name: string;
+      street: string;
+      city: string;
+      province: string;
+      country: string;
+      phoneNumber: string;
+      emailAddress: string;
+      disable: boolean;
+      processesIds?: number[];
+    };
+    ProcessDto: {
+      /** Format: int64 */
+      id?: number;
+      /** Format: date-time */
+      creationDate?: string;
+      /** Format: date-time */
+      updateDate?: string;
+      name?: string;
+      description?: string;
+      disable?: boolean;
+    };
+    SupplierDto: {
+      /** Format: int64 */
+      id?: number;
+      /** Format: date-time */
+      creationDate?: string;
+      /** Format: date-time */
+      updateDate?: string;
+      name?: string;
+      street?: string;
+      city?: string;
+      province?: string;
+      country?: string;
+      phoneNumber?: string;
+      emailAddress?: string;
+      disable?: boolean;
+      processes?: components['schemas']['ProcessDto'][];
+    };
+    CreateProjectRequest: {
+      /** Format: date-time */
+      validFrom: string;
+      /** Format: date-time */
+      validTo: string;
+      name: string;
+      projectNumber: string;
+      /** Format: date-time */
+      projectSOP: string;
+      description?: string;
+      metrics: components['schemas']['MetricsDto'][];
+      componentIds: number[];
+    };
+    MetricsDto: {
+      /** Format: date-time */
+      date?: string;
+      basic?: number;
+      basicWithPercent?: number;
+    };
+    ComponentDto: {
+      /** Format: int64 */
+      id?: number;
+      /** Format: date-time */
+      creationDate?: string;
+      /** Format: date-time */
+      updateDate?: string;
+      number?: string;
+      revision?: string;
+      name?: string;
+      material?: string;
+      description?: string;
+      processes?: components['schemas']['ProcessDto'][];
+    };
+    ProjectDto: {
+      /** Format: int64 */
+      id?: number;
+      /** Format: date-time */
+      creationDate?: string;
+      /** Format: date-time */
+      updateDate?: string;
+      /** Format: date-time */
+      validFrom?: string;
+      /** Format: date-time */
+      validTo?: string;
+      name?: string;
+      projectNumber?: string;
+      /** Format: date-time */
+      projectSOP?: string;
+      description?: string;
+      metricsByDate?: {
+        [key: string]: components['schemas']['MetricsDto'];
+      };
+      components?: components['schemas']['ComponentDto'][];
+    };
+    CreateProcessRequest: {
+      name: string;
+      description: string;
+      disable: boolean;
+    };
+    CreateComponentRequest: {
+      number: string;
+      revision: string;
+      name: string;
+      material: string;
+      description?: string;
+      processesIds?: number[];
+    };
+    CreateRefreshTokenRequest: {
+      refreshToken: string;
+    };
+    AuthDto: {
+      accessToken?: string;
+      refreshToken?: string;
+      tokenType?: string;
+      /** Format: int64 */
+      expiresIn?: number;
+      user?: components['schemas']['UserDto'];
+    };
+    CreateAuthRequest: {
+      login: string;
+      password: string;
+    };
+    UpdateUserRequest: {
+      /** Format: int64 */
+      id: number;
+      username: string;
+      password: string;
+      name?: string;
+      surname?: string;
+      email: string;
+      disable: boolean;
+      /** @enum {string} */
+      role: 'ROLE_USER' | 'ROLE_ADMIN' | 'ROLE_MANAGER';
+    };
+    UpdateSupplierRequest: {
+      /** Format: int64 */
+      id: number;
+      name: string;
+      street: string;
+      city: string;
+      province: string;
+      country: string;
+      phoneNumber: string;
+      emailAddress: string;
+      disable: boolean;
+      processesIds?: number[];
+    };
+    UpdateProjectRequest: {
+      /** Format: int64 */
+      id: number;
+      /** Format: date-time */
+      validFrom: string;
+      /** Format: date-time */
+      validTo: string;
+      name: string;
+      projectNumber: string;
+      /** Format: date-time */
+      projectSOP: string;
+      description?: string;
+      metrics: components['schemas']['MetricsDto'][];
+      componentIds?: number[];
+    };
+    UpdateProcessRequest: {
+      /** Format: int64 */
+      id: number;
+      name: string;
+      description: string;
+      disable: boolean;
+    };
+    UpdateComponentRequest: {
+      /** Format: int64 */
+      id: number;
+      number: string;
+      revision: string;
+      name: string;
+      material: string;
+      description?: string;
+      processesIds?: number[];
+    };
+    Pageable: {
+      /** Format: int32 */
+      page?: number;
+      /** Format: int32 */
+      size?: number;
+      sort?: string[];
+    };
+    PageUserDto: {
+      /** Format: int32 */
+      totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
+      /** Format: int32 */
+      size?: number;
+      content?: components['schemas']['UserDto'][];
+      /** Format: int32 */
+      number?: number;
+      first?: boolean;
+      last?: boolean;
+      /** Format: int32 */
+      numberOfElements?: number;
+      sort?: components['schemas']['SortObject'];
+      pageable?: components['schemas']['PageableObject'];
+      empty?: boolean;
+    };
+    PageableObject: {
+      /** Format: int64 */
+      offset?: number;
+      paged?: boolean;
+      sort?: components['schemas']['SortObject'];
+      /** Format: int32 */
+      pageNumber?: number;
+      /** Format: int32 */
+      pageSize?: number;
+      unpaged?: boolean;
+    };
+    SortObject: {
+      empty?: boolean;
+      sorted?: boolean;
+      unsorted?: boolean;
+    };
+    PageSupplierDto: {
+      /** Format: int32 */
+      totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
+      /** Format: int32 */
+      size?: number;
+      content?: components['schemas']['SupplierDto'][];
+      /** Format: int32 */
+      number?: number;
+      first?: boolean;
+      last?: boolean;
+      /** Format: int32 */
+      numberOfElements?: number;
+      sort?: components['schemas']['SortObject'];
+      pageable?: components['schemas']['PageableObject'];
+      empty?: boolean;
+    };
+    PageProjectDto: {
+      /** Format: int32 */
+      totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
+      /** Format: int32 */
+      size?: number;
+      content?: components['schemas']['ProjectDto'][];
+      /** Format: int32 */
+      number?: number;
+      first?: boolean;
+      last?: boolean;
+      /** Format: int32 */
+      numberOfElements?: number;
+      sort?: components['schemas']['SortObject'];
+      pageable?: components['schemas']['PageableObject'];
+      empty?: boolean;
+    };
+    PageProcessDto: {
+      /** Format: int32 */
+      totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
+      /** Format: int32 */
+      size?: number;
+      content?: components['schemas']['ProcessDto'][];
+      /** Format: int32 */
+      number?: number;
+      first?: boolean;
+      last?: boolean;
+      /** Format: int32 */
+      numberOfElements?: number;
+      sort?: components['schemas']['SortObject'];
+      pageable?: components['schemas']['PageableObject'];
+      empty?: boolean;
+    };
+    PageComponentDto: {
+      /** Format: int32 */
+      totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
+      /** Format: int32 */
+      size?: number;
+      content?: components['schemas']['ComponentDto'][];
+      /** Format: int32 */
+      number?: number;
+      first?: boolean;
+      last?: boolean;
+      /** Format: int32 */
+      numberOfElements?: number;
+      sort?: components['schemas']['SortObject'];
+      pageable?: components['schemas']['PageableObject'];
+      empty?: boolean;
+    };
+  };
+  responses: never;
+  parameters: never;
+  requestBodies: never;
+  headers: never;
+  pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    getAllUsers: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageUserDto"];
-                };
-            };
-        };
+  getAllUsers: {
+    parameters: {
+      query: {
+        pageable: components['schemas']['Pageable'];
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    createUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateUserRequest"];
-            };
+        content: {
+          '*/*': components['schemas']['PageUserDto'];
         };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["UserDto"];
-                };
-            };
-        };
+      };
     };
-    updateUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateUserRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["UserDto"];
-                };
-            };
-        };
+  };
+  createUser: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    getAllSuppliers: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageSupplierDto"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateUserRequest'];
+      };
     };
-    createSupplier: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateSupplierRequest"];
-            };
+        content: {
+          '*/*': components['schemas']['UserDto'];
         };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SupplierDto"];
-                };
-            };
-        };
+      };
     };
-    updateSupplier: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateSupplierRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SupplierDto"];
-                };
-            };
-        };
+  };
+  updateUser: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    getAllProjects: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageProjectDto"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateUserRequest'];
+      };
     };
-    createProject: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateProjectRequest"];
-            };
+        content: {
+          '*/*': components['schemas']['UserDto'];
         };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ProjectDto"];
-                };
-            };
-        };
+      };
     };
-    updateProject: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateProjectRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ProjectDto"];
-                };
-            };
-        };
+  };
+  getAllSuppliers: {
+    parameters: {
+      query: {
+        pageable: components['schemas']['Pageable'];
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    getAllProcesses: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageProcessDto"];
-                };
-            };
+        content: {
+          '*/*': components['schemas']['PageSupplierDto'];
         };
+      };
     };
-    createProcess: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateProcessRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ProcessDto"];
-                };
-            };
-        };
+  };
+  createSupplier: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    updateProcess: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateProcessRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ProcessDto"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateSupplierRequest'];
+      };
     };
-    getAllComponents: {
-        parameters: {
-            query: {
-                pageable: components["schemas"]["Pageable"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["PageComponentDto"];
-                };
-            };
+        content: {
+          '*/*': components['schemas']['SupplierDto'];
         };
+      };
     };
-    createComponent: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateComponentRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ComponentDto"];
-                };
-            };
-        };
+  };
+  updateSupplier: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    updateComponent: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateComponentRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ComponentDto"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateSupplierRequest'];
+      };
     };
-    refreshToken: {
-        parameters: {
-            query: {
-                request: components["schemas"]["CreateRefreshTokenRequest"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["AuthDto"];
-                };
-            };
+        content: {
+          '*/*': components['schemas']['SupplierDto'];
         };
+      };
     };
-    login: {
-        parameters: {
-            query: {
-                request: components["schemas"]["CreateAuthRequest"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["AuthDto"];
-                };
-            };
-        };
+  };
+  getAllProjects: {
+    parameters: {
+      query: {
+        pageable: components['schemas']['Pageable'];
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    getUserById: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["UserDto"];
-                };
-            };
+        content: {
+          '*/*': components['schemas']['PageProjectDto'];
         };
+      };
     };
-    deleteUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
+  };
+  createProject: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    getSupplierById: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["SupplierDto"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateProjectRequest'];
+      };
     };
-    deleteSupplier: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+        content: {
+          '*/*': components['schemas']['ProjectDto'];
         };
+      };
     };
-    getProjectById: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ProjectDto"];
-                };
-            };
-        };
+  };
+  updateProject: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    deleteProject: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateProjectRequest'];
+      };
     };
-    getProcessById: {
-        parameters: {
-            query: {
-                id: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ProcessDto"];
-                };
-            };
+        content: {
+          '*/*': components['schemas']['ProjectDto'];
         };
+      };
     };
-    deleteProcess: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
+  };
+  getAllProcesses: {
+    parameters: {
+      query: {
+        pageable: components['schemas']['Pageable'];
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    getComponentById: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["ComponentDto"];
-                };
-            };
+        content: {
+          '*/*': components['schemas']['PageProcessDto'];
         };
+      };
     };
-    deleteComponent: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
+  };
+  createProcess: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateProcessRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['ProcessDto'];
+        };
+      };
+    };
+  };
+  updateProcess: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateProcessRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['ProcessDto'];
+        };
+      };
+    };
+  };
+  getAllComponents: {
+    parameters: {
+      query: {
+        pageable: components['schemas']['Pageable'];
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['PageComponentDto'];
+        };
+      };
+    };
+  };
+  createComponent: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateComponentRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['ComponentDto'];
+        };
+      };
+    };
+  };
+  updateComponent: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateComponentRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['ComponentDto'];
+        };
+      };
+    };
+  };
+  refreshToken: {
+    parameters: {
+      query: {
+        request: components['schemas']['CreateRefreshTokenRequest'];
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['AuthDto'];
+        };
+      };
+    };
+  };
+  login: {
+    parameters: {
+      query: {
+        request: components['schemas']['CreateAuthRequest'];
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['AuthDto'];
+        };
+      };
+    };
+  };
+  getUserById: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['UserDto'];
+        };
+      };
+    };
+  };
+  deleteUser: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getSupplierById: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['SupplierDto'];
+        };
+      };
+    };
+  };
+  deleteSupplier: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getProjectById: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['ProjectDto'];
+        };
+      };
+    };
+  };
+  deleteProject: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getProcessById: {
+    parameters: {
+      query: {
+        id: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['ProcessDto'];
+        };
+      };
+    };
+  };
+  deleteProcess: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  getComponentById: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          '*/*': components['schemas']['ComponentDto'];
+        };
+      };
+    };
+  };
+  deleteComponent: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
 }
