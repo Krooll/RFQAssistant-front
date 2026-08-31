@@ -4,13 +4,14 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideTranslateService, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '@core/pipes/translate-pipe/translate-loader';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { Translate } from '@core/services/translate-service/translate';
+import { AuthInterceptor } from '@core/interceptors/authInterceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([AuthInterceptor])),
     provideTranslateService({
       fallbackLang: 'pl',
       loader: {
