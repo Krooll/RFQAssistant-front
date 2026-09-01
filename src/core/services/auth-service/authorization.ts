@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
 import { Router } from '@angular/router';
-import { TokenKeys } from '@core/services/auth-service/token-key';
 import { AuthDto, CreateAuthRequest } from '@core/dtos';
 import { Observable, tap } from 'rxjs';
 import { Endpoints } from '@env/endpoints';
@@ -14,7 +13,6 @@ export class AuthorizationService {
   private readonly baseHttpService = inject(BaseHttpService);
   private readonly userDataService = inject(UserDataService);
   private readonly router = inject(Router);
-  private readonly TOKEN_KEY = TokenKeys.auth_token;
 
   constructor() {
     this.checkInitialAuth();
