@@ -4,6 +4,8 @@ export const Endpoints = {
   process: '/process',
   project: '/project',
   component: '/component',
+  authLogin: '/auth/login',
+  authRefresh: '/auth/refresh',
 } as const;
 
 export type Endpoint = (typeof Endpoints)[keyof typeof Endpoints];
