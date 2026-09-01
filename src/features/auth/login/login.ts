@@ -18,10 +18,9 @@ export class Login {
   private readonly _baseHttpService = inject(BaseHttpService);
   private readonly _userDataService = inject(UserDataService);
   private readonly _router = inject(Router);
+  private readonly _destroyRef = inject(DestroyRef);
 
   formGroup = signal<FormGroup | undefined>(undefined);
-
-  private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
     this.formGroup.set(
@@ -43,14 +42,11 @@ export class Login {
 
       this._baseHttpService
         .postData<AuthDto, CreateAuthRequest>(Endpoints.authLogin, payload)
-        .pipe(takeUntilDestroyed(this.destroyRef))
+        .pipe(takeUntilDestroyed(this._destroyRef))
         .subscribe({
           next: (response: AuthDto) => {
             this._userDataService.decodeAndSetCurrentUserData(response);
             this._router.navigateByUrl('/dashboard');
-          },
-          error: (error) => {
-            console.log(error);
           },
         });
     } else {

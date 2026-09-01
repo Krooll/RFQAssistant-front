@@ -4,13 +4,13 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Pipe({ name: 'translateFallback', standalone: true, pure: false })
 export class TranslateFallbackPipe implements PipeTransform {
-  private readonly translateService = inject(TranslateService);
-  private readonly cdr = inject(ChangeDetectorRef);
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly _translateService = inject(TranslateService);
+  private readonly _cdr = inject(ChangeDetectorRef);
+  private readonly _destroyRef = inject(DestroyRef);
 
   constructor() {
-    this.translateService.onLangChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      this.cdr.markForCheck();
+    this._translateService.onLangChange.pipe(takeUntilDestroyed(this._destroyRef)).subscribe(() => {
+      this._cdr.markForCheck();
     });
   }
 
@@ -19,7 +19,7 @@ export class TranslateFallbackPipe implements PipeTransform {
       return '';
     }
 
-    const translatedValue = this.translateService.instant(value);
+    const translatedValue = this._translateService.instant(value);
 
     return (translatedValue === value || this.isBlank(translatedValue)) && !this.isBlank(fallback)
       ? fallback

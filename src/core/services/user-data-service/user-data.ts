@@ -44,6 +44,7 @@ export class UserDataService {
     const data = localStorage.getItem('currentUserData');
 
     if (!data) {
+      console.error('[UserDataService]: Brak danych zalogowanego użytkownika z localStorage');
       return null;
     }
 
