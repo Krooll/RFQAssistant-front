@@ -1,5 +1,5 @@
-import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
 import { UserDataService } from '@core/services/user-data-service/user-data';
 
 export const roleGuard: CanActivateFn = (route, state) => {
@@ -9,27 +9,21 @@ export const roleGuard: CanActivateFn = (route, state) => {
   const currentUserData = userDataService.getUserDataFromLocalStorage();
   const currentUserRole = currentUserData?.user?.role;
 
-  const expectedRole = route.data['role'] || undefined;
-
-  if (!currentUserData || !currentUserRole) {
+  if (!currentUserData || !currentUserData.user) {
     return router.createUrlTree(['/auth/login'], {
       queryParams: { returnUrl: state.url },
     });
   }
 
-  if (!expectedRole || expectedRole.length === 0) {
+  const expectedRole = route.data['role'];
+
+  if (!expectedRole) {
     return true;
   }
 
-  const hasRequiredRole = checkRoles(expectedRole, currentUserRole);
-
-  if (hasRequiredRole) {
-    return true;
+  if (currentUserRole !== expectedRole) {
+    return router.createUrlTree(['/unauthorized']);
   }
 
-  return router.createUrlTree(['/unauthorized']);
+  return true;
 };
-
-function checkRoles(expectedRole: string, inputRole: string): boolean {
-  return expectedRole === inputRole;
-}

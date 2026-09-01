@@ -1,6 +1,6 @@
 @use 'sass:map';
-@use 'global-styles/flex-config' as *;
-@use 'global-styles/colors' as colors;
+@use './flex-config' as *;
+@use './colors' as colors;
 
 html,
 body {
@@ -13,9 +13,9 @@ body {
 }
 
 .dark-mode {
-  --main-background: #{map.get(colors, 'black100')};
+  --main-background: #{map.get(colors.$colors, 'black100')};
 }
 
 .light-mode {
-  --main-background: #{map.get(colors, 'light-gray100')};
+  --main-background: #{map.get(colors.$colors, 'light-gray100')};
 }
