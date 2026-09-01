@@ -8,6 +8,10 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
   const currentUserData = userDataService.getUserDataFromLocalStorage();
   const accessToken = userDataService.getUserAccessToken();
 
+  if (req.url.includes('/auth/login')) {
+    return next(req);
+  }
+
   if (currentUserData && accessToken) {
     req = req.clone({
       setHeaders: {
