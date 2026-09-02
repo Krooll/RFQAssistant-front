@@ -1,0 +1,9 @@
+<div class="d-flex justify-content-center align-items-center flex-column">
+  @for(item of userList(); track item.id) {
+  <div class="d-flex flex-column">
+    <p>{{ item.name }}</p>
+    <p>{{ item.surname }}</p>
+    <p>{{ item.email }}</p>
+  </div>
+  }
+</div>

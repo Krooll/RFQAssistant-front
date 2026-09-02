@@ -7,11 +7,12 @@ import { HttpLoaderFactory } from '@core/pipes/translate-pipe/translate-loader';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { Translate } from '@core/services/translate-service/translate';
 import { AuthInterceptor } from '@core/interceptors/authInterceptor';
+import { ErrorInterceptor } from '@core/interceptors/errorInterceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(withInterceptors([AuthInterceptor])),
+    provideHttpClient(withInterceptors([AuthInterceptor, ErrorInterceptor])),
     provideTranslateService({
       fallbackLang: 'pl',
       loader: {

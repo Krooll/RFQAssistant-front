@@ -10,8 +10,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class BaseHttpService {
-  private readonly httpClient = inject(HttpClient);
-  private readonly createPageParamsService = inject(CreatePageParamsService);
+  private readonly _httpClient = inject(HttpClient);
+  private readonly _createPageParamsService = inject(CreatePageParamsService);
 
   private readonly baseUrl: string = environment.apiUrl;
 
@@ -20,7 +20,7 @@ export class BaseHttpService {
     pageRequestParams?: PageRequestParams,
     extraHttpParams?: HttpParams,
   ): Observable<SpringPageable<T>> {
-    let params = this.createPageParamsService.createPageParams(pageRequestParams);
+    let params = this._createPageParamsService.createPageParams(pageRequestParams);
 
     if (extraHttpParams) {
       extraHttpParams.keys().forEach((key) => {
@@ -31,25 +31,25 @@ export class BaseHttpService {
       });
     }
 
-    return this.httpClient.get<SpringPageable<T>>(this.generateUrlWithEndpoint(endpoint, false), {
+    return this._httpClient.get<SpringPageable<T>>(this.generateUrlWithEndpoint(endpoint, false), {
       params,
     });
   }
 
   getPageDataById<T>(endpoint: Endpoint, id: number): Observable<T> {
-    return this.httpClient.get<T>(this.generateUrlWithEndpoint(endpoint, true, id));
+    return this._httpClient.get<T>(this.generateUrlWithEndpoint(endpoint, true, id));
   }
 
   postData<T, B>(endpoint: Endpoint, requestBody: B): Observable<T> {
-    return this.httpClient.post<T>(this.generateUrlWithEndpoint(endpoint, false), requestBody);
+    return this._httpClient.post<T>(this.generateUrlWithEndpoint(endpoint, false), requestBody);
   }
 
   patchData<T, B>(endpoint: Endpoint, requestBody: B): Observable<T> {
-    return this.httpClient.patch<T>(this.generateUrlWithEndpoint(endpoint, false), requestBody);
+    return this._httpClient.patch<T>(this.generateUrlWithEndpoint(endpoint, false), requestBody);
   }
 
   deleteData<T = void>(endpoint: Endpoint, id: number): Observable<T> {
-    return this.httpClient.delete(
+    return this._httpClient.delete(
       this.generateUrlWithEndpoint(endpoint, true, id),
     ) as Observable<T>;
   }

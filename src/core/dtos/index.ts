@@ -4,7 +4,7 @@ export * from './process/process.dto';
 export * from './project/project.dto';
 export * from './metrics/metrics.dto';
 export * from './component/component.dto';
-export * from './refreshtoken/refreshtoken.dto';
+export * from '@core/dtos/refresh-token/refresh-token.dto';
 export * from './auth/auth.dto';
 export * from './able/able.dto';
 export * from './ableobject/ableobject.dto';

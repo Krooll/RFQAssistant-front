@@ -1,3 +1,23 @@
 {
-  "test": "test"
+  "BUTTONS": {
+    "logIn": "Zaloguj się",
+    "save": "Zapisz",
+    "abort": "Anuluj"
+  },
+  "LOGIN_COMPONENT": {
+    "form": {
+      "labels": {
+        "login": "Login",
+        "password": "Hasło"
+      },
+      "placeholders": {
+        "login": "Wpisz swój login...",
+        "password": "Wpisz hasło..."
+      },
+      "errors": {
+        "login": "Login jest wymagany...",
+        "password": "Hasło jest wymagane..."
+      }
+    }
+  }
 }

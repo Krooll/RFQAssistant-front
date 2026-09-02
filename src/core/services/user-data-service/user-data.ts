@@ -6,7 +6,7 @@ import { UserDataLocalStorage } from '@core/dtos/user-data-local-storage/user-da
   providedIn: 'root',
 })
 export class UserDataService {
-  decodeAndSetCurrentUserData(authResponse: AuthDto) {
+  saveCurrentUserData(authResponse: AuthDto) {
     if (
       !authResponse ||
       !authResponse.user ||
@@ -57,24 +57,24 @@ export class UserDataService {
   }
 
   getUserAccessToken(): string | null {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (!accessToken) {
-      console.error('[UserDataService]: Błąd podczas pobierania tokenu z localStorage');
-      return null;
-    }
-
-    return accessToken;
+    return localStorage.getItem('accessToken');
   }
 
   getUserRefreshToken(): string | null {
-    const refreshToken = localStorage.getItem('refreshToken');
+    return localStorage.getItem('refreshToken');
+  }
 
-    if (!refreshToken) {
-      console.error('[UserDataService]: Błąd podczas pobierania tokenu z localStorage');
-      return null;
+  isUserTokenExpired(): boolean {
+    const currentUserData = this.getUserDataFromLocalStorage();
+
+    if (!currentUserData) {
+      console.error('[UserDataService]: Błąd podczas pobierania danych użytkownika z localStorage');
+      return true;
     }
 
-    return refreshToken;
+    const expTime = currentUserData.expiresIn;
+    const marginInMs = 30 * 1000;
+
+    return Date.now() >= Number(expTime) - marginInMs;
   }
 }

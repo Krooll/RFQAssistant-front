@@ -10,41 +10,22 @@ import { UserDataService } from '@core/services/user-data-service/user-data';
   providedIn: 'root',
 })
 export class AuthorizationService {
-  private readonly baseHttpService = inject(BaseHttpService);
-  private readonly userDataService = inject(UserDataService);
-  private readonly router = inject(Router);
-
-  constructor() {
-    this.checkInitialAuth();
-  }
+  private readonly _baseHttpService = inject(BaseHttpService);
+  private readonly _userDataService = inject(UserDataService);
+  private readonly _router = inject(Router);
 
   login(createAuthRequest: CreateAuthRequest): Observable<AuthDto> {
-    return this.baseHttpService
+    return this._baseHttpService
       .postData<AuthDto, CreateAuthRequest>(Endpoints.authLogin, createAuthRequest)
       .pipe(
         tap((response) => {
-          this.userDataService.decodeAndSetCurrentUserData(response);
+          this._userDataService.saveCurrentUserData(response);
         }),
       );
   }
 
   logout(): void {
-    this.userDataService.clearCurrentUserData();
-    this.router.navigate(['/auth/login']);
-  }
-
-  checkInitialAuth(): void {
-    const currentUserData = this.userDataService.getUserDataFromLocalStorage();
-    const accessToken = this.userDataService.getUserAccessToken();
-    const refreshToken = this.userDataService.getUserRefreshToken();
-
-    if (
-      !currentUserData ||
-      !accessToken ||
-      !refreshToken ||
-      Date.now() >= currentUserData.expiresIn
-    ) {
-      this.logout();
-    }
+    this._userDataService.clearCurrentUserData();
+    this._router.navigateByUrl('/auth/login');
   }
 }
