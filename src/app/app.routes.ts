@@ -25,14 +25,20 @@ export const routes: Routes = [
     children: [],
   },
   {
+    path: 'auth/login',
+    loadComponent: () => import('@features/auth/login/login').then((m) => m.Login),
+    canActivate: [loggedGuard],
+  },
+  {
     path: 'dashboard',
     loadComponent: () => import('@features/dashboard/dashboard').then((m) => m.Dashboard),
     canActivate: [roleGuard],
   },
   {
-    path: 'auth/login',
-    loadComponent: () => import('@features/auth/login/login').then((m) => m.Login),
-    canActivate: [loggedGuard],
+    path: 'user',
+    loadComponent: () => import('@features/user/user').then((m) => m.User),
+    canActivate: [roleGuard],
+    data: { role: 'ROLE_ADMIN' },
   },
   {
     path: 'unauthorized',

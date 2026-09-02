@@ -1,15 +1,19 @@
-<div class="d-flex align-items-center justify-content-center">
+<div class="d-flex align-items-center justify-content-center body-container">
   <form [formGroup]="formGroup()!" (ngSubmit)="onSubmit()">
     <div class="d-flex flex-column mt-4">
       @let login = 'login';
-      <label [for]="login">Login</label>
+      <label [for]="login">
+        {{ 'LOGIN_COMPONENT.form.labels.login' | translateFallback: 'Login' }}
+      </label>
       <input type="text" class="mt-1" [formControlName]="login" />
     </div>
     <div class="d-flex flex-column mt-4">
       @let password = 'password';
-      <label [for]="password">Password</label>
+      <label [for]="password">
+        {{ 'LOGIN_COMPONENT.form.labels.password' | translateFallback: 'Hasło' }}
+      </label>
       <input type="text" class="mt-1" [formControlName]="password" />
     </div>
-    <button type="submit">Zaloguj się</button>
+    <button type="submit">{{ 'BUTTONS.logIn' | translateFallback: 'Zaloguj się' }}</button>
   </form>
 </div>

@@ -6,6 +6,8 @@ html,
 body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  min-height: 100vh;
   overflow: hidden;
   font-family: 'Inter', sans-serif !important;
   background: var(--main-background);
@@ -42,4 +44,9 @@ body {
   --mdc-snackbar-container-color: #0288d1;
   --mdc-snack-text-label-text-color: #ffffff;
   --mat-snack-bar-button-color: #ffffff;
+}
+
+.body-container {
+  height: 100%;
+  width: 100%;
 }

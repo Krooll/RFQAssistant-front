@@ -1,22 +1,20 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthDto, CreateAuthRequest } from '@core/dtos';
-import { BaseHttpService } from '@core/services/base-http-service/base-http';
-import { Endpoints } from '@env/endpoints';
+import { CreateAuthRequest } from '@core/dtos';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { UserDataService } from '@core/services/user-data-service/user-data';
 import { Router } from '@angular/router';
+import { AuthorizationService } from '@core/services/auth-service/authorization';
+import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TranslateFallbackPipe],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
 export class Login {
   private readonly _formBuilder = inject(FormBuilder);
-  private readonly _baseHttpService = inject(BaseHttpService);
-  private readonly _userDataService = inject(UserDataService);
+  private readonly _authorizationService = inject(AuthorizationService);
   private readonly _router = inject(Router);
   private readonly _destroyRef = inject(DestroyRef);
 
@@ -40,12 +38,11 @@ export class Login {
         password: formData.password,
       };
 
-      this._baseHttpService
-        .postData<AuthDto, CreateAuthRequest>(Endpoints.authLogin, payload)
+      this._authorizationService
+        .login(payload)
         .pipe(takeUntilDestroyed(this._destroyRef))
         .subscribe({
-          next: (response: AuthDto) => {
-            this._userDataService.decodeAndSetCurrentUserData(response);
+          next: () => {
             this._router.navigateByUrl('/dashboard');
           },
         });
