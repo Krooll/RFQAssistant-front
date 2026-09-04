@@ -3,7 +3,7 @@ import { NgClass } from '@angular/common';
 import {
   ButtonConfiguration,
   ButtonType,
-} from '@shared/shared-ui/model-ui/button-configuration/button-configuration';
+} from '@shared/model-ui/button-configuration/button-configuration';
 
 @Component({
   selector: 'app-button',

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
 import {
   CreateUserRequest,
@@ -14,6 +14,9 @@ import { HttpParams } from '@angular/common/http';
 @Injectable()
 export class UserService {
   private readonly _baseHttpService = inject(BaseHttpService);
+
+  public pageParams = signal<PageRequestParams>({ page: 0, size: 10 });
+  public userList = signal<UserDto[] | undefined>(undefined);
 
   getUsers(
     pageParams: PageRequestParams,
@@ -43,4 +46,6 @@ export class UserService {
   deleteUser(id: number) {
     return this._baseHttpService.deleteData(Endpoints.user, id);
   }
+
+  showCreateUserModal() {}
 }

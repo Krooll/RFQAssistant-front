@@ -16,7 +16,7 @@ export const routes: Routes = [
         const userData = userDataService.getUserDataFromLocalStorage();
 
         if (userData?.user) {
-          return router.createUrlTree(['/dashboard']);
+          return router.createUrlTree(['/dashboard-component']);
         }
 
         return router.createUrlTree(['/auth/login']);
@@ -31,7 +31,8 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('@features/dashboard/dashboard').then((m) => m.Dashboard),
+    loadComponent: () =>
+      import('@features/dashboard-component/dashboard/dashboard').then((m) => m.Dashboard),
     canActivate: [roleGuard],
     children: [
       {
@@ -41,39 +42,45 @@ export const routes: Routes = [
       },
       {
         path: 'project',
-        loadComponent: () => import('@features/project/project').then((m) => m.Project),
+        loadComponent: () => import('@features/project/project/project').then((m) => m.Project),
         canActivate: [roleGuard],
         data: { role: 'ROLE_ADMIN' },
       },
       {
-        path: 'project-component',
+        path: 'technical-specification-component',
         loadComponent: () =>
-          import('@features/project-component/project-component').then((m) => m.ProjectComponent),
+          import('@features/technical-specification-component/technical-specification/technical-specification').then(
+            (m) => m.TechnicalSpecification,
+          ),
         canActivate: [roleGuard],
         data: { role: 'ROLE_ADMIN' },
       },
       {
         path: 'user',
-        loadComponent: () => import('@features/user/user').then((m) => m.User),
+        loadComponent: () => import('@features/user-component/user/user').then((m) => m.User),
         canActivate: [roleGuard],
         data: { role: 'ROLE_ADMIN' },
       },
       {
         path: 'process',
-        loadComponent: () => import('@features/process/process').then((m) => m.Process),
+        loadComponent: () =>
+          import('@features/process-component/process/process').then((m) => m.Process),
         canActivate: [roleGuard],
         data: { role: 'ROLE_ADMIN' },
       },
       {
         path: 'supplier',
-        loadComponent: () => import('@features/supplier/supplier').then((m) => m.Supplier),
+        loadComponent: () =>
+          import('@features/supplier-component/supplier/supplier').then((m) => m.Supplier),
         canActivate: [roleGuard],
         data: { role: 'ROLE_ADMIN' },
       },
       {
         path: 'unauthorized',
         loadComponent: () =>
-          import('@features/unauthorized/unauthorized').then((m) => m.Unauthorized),
+          import('@features/unauthorized-component/unauthorized/unauthorized').then(
+            (m) => m.Unauthorized,
+          ),
       },
     ],
   },

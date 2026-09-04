@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-process',
+  selector: 'app-process-component',
   imports: [],
   templateUrl: './process.html',
   styleUrl: './process.scss',

@@ -6,7 +6,7 @@ import { RouteEndpoints } from '@env/route-endpoints';
 import { NavbarMenu } from '@shared/shared-ui/navbar-menu/navbar-menu';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-dashboard-component',
   imports: [RouterOutlet, NavbarMenu],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
@@ -24,22 +24,22 @@ export class Dashboard {
       expectedRole: 'ROLE_ADMIN',
     },
     {
-      id: 'project-component',
-      name: 'NAVBAR.applicationList.project-component',
+      id: 'technical-specification-component',
+      name: 'NAVBAR.applicationList.technical-specification-component',
       nameFallback: 'Komponenty',
       route: RouteEndpoints.component,
       expectedRole: 'ROLE_ADMIN',
     },
     {
       id: 'supplier',
-      name: 'NAVBAR.applicationList.supplier',
+      name: 'NAVBAR.applicationList.supplier-component',
       nameFallback: 'Dostawcy',
       route: RouteEndpoints.supplier,
       expectedRole: 'ROLE_ADMIN',
     },
     {
       id: 'process',
-      name: 'NAVBAR.applicationList.process',
+      name: 'NAVBAR.applicationList.process-component',
       nameFallback: 'Procesy',
       route: RouteEndpoints.process,
       expectedRole: 'ROLE_ADMIN',

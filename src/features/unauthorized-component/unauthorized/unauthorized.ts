@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-unauthorized',
+  selector: 'app-unauthorized-component',
   imports: [],
   templateUrl: './unauthorized.html',
   styleUrl: './unauthorized.scss',
