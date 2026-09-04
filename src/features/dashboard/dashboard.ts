@@ -1,13 +1,13 @@
 import { Component, computed, inject, Signal } from '@angular/core';
 import { Application } from '@core/dtos/application/application';
-import { Endpoints } from '@env/endpoints';
 import { UserDataService } from '@core/services/user-data-service/user-data';
-import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { RouteEndpoints } from '@env/route-endpoints';
+import { NavbarMenu } from '@shared/shared-ui/navbar-menu/navbar-menu';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [TranslateFallbackPipe],
+  imports: [RouterOutlet, NavbarMenu],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -17,10 +17,38 @@ export class Dashboard {
 
   protected readonly applicationList: Application[] = [
     {
+      id: 'projects',
+      name: 'NAVBAR.applicationList.projects',
+      nameFallback: 'Projekty',
+      route: RouteEndpoints.project,
+      expectedRole: 'ROLE_ADMIN',
+    },
+    {
+      id: 'project-component',
+      name: 'NAVBAR.applicationList.project-component',
+      nameFallback: 'Komponenty',
+      route: RouteEndpoints.component,
+      expectedRole: 'ROLE_ADMIN',
+    },
+    {
+      id: 'supplier',
+      name: 'NAVBAR.applicationList.supplier',
+      nameFallback: 'Dostawcy',
+      route: RouteEndpoints.supplier,
+      expectedRole: 'ROLE_ADMIN',
+    },
+    {
+      id: 'process',
+      name: 'NAVBAR.applicationList.process',
+      nameFallback: 'Procesy',
+      route: RouteEndpoints.process,
+      expectedRole: 'ROLE_ADMIN',
+    },
+    {
       id: 'user',
-      name: 'Użytkownik',
+      name: 'NAVBAR.applicationList.user',
       nameFallback: 'Użytkownik',
-      route: Endpoints.user,
+      route: RouteEndpoints.user,
       expectedRole: 'ROLE_ADMIN',
     },
   ];
@@ -36,8 +64,8 @@ export class Dashboard {
     return this.applicationList.filter((item) => item.expectedRole === currentUserRole);
   });
 
-  protected navigateToSelectedApp(url: string) {
-    if (url.length > 0) {
+  protected navigateToSelectedApp(url: string | undefined) {
+    if (url && url.length > 0) {
       this._router.navigateByUrl(url);
     }
   }

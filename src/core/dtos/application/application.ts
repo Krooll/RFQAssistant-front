@@ -1,9 +1,9 @@
-import { Endpoint } from '@env/endpoints';
+import { RouteEndpoints } from '@env/route-endpoints';
 
 export interface Application {
   id: string;
   name: string;
   nameFallback: string;
-  route: Endpoint;
+  route: RouteEndpoints;
   expectedRole: string;
 }

@@ -1,0 +1,24 @@
+<div class="d-flex flex-column navbar-menu text-align-center">
+  <h3>RFQ ASSISTANT</h3>
+  <div class="upper-section d-flex flex-column align-items-center">
+    @for (item of applicationList(); track item.id) {
+    <app-button
+      [buttonType]="'button'"
+      [buttonConfiguration]="menuNavBarButtonConfig"
+      [dataToEmit]="item.route"
+      (emitButtonClick)="onNavBarItemClick($event)"
+    >
+      <p>{{ item.name | translateFallback: item.nameFallback }}</p>
+    </app-button>
+    }
+  </div>
+  <div class="lower-section">
+    <app-button
+      [buttonType]="'button'"
+      [buttonConfiguration]="logoutButtonConfiguration"
+      (click)="logOut()"
+    >
+      {{ 'BUTTONS.logout' | translateFallback: 'Wyloguj się' }}
+    </app-button>
+  </div>
+</div>

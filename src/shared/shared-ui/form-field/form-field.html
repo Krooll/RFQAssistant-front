@@ -1,0 +1,11 @@
+<div
+  class="form-field d-flex justify-content-center flex-column mt-1 mb-1"
+  [class.form-error]="showError"
+>
+  <ng-content></ng-content>
+  @if(showError) {
+  <span class="error-text mt-1">
+    {{ errorMessage | translateFallback: 'Pole zawiera błędy...'}}
+  </span>
+  }
+</div>
