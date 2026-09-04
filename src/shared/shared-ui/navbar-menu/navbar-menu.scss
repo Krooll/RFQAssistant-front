@@ -1,0 +1,22 @@
+.navbar-menu {
+  height: 100%;
+  width: 17rem;
+}
+
+.upper-section {
+  height: 85%;
+  width: 100%;
+}
+
+.lower-section {
+  height: 15%;
+  width: 100%;
+}
+
+@media (max-width: 800px) {
+  .navbar-menu {
+    border: 1px solid;
+    height: 100%;
+    width: 100%;
+  }
+}

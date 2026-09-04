@@ -1,7 +1,9 @@
-<div class="d-flex align-items-center justify-content-center flex-column">
-  @for (item of validApplicationList(); track item.id) {
-  <button type="button" (click)="navigateToSelectedApp(item.route)">
-    {{item.name | translateFallback: item.nameFallback}}
-  </button>
-  }
+<div class="d-flex body-container">
+  <app-navbar-menu
+    (selectedApplication)="navigateToSelectedApp($event)"
+    [applicationList]="validApplicationList()"
+  ></app-navbar-menu>
+  <div class="body-container overflow-auto p-2">
+    <router-outlet></router-outlet>
+  </div>
 </div>

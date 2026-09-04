@@ -5,6 +5,7 @@ import { AuthDto, CreateAuthRequest } from '@core/dtos';
 import { Observable, tap } from 'rxjs';
 import { Endpoints } from '@env/endpoints';
 import { UserDataService } from '@core/services/user-data-service/user-data';
+import { RouteEndpoints } from '@env/route-endpoints';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,6 @@ export class AuthorizationService {
 
   logout(): void {
     this._userDataService.clearCurrentUserData();
-    this._router.navigateByUrl('/auth/login');
+    this._router.navigateByUrl(RouteEndpoints.authLogin);
   }
 }

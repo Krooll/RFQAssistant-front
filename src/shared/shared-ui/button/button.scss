@@ -1,0 +1,30 @@
+@use 'sass:map';
+@use '../../../global-styles/styles' as globalStyles;
+
+.btn {
+  cursor: pointer;
+  width: 100%;
+
+  &:disabled,
+  &[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: auto;
+  }
+}
+
+.large {
+  height: 10rem;
+}
+
+.medium {
+  height: 3rem;
+}
+
+.small {
+  height: 1.5rem;
+}
+
+.extra-small {
+  height: 4rem;
+}

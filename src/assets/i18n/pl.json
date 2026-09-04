@@ -1,8 +1,36 @@
 {
+  "NAVBAR": {
+    "applicationsList": {
+      "user": {
+        "name": "Użytkownicy"
+      },
+      "supplier": {
+        "name": "Dostawcy"
+      },
+      "process": {
+        "name": "Procesy"
+      },
+      "projects": {
+        "name": "Projekty"
+      },
+      "components": {
+        "name": "Komponenty"
+      }
+    }
+  },
   "BUTTONS": {
-    "logIn": "Zaloguj się",
+    "login": "Zaloguj się",
     "save": "Zapisz",
     "abort": "Anuluj"
+  },
+  "FORM_VALIDATION_TEXTS": {
+    "required": "To pole jest wymagane...",
+    "email": "Niepoprawny format adresu email...",
+    "minlength": "Minimalna liczba znaków to ${errors['minlength'].requiredLength}...",
+    "maxlength": "Maxymalna liczba znaków to ${errors['maxlength'].requiredLength}...",
+    "pattern": "Wprowadzona wartość ma niepoprawny format...",
+    "nullValidator": "Błąd walidacji pola...",
+    "default": "Pole zawiera błędy..."
   },
   "LOGIN_COMPONENT": {
     "form": {

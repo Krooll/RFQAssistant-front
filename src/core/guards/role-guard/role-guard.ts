@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { UserDataService } from '@core/services/user-data-service/user-data';
 import { AuthorizationService } from '@core/services/auth-service/authorization';
+import { RouteEndpoints } from '@env/route-endpoints';
 
 export const roleGuard: CanActivateFn = (route, state) => {
   const userDataService = inject(UserDataService);
@@ -26,7 +27,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
   const expectedRole = route.data['role'];
 
   if (expectedRole && currentUserRole !== expectedRole) {
-    return router.createUrlTree(['/unauthorized']);
+    return router.createUrlTree([RouteEndpoints.unauthorized]);
   }
 
   return true;

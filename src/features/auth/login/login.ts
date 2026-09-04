@@ -1,14 +1,18 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CreateAuthRequest } from '@core/dtos';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '@core/services/auth-service/authorization';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
+import { Button } from '@shared/shared-ui/button/button';
+import { ButtonConfiguration } from '@shared/shared-ui/model-ui/button-configuration/button-configuration';
+import { FormField } from '@shared/shared-ui/form-field/form-field';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouteEndpoints } from '@env/route-endpoints';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, TranslateFallbackPipe],
+  imports: [ReactiveFormsModule, TranslateFallbackPipe, Button, FormField],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -19,6 +23,12 @@ export class Login {
   private readonly _destroyRef = inject(DestroyRef);
 
   formGroup = signal<FormGroup | undefined>(undefined);
+
+  loginButtonConfig: ButtonConfiguration = {
+    variant: 'primary',
+    size: 'medium',
+    margin: 'mt-4',
+  };
 
   constructor() {
     this.formGroup.set(
@@ -43,7 +53,7 @@ export class Login {
         .pipe(takeUntilDestroyed(this._destroyRef))
         .subscribe({
           next: () => {
-            this._router.navigateByUrl('/dashboard');
+            this._router.navigateByUrl(RouteEndpoints.dashboard);
           },
         });
     } else {
