@@ -46,7 +46,7 @@ export const routes: Routes = [
         data: { role: 'ROLE_ADMIN' },
       },
       {
-        path: 'component',
+        path: 'project-component',
         loadComponent: () =>
           import('@features/project-component/project-component').then((m) => m.ProjectComponent),
         canActivate: [roleGuard],

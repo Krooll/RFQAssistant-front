@@ -24,10 +24,10 @@ export class Dashboard {
       expectedRole: 'ROLE_ADMIN',
     },
     {
-      id: 'components',
+      id: 'project-component',
       name: 'NAVBAR.applicationList.project-component',
       nameFallback: 'Komponenty',
-      route: RouteEndpoints.user,
+      route: RouteEndpoints.component,
       expectedRole: 'ROLE_ADMIN',
     },
     {

@@ -20,6 +20,7 @@
   },
   "BUTTONS": {
     "login": "Zaloguj się",
+    "logout": "Wyloguj się",
     "save": "Zapisz",
     "abort": "Anuluj"
   },
