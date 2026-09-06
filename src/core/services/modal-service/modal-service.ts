@@ -3,20 +3,21 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { ComponentType } from '@angular/cdk/portal';
 
-Injectable({
+@Injectable({
   providedIn: 'root',
-});
+})
 export class ModalService {
   private readonly _matDialog = inject(MatDialog);
   private openModalsStack: MatDialogRef<unknown>[] = [];
 
-  openModal<C, D = unknown>(
+  public openModal<C, D = unknown>(
     component: ComponentType<C>,
     data?: ModalDataConfiguration<D>,
     config?: Partial<MatDialogConfig>,
   ) {
     const dialogRef = this._matDialog.open(component, {
       data,
+      maxHeight: '99vh',
       disableClose: true,
       ...config,
     });
@@ -28,14 +29,14 @@ export class ModalService {
     });
   }
 
-  closeCurrentModal(): void {
+  public closeCurrentModal(): void {
     const currentModal = this.openModalsStack.pop();
     if (currentModal) {
       currentModal.close();
     }
   }
 
-  closeAllModals(): void {
+  public closeAllModals(): void {
     this._matDialog.closeAll();
     this.openModalsStack = [];
   }

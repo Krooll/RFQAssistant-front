@@ -16,7 +16,7 @@ export const routes: Routes = [
         const userData = userDataService.getUserDataFromLocalStorage();
 
         if (userData?.user) {
-          return router.createUrlTree(['/dashboard-component']);
+          return router.createUrlTree(['/dashboard']);
         }
 
         return router.createUrlTree(['/auth/login']);
@@ -47,7 +47,7 @@ export const routes: Routes = [
         data: { role: 'ROLE_ADMIN' },
       },
       {
-        path: 'technical-specification-component',
+        path: 'technical-specification',
         loadComponent: () =>
           import('@features/technical-specification-component/technical-specification/technical-specification').then(
             (m) => m.TechnicalSpecification,

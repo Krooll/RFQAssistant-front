@@ -15,7 +15,7 @@ export class AuthorizationService {
   private readonly _userDataService = inject(UserDataService);
   private readonly _router = inject(Router);
 
-  login(createAuthRequest: CreateAuthRequest): Observable<AuthDto> {
+  public login(createAuthRequest: CreateAuthRequest): Observable<AuthDto> {
     return this._baseHttpService
       .postData<AuthDto, CreateAuthRequest>(Endpoints.authLogin, createAuthRequest)
       .pipe(
@@ -25,7 +25,7 @@ export class AuthorizationService {
       );
   }
 
-  logout(): void {
+  public logout(): void {
     this._userDataService.clearCurrentUserData();
     this._router.navigateByUrl(RouteEndpoints.authLogin);
   }

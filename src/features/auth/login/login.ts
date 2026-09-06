@@ -22,7 +22,7 @@ export class Login {
   private readonly _router = inject(Router);
   private readonly _destroyRef = inject(DestroyRef);
 
-  formGroup = signal<FormGroup | undefined>(undefined);
+  protected formGroup = signal<FormGroup | undefined>(undefined);
 
   loginButtonConfig: ButtonConfiguration = {
     variant: 'primary',
@@ -39,7 +39,7 @@ export class Login {
     );
   }
 
-  onSubmit() {
+  protected onSubmit() {
     const formData = this.formGroup()?.value;
 
     if (this.formGroup()?.valid) {

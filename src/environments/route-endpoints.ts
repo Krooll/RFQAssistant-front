@@ -1,11 +1,11 @@
 export const RouteEndpoints = {
-  dashboard: '/dashboard-component',
-  user: '/dashboard-component/user',
-  supplier: '/dashboard-component/supplier-component',
-  process: '/dashboard-component/process-component',
-  project: '/dashboard-component/project',
-  component: '/dashboard-component/technical-specification-component',
-  unauthorized: '/dashboard-component/unauthorized-component',
+  dashboard: '/dashboard',
+  user: '/dashboard/user',
+  supplier: '/dashboard/supplier',
+  process: '/dashboard/process',
+  project: '/dashboard/project',
+  component: '/dashboard/technical-specification',
+  unauthorized: '/dashboard/unauthorized',
   authLogin: '/auth/login',
   authRefresh: '/auth/refresh',
 } as const;

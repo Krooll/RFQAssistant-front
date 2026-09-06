@@ -51,6 +51,7 @@ body {
 .body-container {
   height: 100%;
   width: 100%;
+  border: 2px solid red;
 }
 
 .overflow-auto {
@@ -61,4 +62,9 @@ body {
   height: 2rem;
   border-radius: 0.25rem;
   border: 1px solid black;
+}
+
+.list-item {
+  border: 1px solid black;
+  border-radius: 0.25rem;
 }

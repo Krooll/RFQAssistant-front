@@ -6,7 +6,7 @@ import { UserDataLocalStorage } from '@core/dtos/user-data-local-storage/user-da
   providedIn: 'root',
 })
 export class UserDataService {
-  saveCurrentUserData(authResponse: AuthDto) {
+  public saveCurrentUserData(authResponse: AuthDto) {
     if (
       !authResponse ||
       !authResponse.user ||
@@ -34,13 +34,13 @@ export class UserDataService {
     localStorage.setItem('refreshToken', authResponse.refreshToken);
   }
 
-  clearCurrentUserData(): void {
+  public clearCurrentUserData(): void {
     localStorage.removeItem('currentUserData');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
   }
 
-  getUserDataFromLocalStorage(): UserDataLocalStorage | null {
+  public getUserDataFromLocalStorage(): UserDataLocalStorage | null {
     const data = localStorage.getItem('currentUserData');
 
     if (!data) {
@@ -56,15 +56,15 @@ export class UserDataService {
     }
   }
 
-  getUserAccessToken(): string | null {
+  public getUserAccessToken(): string | null {
     return localStorage.getItem('accessToken');
   }
 
-  getUserRefreshToken(): string | null {
+  public getUserRefreshToken(): string | null {
     return localStorage.getItem('refreshToken');
   }
 
-  isUserTokenExpired(): boolean {
+  public isUserTokenExpired(): boolean {
     const currentUserData = this.getUserDataFromLocalStorage();
 
     if (!currentUserData) {

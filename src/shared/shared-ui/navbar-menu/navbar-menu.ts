@@ -25,15 +25,8 @@ export class NavbarMenu {
     margin: 'mt-1',
   };
 
-  logoutButtonConfiguration: ButtonConfiguration = {
-    variant: 'transparent',
-    size: 'medium',
-    padding: '',
-    margin: 'mt-1',
-  };
-
-  onNavBarItemClick(url: string) {
-    if (url.length > 0) {
+  protected onNavBarItemClick(url: string | void) {
+    if (url && url?.length > 0) {
       this.selectedApplication.emit(url);
     }
   }

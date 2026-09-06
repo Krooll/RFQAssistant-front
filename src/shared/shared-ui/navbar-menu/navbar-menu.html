@@ -1,6 +1,6 @@
 <div class="d-flex flex-column navbar-menu text-align-center">
   <h3>RFQ ASSISTANT</h3>
-  <div class="upper-section d-flex flex-column align-items-center">
+  <div class="upper-section d-flex flex-column">
     @for (item of applicationList(); track item.id) {
     <app-button
       [buttonType]="'button'"
@@ -12,10 +12,11 @@
     </app-button>
     }
   </div>
-  <div class="lower-section">
+  <div class="d-flex align-items-end lower-section">
     <app-button
+      class="w-100"
       [buttonType]="'button'"
-      [buttonConfiguration]="logoutButtonConfiguration"
+      [buttonConfiguration]="menuNavBarButtonConfig"
       (click)="logOut()"
     >
       {{ 'BUTTONS.logout' | translateFallback: 'Wyloguj się' }}

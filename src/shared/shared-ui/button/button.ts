@@ -12,7 +12,7 @@ import {
   styleUrl: './button.scss',
 })
 export class Button<T> {
-  emitButtonClick = output<T>();
+  emitButtonClick = output<T | void>();
 
   dataToEmit = input<T>();
   buttonType = input<ButtonType>();
@@ -31,13 +31,15 @@ export class Button<T> {
     return [config.variant, config.size, config.margin, config.padding].filter(Boolean);
   });
 
-  onButtonClick(): void {
+  protected onButtonClick(): void {
     if (this.dataToEmit() !== undefined || null) {
       const value = this.dataToEmit();
 
       if (value !== undefined && value !== null) {
         this.emitButtonClick.emit(value);
       }
+    } else {
+      this.emitButtonClick.emit();
     }
   }
 }

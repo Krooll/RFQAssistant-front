@@ -2,5 +2,7 @@ import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/mod
 
 export interface ModalDataConfiguration<T> {
   type: ModalTypes;
+  title: string;
+  titleFallback: string;
   data?: T;
 }

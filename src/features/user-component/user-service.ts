@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, Injector, signal } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
 import {
   CreateUserRequest,
@@ -10,10 +10,14 @@ import {
 import { Observable } from 'rxjs';
 import { Endpoints } from '@env/endpoints';
 import { HttpParams } from '@angular/common/http';
+import { ModalService } from '@core/services/modal-service/modal-service';
+import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
+import { UserModal } from '@features/user-component/user-modal/user-modal';
 
 @Injectable()
 export class UserService {
   private readonly _baseHttpService = inject(BaseHttpService);
+  private readonly _modalService = inject(ModalService);
 
   public pageParams = signal<PageRequestParams>({ page: 0, size: 10 });
   public userList = signal<UserDto[] | undefined>(undefined);
@@ -47,5 +51,38 @@ export class UserService {
     return this._baseHttpService.deleteData(Endpoints.user, id);
   }
 
-  showCreateUserModal() {}
+  showCreateUserModal(injector: Injector) {
+    const createModalConfiguration: ModalDataConfiguration<UserDto> = {
+      type: 'create',
+      title: 'MODALS.user.create',
+      titleFallback: 'Dodaj nowego użytkownika',
+    };
+
+    this._modalService.openModal(UserModal, createModalConfiguration, { injector: injector });
+  }
+
+  showInfoUserModal(response: UserDto, injector: Injector) {
+    const createModalConfiguration: ModalDataConfiguration<UserDto> = {
+      type: 'info',
+      title: 'MODALS.user.info',
+      titleFallback: 'Więcej informacji',
+      data: response,
+    };
+
+    this._modalService.openModal(UserModal, createModalConfiguration, { injector: injector });
+  }
+
+  showDeleteModal(injector: Injector) {
+    const createModalConfiguration: ModalDataConfiguration<UserDto> = {
+      type: 'delete',
+      title: 'MODALS.user.delete',
+      titleFallback: 'Usuń użytkownika',
+    };
+
+    this._modalService.openModal(UserModal, createModalConfiguration, { injector: injector });
+  }
+
+  closeCurrentModal() {
+    this._modalService.closeCurrentModal();
+  }
 }
