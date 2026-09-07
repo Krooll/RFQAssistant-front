@@ -13,7 +13,7 @@ import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/mod
 export class ModalBase {
   public modalType = input.required<ModalTypes | undefined>();
   public modalTitle = input.required<{ title: string; titleFallback: string }>();
-  public buttonDisabled = input.required<boolean | undefined>();
+  public buttonDisabled = input<boolean | undefined>();
 
   submitOutput = output<void>();
   closeOutput = output<void>();

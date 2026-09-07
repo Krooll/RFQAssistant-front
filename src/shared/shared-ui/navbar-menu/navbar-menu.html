@@ -1,6 +1,8 @@
 <div class="d-flex flex-column navbar-menu text-align-center">
-  <h3>RFQ ASSISTANT</h3>
-  <div class="upper-section d-flex flex-column">
+  <div class="mt-4">
+    <h3>RFQ ASSISTANT</h3>
+  </div>
+  <div class="upper-section d-flex flex-column p-1">
     @for (item of applicationList(); track item.id) {
     <app-button
       [buttonType]="'button'"
@@ -12,7 +14,7 @@
     </app-button>
     }
   </div>
-  <div class="d-flex align-items-end lower-section">
+  <div class="d-flex align-items-end lower-section p-1">
     <app-button
       class="w-100"
       [buttonType]="'button'"

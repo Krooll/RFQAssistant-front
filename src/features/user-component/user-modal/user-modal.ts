@@ -94,42 +94,41 @@ export class UserModal {
 
   protected onSubmit(): void {
     const currentModalType = this.type();
-    const formValueControl = this.formGroup()?.getRawValue();
 
     if (!currentModalType) {
       return;
     }
 
-    //TODO: GDZIE UMIESCIC WALIDACJE TUTAJ BLOKUJE INFO
+    if (currentModalType === 'info') {
+      this.onUpdate();
+      return;
+    }
 
-    // if (this.formGroup()?.valid) {
+    if (!this.isFormValid()) {
+      return;
+    }
+
+    const formValue = this.formGroup()?.getRawValue();
+
     switch (currentModalType) {
       case 'create': {
         const createUserPayload: CreateUserRequest = {
-          ...formValueControl,
-          disable: !!formValueControl.disable,
+          ...formValue,
+          disable: !!formValue.disable,
         };
         this.createUser(createUserPayload);
         break;
       }
 
       case 'update': {
-        const updateUserPayload = {
+        const updateUserPayload: UpdateUserRequest = {
           id: this.data()?.id,
-          ...formValueControl,
-        } as UpdateUserRequest;
+          ...formValue,
+        };
         this.updateUser(updateUserPayload);
         break;
       }
-
-      case 'info': {
-        this.onUpdate();
-        break;
-      }
     }
-    // } else {
-    //   this.formGroup()?.markAllAsTouched();
-    // }
   }
 
   private onUpdate(): void {
@@ -191,5 +190,14 @@ export class UserModal {
 
   private resetCurrentForm(): void {
     this.formGroup()?.reset();
+  }
+
+  private isFormValid(): boolean {
+    if (this.formGroup()?.invalid) {
+      this.formGroup()?.markAllAsTouched();
+      return false;
+    }
+
+    return true;
   }
 }

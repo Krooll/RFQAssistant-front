@@ -29,6 +29,10 @@
       "edit": "Edytuj użytkownika",
       "delete": "Usuń użytkownika",
       "info": "Więcej informacji"
+    },
+    "delete": {
+      "title": "Uwaga!",
+      "text": "Czy na pewno chcesz usunąc tę pozycję?"
     }
   },
   "BUTTONS": {
@@ -68,6 +72,7 @@
     }
   },
   "USER_COMPONENT": {
+    "componentTitle": "Użytkownicy",
     "form": {
       "labels": {
         "username": "Nazwa użytkownika",

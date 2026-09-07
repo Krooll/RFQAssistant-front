@@ -14,7 +14,7 @@ export class ModalService {
     component: ComponentType<C>,
     data?: ModalDataConfiguration<D>,
     config?: Partial<MatDialogConfig>,
-  ) {
+  ): MatDialogRef<C> {
     const dialogRef = this._matDialog.open(component, {
       data,
       maxHeight: '99vh',
@@ -27,6 +27,8 @@ export class ModalService {
     dialogRef.afterClosed().subscribe(() => {
       this.openModalsStack = this.openModalsStack.filter((ref) => ref !== dialogRef);
     });
+
+    return dialogRef;
   }
 
   public closeCurrentModal(): void {

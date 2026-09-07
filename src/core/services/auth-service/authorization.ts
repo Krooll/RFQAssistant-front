@@ -6,6 +6,7 @@ import { Observable, tap } from 'rxjs';
 import { Endpoints } from '@env/endpoints';
 import { UserDataService } from '@core/services/user-data-service/user-data';
 import { RouteEndpoints } from '@env/route-endpoints';
+import { ModalService } from '@core/services/modal-service/modal-service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ import { RouteEndpoints } from '@env/route-endpoints';
 export class AuthorizationService {
   private readonly _baseHttpService = inject(BaseHttpService);
   private readonly _userDataService = inject(UserDataService);
+  private readonly _modalService = inject(ModalService);
   private readonly _router = inject(Router);
 
   public login(createAuthRequest: CreateAuthRequest): Observable<AuthDto> {
@@ -27,6 +29,7 @@ export class AuthorizationService {
 
   public logout(): void {
     this._userDataService.clearCurrentUserData();
+    this._modalService.closeAllModals();
     this._router.navigateByUrl(RouteEndpoints.authLogin);
   }
 }

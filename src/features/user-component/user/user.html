@@ -1,22 +1,26 @@
-<div class="d-flex flex-column">
+<div class="d-flex flex-column component-container">
   <div class="d-flex align-items-center justify-content-between">
-    <h2>Użytkownicy</h2>
+    <h2>{{ 'USER_COMPONENT.componentTitle' | translateFallback: 'Użytkownicy' }}</h2>
     <app-button [buttonType]="'button'" (emitButtonClick)="onAddButtonClicked()">
       {{ 'BUTTONS.add' | translateFallback: 'Dodaj' }}
     </app-button>
   </div>
-  <div style="border: 2px solid" class="overflow-auto">
+  <div class="list-container">
     @for(item of _userComponentService.userList(); track item.id) {
-    <div class="d-flex flex-column justify-content-center list-item mt-2 mb-2 p-2">
-      <p>{{ item.name }}</p>
-      <p>{{ item.surname }}</p>
-      <p>{{ item.email }}</p>
-      <app-button [buttonType]="'button'" (emitButtonClick)="onInfoButtonClicked(item?.id)">
-        {{ 'BUTTONS.info' | translateFallback: 'Więcej informacji' }}
-      </app-button>
-      <app-button [buttonType]="'button'" (emitButtonClick)="onDeleteButtonCLicked(item?.id)">
-        {{ 'BUTTONS.info' | translateFallback: 'Więcej informacji' }}
-      </app-button>
+    <div class="d-flex justify-content-between list-item mt-2 mb-2 p-2">
+      <div class="d-flex flex-column">
+        <p>{{ item.name }}</p>
+        <p>{{ item.surname }}</p>
+        <p>{{ item.email }}</p>
+      </div>
+      <div class="d-flex">
+        <app-button [buttonType]="'button'" (emitButtonClick)="onInfoButtonClicked(item?.id)">
+          {{ 'BUTTONS.info' | translateFallback: 'Więcej informacji' }}
+        </app-button>
+        <app-button [buttonType]="'button'" (emitButtonClick)="onDeleteButtonCLicked(item?.id)">
+          {{ 'BUTTONS.delete' | translateFallback: 'Usuń' }}
+        </app-button>
+      </div>
     </div>
     }
   </div>

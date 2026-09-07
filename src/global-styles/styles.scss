@@ -5,11 +5,18 @@
 
 @use './colors' as colors;
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  min-height: 100dvh;
+  height: 100%;
   overflow: hidden;
   font-family: 'Inter', sans-serif !important;
   background: var(--main-background);
@@ -48,14 +55,30 @@ body {
   --mdc-snackbar-action-label-text-color: #ffffff;
 }
 
+.overflow-auto {
+  overflow: auto;
+}
+
 .body-container {
   height: 100%;
   width: 100%;
-  border: 2px solid red;
+  overflow: hidden;
 }
 
-.overflow-auto {
-  overflow: auto;
+.main-content {
+  flex: 1;
+  height: 100%;
+  min-width: 0;
+}
+
+.component-container {
+  height: 100%;
+}
+
+.list-container {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .input {
