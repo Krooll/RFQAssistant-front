@@ -31,10 +31,10 @@ export class ModalService {
     return dialogRef;
   }
 
-  public closeCurrentModal(): void {
+  public closeCurrentModal(reloadPage?: boolean): void {
     const currentModal = this.openModalsStack.pop();
     if (currentModal) {
-      currentModal.close();
+      currentModal.close(reloadPage);
     }
   }
 

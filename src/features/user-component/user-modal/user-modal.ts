@@ -144,7 +144,7 @@ export class UserModal {
         next: (response: UserDto) => {
           if (response) {
             this._notificationService.showSuccess('Sukces!');
-            this.closeCurrentModal();
+            this.closeCurrentModal(true);
           }
         },
       });
@@ -157,9 +157,8 @@ export class UserModal {
       .subscribe({
         next: (response: UserDto) => {
           if (response) {
-            console.log(response);
             this._notificationService.showSuccess('Sukces!');
-            this.closeCurrentModal();
+            this.closeCurrentModal(true);
           }
         },
       });
@@ -182,8 +181,8 @@ export class UserModal {
     }
   }
 
-  protected closeCurrentModal(): void {
-    this._userComponentService.closeCurrentModal();
+  protected closeCurrentModal(reloadPage?: boolean): void {
+    this._userComponentService.closeCurrentModal(reloadPage ? reloadPage : false);
     this.resetCurrentForm();
   }
 

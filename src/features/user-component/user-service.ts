@@ -98,8 +98,10 @@ export class UserService {
       .afterClosed()
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
-        next: () => {
-          this.getAllUsers();
+        next: (reloadPage: boolean) => {
+          if (reloadPage) {
+            this.getAllUsers();
+          }
         },
       });
   }
@@ -117,8 +119,10 @@ export class UserService {
       .afterClosed()
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
-        next: () => {
-          this.getAllUsers();
+        next: (reloadPage: boolean) => {
+          if (reloadPage) {
+            this.getAllUsers();
+          }
         },
       });
   }
@@ -142,13 +146,15 @@ export class UserService {
       .afterClosed()
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
-        next: () => {
-          this.getAllUsers();
+        next: (reloadPage: boolean) => {
+          if (reloadPage) {
+            this.getAllUsers();
+          }
         },
       });
   }
 
-  closeCurrentModal() {
-    this._modalService.closeCurrentModal();
+  closeCurrentModal(reloadPage?: boolean) {
+    this._modalService.closeCurrentModal(reloadPage);
   }
 }

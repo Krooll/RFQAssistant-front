@@ -58,12 +58,12 @@ export class DeleteModal {
       .subscribe({
         next: () => {
           this._notificationService.showSuccess('Udało się usunać pozycję!');
-          this._modalService.closeCurrentModal();
+          this._modalService.closeCurrentModal(true);
         },
       });
   }
 
-  closeCurrentModal() {
-    this._modalService.closeCurrentModal();
+  closeCurrentModal(reloadPage?: boolean) {
+    this._modalService.closeCurrentModal(reloadPage);
   }
 }
