@@ -23,6 +23,7 @@ export class UserService {
   private readonly _destroyRef = inject(DestroyRef);
 
   public pageParams = signal<PageRequestParams>({ page: 0, size: 10 });
+  public totalElements = signal<number>(0);
   public userList = signal<UserDto[] | undefined>(undefined);
 
   private getUsers(
@@ -57,9 +58,16 @@ export class UserService {
         next: (data) => {
           if (data) {
             this.userList.set(data.content);
+            console.log(data.totalElements);
+            this.totalElements.set(data.totalElements);
           }
         },
       });
+  }
+
+  updatePageParams(params: PageRequestParams) {
+    this.pageParams.set(params);
+    this.getAllUsers();
   }
 
   public getCurrentUserById(id: number | undefined, injector: Injector) {
@@ -104,7 +112,15 @@ export class UserService {
       data: response,
     };
 
-    this._modalService.openModal(UserModal, createModalConfiguration, { injector: injector });
+    this._modalService
+      .openModal(UserModal, createModalConfiguration, { injector: injector })
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: () => {
+          this.getAllUsers();
+        },
+      });
   }
 
   showDeleteModal(id: number | undefined, injector: Injector) {

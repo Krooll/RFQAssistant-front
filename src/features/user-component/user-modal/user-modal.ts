@@ -143,7 +143,6 @@ export class UserModal {
       .subscribe({
         next: (response: UserDto) => {
           if (response) {
-            console.log(response);
             this._notificationService.showSuccess('Sukces!');
             this.closeCurrentModal();
           }

@@ -2,10 +2,11 @@ import { Component, inject, Injector, OnInit } from '@angular/core';
 import { UserService } from '@features/user-component/user-service';
 import { Button } from '@shared/shared-ui/button/button';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
+import { Paginator } from '@shared/shared-ui/paginator/paginator';
 
 @Component({
   selector: 'app-user',
-  imports: [Button, TranslateFallbackPipe],
+  imports: [Button, TranslateFallbackPipe, Paginator],
   providers: [UserService],
   templateUrl: './user.html',
   styleUrl: './user.scss',
