@@ -5,11 +5,18 @@
 
 @use './colors' as colors;
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  min-height: 100dvh;
+  height: 100%;
   overflow: hidden;
   font-family: 'Inter', sans-serif !important;
   background: var(--main-background);
@@ -24,41 +31,89 @@ body {
   --main-background: #{map.get(colors.$colors, 'light-gray100')};
 }
 
+/* styles.scss */
+
 .snackbar-error {
-  --mdc-snackbar-container-color: #d32f2f;
-  --mdc-snackbar-supporting-text-label-text-color: #ffffff;
-  --mdc-snackbar-action-label-text-color: #ffffff;
+  --mat-snack-bar-button-color: #ffffff;
+  .mdc-snackbar__surface {
+    background-color: #d32f2f !important;
+  }
+  .mat-mdc-snack-bar-label,
+  .mat-mdc-button {
+    color: #ffffff !important;
+  }
 }
 
 .snackbar-success {
-  --mdc-snackbar-container-color: #2e7d32;
-  --mdc-snackbar-supporting-text-label-text-color: #ffffff;
-  --mdc-snackbar-action-label-text-color: #ffffff;
+  --mat-snack-bar-button-color: #ffffff;
+  .mdc-snackbar__surface {
+    background-color: #2e7d32 !important;
+  }
+  .mat-mdc-snack-bar-label,
+  .mat-mdc-button {
+    color: #ffffff !important;
+  }
 }
 
 .snackbar-info {
-  --mdc-snackbar-container-color: #0288d1;
-  --mdc-snackbar-supporting-text-label-text-color: #ffffff;
-  --mdc-snackbar-action-label-text-color: #ffffff;
+  --mat-snack-bar-button-color: #ffffff;
+  .mdc-snackbar__surface {
+    background-color: #0288d1 !important;
+  }
+  .mat-mdc-snack-bar-label,
+  .mat-mdc-button {
+    color: #ffffff !important;
+  }
 }
 
 .snackbar-warning {
-  --mdc-snackbar-container-color: #ed6c02;
-  --mdc-snackbar-supporting-text-label-text-color: #ffffff;
-  --mdc-snackbar-action-label-text-color: #ffffff;
-}
-
-.body-container {
-  height: 100%;
-  width: 100%;
+  --mat-snack-bar-button-color: #ffffff;
+  .mdc-snackbar__surface {
+    background-color: #ed6c02 !important;
+  }
+  .mat-mdc-snack-bar-label,
+  .mat-mdc-button {
+    color: #ffffff !important;
+  }
 }
 
 .overflow-auto {
   overflow: auto;
 }
 
+.text-align-center {
+  text-align: center;
+}
+
+.body-container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  height: 100%;
+  min-width: 0;
+}
+
+.component-container {
+  height: 100%;
+}
+
+.list-container {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
 .input {
   height: 2rem;
   border-radius: 0.25rem;
   border: 1px solid black;
+}
+
+.list-item {
+  border: 1px solid black;
+  border-radius: 0.25rem;
 }

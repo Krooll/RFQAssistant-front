@@ -18,11 +18,33 @@
       }
     }
   },
+  "ROLES": {
+    "admin": "Administrator",
+    "manager": "Manager",
+    "user": "Użytkownik"
+  },
+  "MODALS": {
+    "user": {
+      "create": "Dodaj nowego użytkownika",
+      "edit": "Edytuj użytkownika",
+      "delete": "Usuń użytkownika",
+      "info": "Więcej informacji"
+    },
+    "delete": {
+      "title": "Uwaga!",
+      "text": "Czy na pewno chcesz usunąc tę pozycję?"
+    }
+  },
   "BUTTONS": {
     "login": "Zaloguj się",
     "logout": "Wyloguj się",
     "save": "Zapisz",
-    "abort": "Anuluj"
+    "abort": "Anuluj",
+    "close": "Zamknij",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "add": "Dodaj",
+    "info": "Więcej informacji"
   },
   "FORM_VALIDATION_TEXTS": {
     "required": "To pole jest wymagane...",
@@ -46,6 +68,20 @@
       "errors": {
         "login": "Login jest wymagany...",
         "password": "Hasło jest wymagane..."
+      }
+    }
+  },
+  "USER_COMPONENT": {
+    "componentTitle": "Użytkownicy",
+    "form": {
+      "labels": {
+        "username": "Nazwa użytkownika",
+        "password": "Hasło",
+        "name": "Imię",
+        "surname": "Nazwisko",
+        "email": "Adres email",
+        "disable": "Nieaktywny",
+        "role": "Rola"
       }
     }
   }

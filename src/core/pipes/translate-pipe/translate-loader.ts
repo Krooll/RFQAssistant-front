@@ -9,7 +9,7 @@ export const BUILD_HASH = '';
 export class CustomTranslateHttpLoader implements TranslateLoader {
   constructor(private readonly _httpClient: HttpClient) {}
 
-  getTranslation(lang: string): Observable<TranslationObject> {
+  public getTranslation(lang: string): Observable<TranslationObject> {
     const buildHash = BUILD_HASH ? `?v=${BUILD_HASH}` : '';
     const url = `${ASSETS_PATH}${lang}.json${buildHash}`;
 

@@ -1,0 +1,11 @@
+<app-modal-base
+  [modalType]="type()"
+  [modalTitle]="title()"
+  (closeOutput)="closeCurrentModal()"
+  (deleteOutput)="onDelete()"
+>
+  <div class="text-align-center">
+    <h4>{{ 'MODALS.delete.title' | translateFallback: 'Uwaga!'}}</h4>
+    <p>{{ 'MODALS.delete.text' | translateFallback: 'Czy na pewno chcesz usunąc tę pozycję?'}}</p>
+  </div>
+</app-modal-base>

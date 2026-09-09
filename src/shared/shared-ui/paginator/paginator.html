@@ -1,0 +1,16 @@
+<div class="d-flex align-items-center justify-content-between">
+  <div class="d-flex align-items-center w-50">
+    <app-button (emitButtonClick)="onSortPageChange('name,asc')">Sortowanie od gory</app-button>
+    <app-button (emitButtonClick)="onSortPageChange('name,desc')">Sortowanie od dolu</app-button>
+  </div>
+  <div class="w-50">
+    <mat-paginator
+      [length]="totalElements()"
+      [pageIndex]="pageParams().page ?? 0"
+      [pageSize]="pageParams().size ?? 10"
+      [pageSizeOptions]="pageSizeOptions()"
+      (page)="onPageChange($event)"
+      aria-label="Wybierz stronę"
+    ></mat-paginator>
+  </div>
+</div>

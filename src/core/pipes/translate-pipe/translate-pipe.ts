@@ -14,7 +14,7 @@ export class TranslateFallbackPipe implements PipeTransform {
     });
   }
 
-  transform(value: string | undefined, fallback: string): string {
+  public transform(value: string | undefined, fallback: string): string {
     if (!value) {
       return '';
     }

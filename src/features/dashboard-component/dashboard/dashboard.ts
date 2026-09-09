@@ -6,7 +6,7 @@ import { RouteEndpoints } from '@env/route-endpoints';
 import { NavbarMenu } from '@shared/shared-ui/navbar-menu/navbar-menu';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-dashboard-component',
   imports: [RouterOutlet, NavbarMenu],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
@@ -18,36 +18,36 @@ export class Dashboard {
   protected readonly applicationList: Application[] = [
     {
       id: 'projects',
-      name: 'NAVBAR.applicationList.projects',
+      name: 'NAVBAR.applicationList.name.projects',
       nameFallback: 'Projekty',
       route: RouteEndpoints.project,
       expectedRole: 'ROLE_ADMIN',
     },
     {
-      id: 'project-component',
-      name: 'NAVBAR.applicationList.project-component',
+      id: 'technical-specification-component',
+      name: 'NAVBAR.applicationList.name.components',
       nameFallback: 'Komponenty',
       route: RouteEndpoints.component,
       expectedRole: 'ROLE_ADMIN',
     },
     {
       id: 'supplier',
-      name: 'NAVBAR.applicationList.supplier',
+      name: 'NAVBAR.applicationList.name.supplier',
       nameFallback: 'Dostawcy',
       route: RouteEndpoints.supplier,
       expectedRole: 'ROLE_ADMIN',
     },
     {
       id: 'process',
-      name: 'NAVBAR.applicationList.process',
+      name: 'NAVBAR.applicationList.name.process',
       nameFallback: 'Procesy',
       route: RouteEndpoints.process,
       expectedRole: 'ROLE_ADMIN',
     },
     {
       id: 'user',
-      name: 'NAVBAR.applicationList.user',
-      nameFallback: 'Użytkownik',
+      name: 'NAVBAR.applicationList.name.user',
+      nameFallback: 'Użytkownicy',
       route: RouteEndpoints.user,
       expectedRole: 'ROLE_ADMIN',
     },

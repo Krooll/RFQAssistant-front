@@ -13,7 +13,7 @@ export class NotificationService {
     verticalPosition: 'top',
   };
 
-  showError(message: string, customConfig?: MatSnackBarConfig) {
+  public showError(message: string, customConfig?: MatSnackBarConfig) {
     const mergedConfig: MatSnackBarConfig = {
       ...this.defaultConfig,
       ...customConfig,
@@ -23,7 +23,7 @@ export class NotificationService {
     return this._snackbar.open(message, '', mergedConfig);
   }
 
-  showSuccess(message: string, customConfig?: MatSnackBarConfig) {
+  public showSuccess(message: string, customConfig?: MatSnackBarConfig) {
     const mergedConfig: MatSnackBarConfig = {
       ...this.defaultConfig,
       ...customConfig,
@@ -33,7 +33,7 @@ export class NotificationService {
     return this._snackbar.open(message, '', mergedConfig);
   }
 
-  showWarning(message: string, customConfig?: MatSnackBarConfig) {
+  public showWarning(message: string, customConfig?: MatSnackBarConfig) {
     const mergedConfig: MatSnackBarConfig = {
       ...this.defaultConfig,
       ...customConfig,
@@ -43,7 +43,7 @@ export class NotificationService {
     return this._snackbar.open(message, '', mergedConfig);
   }
 
-  showInfo(message: string, customConfig?: MatSnackBarConfig) {
+  public showInfo(message: string, customConfig?: MatSnackBarConfig) {
     const mergedConfig: MatSnackBarConfig = {
       ...this.defaultConfig,
       ...customConfig,

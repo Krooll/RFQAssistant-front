@@ -4,7 +4,7 @@ import { HttpParams } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class CreatePageParamsService {
-  createPageParams(options?: PageRequestParams): HttpParams {
+  public createPageParams(options?: PageRequestParams): HttpParams {
     let params = new HttpParams();
 
     if (!options) {

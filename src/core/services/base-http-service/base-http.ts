@@ -15,7 +15,7 @@ export class BaseHttpService {
 
   private readonly baseUrl: string = environment.apiUrl;
 
-  getPageData<T>(
+  public getPageData<T>(
     endpoint: Endpoint,
     pageRequestParams?: PageRequestParams,
     extraHttpParams?: HttpParams,
@@ -36,25 +36,29 @@ export class BaseHttpService {
     });
   }
 
-  getPageDataById<T>(endpoint: Endpoint, id: number): Observable<T> {
+  public getPageDataById<T>(endpoint: Endpoint, id: number): Observable<T> {
     return this._httpClient.get<T>(this.generateUrlWithEndpoint(endpoint, true, id));
   }
 
-  postData<T, B>(endpoint: Endpoint, requestBody: B): Observable<T> {
+  public postData<T, B>(endpoint: Endpoint, requestBody: B): Observable<T> {
     return this._httpClient.post<T>(this.generateUrlWithEndpoint(endpoint, false), requestBody);
   }
 
-  patchData<T, B>(endpoint: Endpoint, requestBody: B): Observable<T> {
+  public patchData<T, B>(endpoint: Endpoint, requestBody: B): Observable<T> {
     return this._httpClient.patch<T>(this.generateUrlWithEndpoint(endpoint, false), requestBody);
   }
 
-  deleteData<T = void>(endpoint: Endpoint, id: number): Observable<T> {
+  public deleteData<T = void>(endpoint: Endpoint, id: number): Observable<T> {
     return this._httpClient.delete(
       this.generateUrlWithEndpoint(endpoint, true, id),
     ) as Observable<T>;
   }
 
-  generateUrlWithEndpoint(endpoint: Endpoint, getByIdException: boolean, id?: number): string {
+  private generateUrlWithEndpoint(
+    endpoint: Endpoint,
+    getByIdException: boolean,
+    id?: number,
+  ): string {
     if (!endpoint || endpoint.trim().length === 0) {
       const errorMessage = '[BaseHttpService]: Endpoint nie może być pusty!';
       console.error(errorMessage);

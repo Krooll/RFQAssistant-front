@@ -4,7 +4,7 @@ export const RouteEndpoints = {
   supplier: '/dashboard/supplier',
   process: '/dashboard/process',
   project: '/dashboard/project',
-  component: '/dashboard/project-component',
+  component: '/dashboard/technical-specification',
   unauthorized: '/dashboard/unauthorized',
   authLogin: '/auth/login',
   authRefresh: '/auth/refresh',

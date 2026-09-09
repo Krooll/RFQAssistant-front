@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-supplier',
+  selector: 'app-supplier-component',
   imports: [],
   templateUrl: './supplier.html',
   styleUrl: './supplier.scss',
