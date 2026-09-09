@@ -1,63 +1,58 @@
 import { DestroyRef, inject, Injectable, Injector, signal } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
+import { ModalService } from '@core/services/modal-service/modal-service';
 import {
-  CreateUserRequest,
+  CreateProcessRequest,
   PageRequestParams,
+  ProcessDto,
   SpringPageable,
-  UpdateUserRequest,
+  UpdateProcessRequest,
   UserDto,
 } from '@core/dtos';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Endpoint, Endpoints } from '@env/endpoints';
-import { HttpParams } from '@angular/common/http';
-import { ModalService } from '@core/services/modal-service/modal-service';
-import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
-import { UserModal } from '@features/user-component/user-modal/user-modal';
-import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
+import { ProcessModal } from '@features/process-component/process-modal/process-modal';
+import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
 
 @Injectable()
-export class UserService {
+export class ProcessService {
   private readonly _baseHttpService = inject(BaseHttpService);
   private readonly _modalService = inject(ModalService);
   private readonly _destroyRef = inject(DestroyRef);
 
   public pageParams = signal<PageRequestParams>({ page: 0, size: 10 });
   public totalElements = signal<number>(0);
-  public userList = signal<UserDto[] | undefined>(undefined);
+  public processList = signal<ProcessDto[] | undefined>(undefined);
 
-  private getUsers(
+  private getProcesses(
     pageParams: PageRequestParams,
     extraPageParams: HttpParams,
-  ): Observable<SpringPageable<UserDto>> {
-    return this._baseHttpService.getPageData(Endpoints.user, pageParams, extraPageParams);
+  ): Observable<SpringPageable<ProcessDto>> {
+    return this._baseHttpService.getPageData(Endpoints.process, pageParams, extraPageParams);
   }
 
-  private getUserById(id: number): Observable<UserDto> {
-    return this._baseHttpService.getPageDataById(Endpoints.user, id);
+  private getProcessById(id: number): Observable<ProcessDto> {
+    return this._baseHttpService.getPageDataById(Endpoints.process, id);
   }
 
-  public createUser(createUserRequest: CreateUserRequest): Observable<UserDto> {
-    return this._baseHttpService.postData<UserDto, CreateUserRequest>(
-      Endpoints.user,
-      createUserRequest,
-    );
+  public createProcess(createProcessRequest: CreateProcessRequest): Observable<ProcessDto> {
+    return this._baseHttpService.postData(Endpoints.process, createProcessRequest);
   }
 
-  public updateUser(updateUserRequest: UpdateUserRequest): Observable<UserDto> {
-    return this._baseHttpService.patchData<UserDto, UpdateUserRequest>(
-      Endpoints.user,
-      updateUserRequest,
-    );
+  public updateProcess(updateProcessRequest: UpdateProcessRequest): Observable<ProcessDto> {
+    return this._baseHttpService.patchData(Endpoints.process, updateProcessRequest);
   }
 
-  public getAllUsers() {
-    this.getUsers(this.pageParams(), new HttpParams())
+  getAllProcess() {
+    this.getProcesses(this.pageParams(), new HttpParams())
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
         next: (response) => {
           if (response) {
-            this.userList.set(response.content);
+            this.processList.set(response.content);
             this.totalElements.set(response.totalElements);
           }
         },
@@ -66,34 +61,34 @@ export class UserService {
 
   updatePageParams(params: PageRequestParams) {
     this.pageParams.set(params);
-    this.getAllUsers();
+    this.getAllProcess();
   }
 
-  public getCurrentUserById(id: number | undefined, injector: Injector) {
+  getCurrentProcessById(id: number | undefined, injector: Injector) {
     if (!id) {
       return;
     }
 
-    this.getUserById(id)
+    this.getProcessById(id)
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
         next: (response) => {
           if (response) {
-            this.showInfoUserModal(response, injector);
+            this.showInfoProcessModal(response, injector);
           }
         },
       });
   }
 
-  showCreateUserModal(injector: Injector) {
+  showCreateProcessModal(injector: Injector) {
     const createModalConfiguration: ModalDataConfiguration<UserDto> = {
       type: 'create',
-      title: 'MODALS.user.create',
-      titleFallback: 'Dodaj nowego użytkownika',
+      title: 'MODALS.process.create',
+      titleFallback: 'Dodaj nowy Process',
     };
 
     this._modalService
-      .openModal(UserModal, createModalConfiguration, {
+      .openModal(ProcessModal, createModalConfiguration, {
         injector: injector,
       })
       .afterClosed()
@@ -101,28 +96,28 @@ export class UserService {
       .subscribe({
         next: (reloadPage: boolean) => {
           if (reloadPage) {
-            this.getAllUsers();
+            this.getAllProcess();
           }
         },
       });
   }
 
-  showInfoUserModal(response: UserDto, injector: Injector) {
-    const createModalConfiguration: ModalDataConfiguration<UserDto> = {
+  showInfoProcessModal(response: ProcessDto, injector: Injector) {
+    const createModalConfiguration: ModalDataConfiguration<ProcessDto> = {
       type: 'info',
-      title: 'MODALS.user.info',
+      title: 'MODALS.process.info',
       titleFallback: 'Więcej informacji',
       data: response,
     };
 
     this._modalService
-      .openModal(UserModal, createModalConfiguration, { injector: injector })
+      .openModal(ProcessModal, createModalConfiguration, { injector: injector })
       .afterClosed()
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
         next: (reloadPage: boolean) => {
           if (reloadPage) {
-            this.getAllUsers();
+            this.getAllProcess();
           }
         },
       });
@@ -137,7 +132,7 @@ export class UserService {
       type: 'delete',
       title: 'MODALS.user.delete',
       titleFallback: 'Usuń użytkownika',
-      data: { id: id, endpoint: Endpoints.user },
+      data: { id: id, endpoint: Endpoints.process },
     };
 
     this._modalService
@@ -149,7 +144,7 @@ export class UserService {
       .subscribe({
         next: (reloadPage: boolean) => {
           if (reloadPage) {
-            this.getAllUsers();
+            this.getAllProcess();
           }
         },
       });

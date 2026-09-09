@@ -30,6 +30,12 @@
       "delete": "Usuń użytkownika",
       "info": "Więcej informacji"
     },
+    "process": {
+      "create": "Dodaj nowy proces",
+      "edit": "Edytuj proces",
+      "delete": "Usuń proces",
+      "info": "Więcej informacji"
+    },
     "delete": {
       "title": "Uwaga!",
       "text": "Czy na pewno chcesz usunąc tę pozycję?"
@@ -82,6 +88,16 @@
         "email": "Adres email",
         "disable": "Nieaktywny",
         "role": "Rola"
+      }
+    }
+  },
+  "PROCESS_COMPONENT": {
+    "componentTitle": "Procesy",
+    "form": {
+      "labels": {
+        "name": "Nazwa",
+        "description": "Opis",
+        "disable": "Nieaktywny"
       }
     }
   }

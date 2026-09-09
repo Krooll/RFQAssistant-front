@@ -1,9 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, inject, Injector, OnInit } from '@angular/core';
+import { ProcessService } from '@features/process-component/process-service';
+import { Button } from '@shared/shared-ui/button/button';
+import { Paginator } from '@shared/shared-ui/paginator/paginator';
+import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 
 @Component({
   selector: 'app-process-component',
-  imports: [],
+  imports: [Button, Paginator, TranslateFallbackPipe],
+  providers: [ProcessService],
   templateUrl: './process.html',
   styleUrl: './process.scss',
 })
-export class Process {}
+export class Process implements OnInit {
+  readonly _processComponentService = inject(ProcessService);
+  private readonly _injector = inject(Injector);
+
+  ngOnInit() {
+    this._processComponentService.getAllProcess();
+  }
+
+  protected onAddButtonClicked() {
+    this._processComponentService.showCreateProcessModal(this._injector);
+  }
+
+  protected onInfoButtonClicked(id: number | undefined) {
+    this._processComponentService.getCurrentProcessById(id, this._injector);
+  }
+
+  protected onDeleteButtonCLicked(id: number | undefined) {
+    this._processComponentService.showDeleteModal(id, this._injector);
+  }
+}

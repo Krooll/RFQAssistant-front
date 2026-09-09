@@ -1,1 +1,43 @@
-<p>process works!</p>
+<div class="d-flex flex-column component-container">
+  <div class="d-flex align-items-center justify-content-between">
+    <h2>{{ 'PROCESS_COMPONENT.componentTitle' | translateFallback: 'Procesy' }}</h2>
+    <app-button [buttonType]="'button'" (emitButtonClick)="onAddButtonClicked()">
+      {{ 'BUTTONS.add' | translateFallback: 'Dodaj' }}
+    </app-button>
+  </div>
+  <div class="list-container">
+    @for(item of _processComponentService.processList(); track item.id) {
+    <div class="d-flex justify-content-between list-item mt-2 mb-2 p-2">
+      <div class="d-flex flex-column">
+        <p>
+          <span style="font-weight: bold">
+            {{ 'PROCESS_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:
+          </span>
+          {{ item.name }}
+        </p>
+        <p>
+          <span style="font-weight: bold">
+            {{ 'PROCESS_COMPONENT.form.labels.description' | translateFallback: 'Opis'}}:
+          </span>
+          {{ item.description }}
+        </p>
+      </div>
+      <div class="d-flex">
+        <app-button [buttonType]="'button'" (emitButtonClick)="onInfoButtonClicked(item?.id)">
+          {{ 'BUTTONS.info' | translateFallback: 'Więcej informacji' }}
+        </app-button>
+        <app-button [buttonType]="'button'" (emitButtonClick)="onDeleteButtonCLicked(item?.id)">
+          {{ 'BUTTONS.delete' | translateFallback: 'Usuń' }}
+        </app-button>
+      </div>
+    </div>
+    }
+  </div>
+  <div class="w-100">
+    <app-paginator
+      (pageChange)="_processComponentService.updatePageParams($event)"
+      [totalElements]="_processComponentService.totalElements()"
+      [pageParams]="_processComponentService.pageParams()"
+    ></app-paginator>
+  </div>
+</div>
