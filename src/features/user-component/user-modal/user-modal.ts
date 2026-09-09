@@ -32,14 +32,14 @@ export class UserModal {
 
   private readonly _destroyRef = inject(DestroyRef);
 
+  protected formGroup = signal<FormGroup | undefined>(undefined);
+
   protected data = signal<UserDto | undefined>(undefined);
   protected type = signal<ModalTypes | undefined>(undefined);
   protected title = signal<{ title: string; titleFallback: string }>({
     title: '',
     titleFallback: '',
   });
-
-  protected formGroup = signal<FormGroup | undefined>(undefined);
 
   protected roles: RolesInterface[] = [
     {

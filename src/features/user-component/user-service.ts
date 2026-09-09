@@ -58,7 +58,6 @@ export class UserService {
         next: (data) => {
           if (data) {
             this.userList.set(data.content);
-            console.log(data.totalElements);
             this.totalElements.set(data.totalElements);
           }
         },
