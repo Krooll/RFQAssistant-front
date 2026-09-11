@@ -8,7 +8,7 @@
 >
   <div class="d-flex flex-column">
     <form class="d-flex justify-content-between" [formGroup]="formGroup()!">
-      <div>
+      <div style="min-width: 15rem; padding: 0.5rem">
         <div class="d-flex flex-column mt-4">
           @let name = 'name';
           <label [for]="name">
@@ -92,7 +92,7 @@
           </app-form-field>
         </div>
       </div>
-      <div>
+      <div style="min-width: 15rem; padding: 0.5rem">
         <div class="d-flex flex-column mt-4">
           @let processesIds = 'processesIds';
           <label [id]="processesIds" [for]="processesIds">
@@ -109,10 +109,12 @@
         </div>
         @if(_supplierComponentService.selectedProcessList()){
         <div class="d-flex flex-column">
+          <p>Procesy:</p>
           @for (item of _supplierComponentService.selectedProcessList(); track $index) {
-          <div class="d-flex">
+          <div class="d-flex p-1">
             <p>{{item.name}}</p>
             <app-button
+              class="ms-2"
               [buttonDisabled]="formGroup()?.disabled"
               (emitButtonClick)="_supplierComponentService.removeSelectedProcessFromList(item.id)"
             >
@@ -121,6 +123,8 @@
           </div>
           }
         </div>
+        } @else {
+        <p>Brak dodanych procesów...</p>
         }
       </div>
     </form>
