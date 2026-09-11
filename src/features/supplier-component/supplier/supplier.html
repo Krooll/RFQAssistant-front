@@ -10,56 +10,56 @@
     <div class="d-flex justify-content-between list-item mt-2 mb-2 p-2">
       <div class="d-flex flex-column">
         <p>
-          <span style="font-weight: bold">
+          <span class="font-weight-bold">
             {{ 'SUPPLIER_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:
           </span>
           {{ item.name }}
         </p>
         <p>
-          <span style="font-weight: bold">
+          <span class="font-weight-bold">
             {{ 'SUPPLIER_COMPONENT.form.labels.street' | translateFallback: 'Ulica'}}:
           </span>
           {{ item.street }}
         </p>
         <p>
-          <span style="font-weight: bold">
+          <span class="font-weight-bold">
             {{ 'SUPPLIER_COMPONENT.form.labels.city' | translateFallback: 'Miasto'}}:
           </span>
           {{ item.city }}
         </p>
         <p>
-          <span style="font-weight: bold">
+          <span class="font-weight-bold">
             {{ 'SUPPLIER_COMPONENT.form.labels.province' | translateFallback: 'Województwo'}}:
           </span>
           {{ item.province }}
         </p>
         <p>
-          <span style="font-weight: bold">
+          <span class="font-weight-bold">
             {{ 'SUPPLIER_COMPONENT.form.labels.country' | translateFallback: 'Kraj'}}:
           </span>
           {{ item.country }}
         </p>
         <p>
-          <span style="font-weight: bold">
+          <span class="font-weight-bold">
             {{ 'SUPPLIER_COMPONENT.form.labels.phoneNumber' | translateFallback: 'Numer telefonu'}}:
           </span>
           {{ item.phoneNumber }}
         </p>
         <p>
-          <span style="font-weight: bold">
+          <span class="font-weight-bold">
             {{ 'SUPPLIER_COMPONENT.form.labels.email' | translateFallback: 'Adres email'}}:
           </span>
           {{ item.emailAddress }}
         </p>
         <div class="d-flex flex-column">
           <p>
-            <span style="font-weight: bold">
+            <span class="font-weight-bold">
               {{ 'SUPPLIER_COMPONENT.form.labels.process' | translateFallback: 'Procesy'}}:
             </span>
           </p>
           @for(process of item.processes; track $index) {
           <p>
-            <span style="font-weight: bold">
+            <span class="font-weight-bold">
               {{ 'SUPPLIER_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:
             </span>
             {{ process.name }}

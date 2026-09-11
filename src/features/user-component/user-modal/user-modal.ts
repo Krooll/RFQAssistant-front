@@ -122,8 +122,8 @@ export class UserModal {
 
       case 'update': {
         const updateUserPayload: UpdateUserRequest = {
-          id: this.data()?.id,
           ...formValue,
+          id: this.data()?.id,
         };
         this.updateUser(updateUserPayload);
         break;

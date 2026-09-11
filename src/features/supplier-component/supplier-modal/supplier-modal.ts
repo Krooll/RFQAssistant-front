@@ -63,13 +63,7 @@ export class SupplierModal implements OnInit {
   }
 
   ngOnInit() {
-    this.formGroup()
-      ?.get('processesIds')
-      ?.valueChanges.pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe((selectedItem: ProcessDto) => {
-        this._supplierComponentService.addSelectedProcessToList(selectedItem);
-        this.formGroup()?.get('processesIds')?.setValue(null, { emitEvent: false });
-      });
+    this.subscribeFormChanges();
   }
 
   private loadData(): void {
@@ -187,6 +181,16 @@ export class SupplierModal implements OnInit {
   protected closeCurrentModal(reloadPage?: boolean): void {
     this._supplierComponentService.closeCurrentModal(reloadPage ? reloadPage : false);
     this.resetCurrentForm();
+  }
+
+  private subscribeFormChanges(): void {
+    this.formGroup()
+      ?.get('processesIds')
+      ?.valueChanges.pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe((selectedItem: ProcessDto) => {
+        this._supplierComponentService.addSelectedProcessToList(selectedItem);
+        this.formGroup()?.get('processesIds')?.setValue(null, { emitEvent: false });
+      });
   }
 
   private resetCurrentForm(): void {
