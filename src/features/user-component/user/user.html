@@ -10,33 +10,35 @@
     <div class="d-flex justify-content-between list-item mt-2 mb-2 p-2">
       <div class="d-flex flex-column">
         <p>
-          <span style="font-weight: bold">
+          <span class="font-weight-bold">
             {{ 'USER_COMPONENT.form.labels.name' | translateFallback: 'Imię'}}:
           </span>
           {{ item.name }}
         </p>
         <p>
-          <span style="font-weight: bold">
+          <span class="font-weight-bold">
             {{ 'USER_COMPONENT.form.labels.surname' | translateFallback: 'Nazwisko'}}:
           </span>
           {{ item.surname }}
         </p>
         <p>
-          <span style="font-weight: bold">
+          <span class="font-weight-bold">
             {{ 'USER_COMPONENT.form.labels.email' | translateFallback: 'Adres email'}}:
           </span>
           {{ item.email }}
         </p>
         <p>
-          <span style="font-weight: bold">
+          <span class="font-weight-bold">
             {{ 'USER_COMPONENT.form.labels.username' | translateFallback: 'Nazwa użytkownika'}}:
           </span>
           {{ item.username }}
         </p>
-        <span style="font-weight: bold">
-          {{ 'USER_COMPONENT.form.labels.role' | translateFallback: 'Rola'}}:
-        </span>
-        <p>{{ item.role }}</p>
+        <p>
+          <span class="font-weight-bold">
+            {{ 'USER_COMPONENT.form.labels.role' | translateFallback: 'Rola'}}:
+          </span>
+          {{ item.role }}
+        </p>
       </div>
       <div class="d-flex">
         <app-button [buttonType]="'button'" (emitButtonClick)="onInfoButtonClicked(item?.id)">

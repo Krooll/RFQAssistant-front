@@ -1,1 +1,88 @@
-<p>supplier works!</p>
+<div class="d-flex flex-column component-container">
+  <div class="d-flex align-items-center justify-content-between">
+    <h2>{{ 'SUPPLIER_COMPONENT.componentTitle' | translateFallback: 'Dostawcy' }}</h2>
+    <app-button [buttonType]="'button'" (emitButtonClick)="onAddButtonClicked()">
+      {{ 'BUTTONS.add' | translateFallback: 'Dodaj' }}
+    </app-button>
+  </div>
+  <div class="list-container">
+    @for(item of _supplierComponentService.supplierList(); track item.id) {
+    <div class="d-flex justify-content-between list-item mt-2 mb-2 p-2">
+      <div class="d-flex flex-column">
+        <p>
+          <span class="font-weight-bold">
+            {{ 'SUPPLIER_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:
+          </span>
+          {{ item.name }}
+        </p>
+        <p>
+          <span class="font-weight-bold">
+            {{ 'SUPPLIER_COMPONENT.form.labels.street' | translateFallback: 'Ulica'}}:
+          </span>
+          {{ item.street }}
+        </p>
+        <p>
+          <span class="font-weight-bold">
+            {{ 'SUPPLIER_COMPONENT.form.labels.city' | translateFallback: 'Miasto'}}:
+          </span>
+          {{ item.city }}
+        </p>
+        <p>
+          <span class="font-weight-bold">
+            {{ 'SUPPLIER_COMPONENT.form.labels.province' | translateFallback: 'Województwo'}}:
+          </span>
+          {{ item.province }}
+        </p>
+        <p>
+          <span class="font-weight-bold">
+            {{ 'SUPPLIER_COMPONENT.form.labels.country' | translateFallback: 'Kraj'}}:
+          </span>
+          {{ item.country }}
+        </p>
+        <p>
+          <span class="font-weight-bold">
+            {{ 'SUPPLIER_COMPONENT.form.labels.phoneNumber' | translateFallback: 'Numer telefonu'}}:
+          </span>
+          {{ item.phoneNumber }}
+        </p>
+        <p>
+          <span class="font-weight-bold">
+            {{ 'SUPPLIER_COMPONENT.form.labels.email' | translateFallback: 'Adres email'}}:
+          </span>
+          {{ item.emailAddress }}
+        </p>
+        <div class="d-flex flex-column">
+          <p>
+            <span class="font-weight-bold">
+              {{ 'SUPPLIER_COMPONENT.form.labels.process' | translateFallback: 'Procesy'}}:
+            </span>
+          </p>
+          @for(process of item.processes; track $index) {
+          <p>
+            <span class="font-weight-bold">
+              {{ 'SUPPLIER_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:
+            </span>
+            {{ process.name }}
+          </p>
+          }
+        </div>
+      </div>
+      <div class="d-flex">
+        <app-button [buttonType]="'button'" (emitButtonClick)="onInfoButtonClicked(item?.id)">
+          {{ 'BUTTONS.info' | translateFallback: 'Więcej informacji' }}
+        </app-button>
+        <app-button [buttonType]="'button'" (emitButtonClick)="onDeleteButtonCLicked(item?.id)">
+          {{ 'BUTTONS.delete' | translateFallback: 'Usuń' }}
+        </app-button>
+      </div>
+    </div>
+    }
+  </div>
+  <div class="w-100">
+    <app-paginator
+      (pageChange)="_supplierComponentService.updatePageParams($event)"
+      [totalElements]="_supplierComponentService.totalElements()"
+      [pageParams]="_supplierComponentService.pageParams()"
+    ></app-paginator>
+  </div>
+</div>

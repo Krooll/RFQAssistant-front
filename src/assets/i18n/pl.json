@@ -36,6 +36,12 @@
       "delete": "Usuń proces",
       "info": "Więcej informacji"
     },
+    "supplier": {
+      "create": "Dodaj nowego dostawcę",
+      "edit": "Edytuj dostawcę",
+      "delete": "Usuń dostawcę",
+      "info": "Więcej informacji"
+    },
     "delete": {
       "title": "Uwaga!",
       "text": "Czy na pewno chcesz usunąc tę pozycję?"
@@ -97,6 +103,22 @@
       "labels": {
         "name": "Nazwa",
         "description": "Opis",
+        "disable": "Nieaktywny"
+      }
+    }
+  },
+  "SUPPLIER_COMPONENT": {
+    "componentTitle": "Dostawcy",
+    "form": {
+      "labels": {
+        "name": "Nazwa",
+        "street": "Ulica",
+        "city": "Miasto",
+        "province": "Województwo",
+        "country": "Kraj",
+        "phoneNumber": "Numer telefonu",
+        "email": "Adres email",
+        "process": "Procesy",
         "disable": "Nieaktywny"
       }
     }

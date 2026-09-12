@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { ProcessService } from '@features/process-component/process-service';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
-import { CreateProcessRequest, ProcessDto, UpdateProcessRequest, UserDto } from '@core/dtos';
+import { CreateProcessRequest, ProcessDto, UpdateProcessRequest } from '@core/dtos';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationService } from '@core/services/notification-service/notification-service';
 import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
@@ -52,9 +52,9 @@ export class ProcessModal {
     );
 
     effect(() => {
-      const userData: UserDto | undefined = this.data();
+      const processDto: ProcessDto | undefined = this.data();
 
-      if (userData?.id) {
+      if (processDto?.id) {
         this.updateStateAndPatchForm();
       }
     });
@@ -99,8 +99,8 @@ export class ProcessModal {
 
       case 'update': {
         const updateProcessPayload: UpdateProcessRequest = {
-          id: this.data()?.id,
           ...formValue,
+          id: this.data()?.id,
         };
         this.updateProcess(updateProcessPayload);
         break;

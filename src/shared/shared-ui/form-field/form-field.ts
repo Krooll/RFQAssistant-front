@@ -21,9 +21,16 @@ export class FormField {
 
   get errorMessage(): string {
     const errors = this.control?.errors;
-    if (!errors) return '';
+
+    if (!errors || Object.keys(errors).length === 0) {
+      return '';
+    }
 
     const firstErrorKey = Object.keys(errors)[0];
+
+    if (!firstErrorKey) {
+      return '';
+    }
 
     switch (firstErrorKey) {
       case 'required':
