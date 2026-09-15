@@ -1,14 +1,7 @@
 import { DestroyRef, inject, Injectable, Injector, signal } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
 import { ModalService } from '@core/services/modal-service/modal-service';
-import {
-  CreateProcessRequest,
-  PageRequestParams,
-  ProcessDto,
-  SpringPageable,
-  UpdateProcessRequest,
-  UserDto,
-} from '@core/dtos';
+import { CreateProcessRequest, ProcessDto, UpdateProcessRequest, UserDto } from '@core/dtos';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Endpoint, Endpoints } from '@env/endpoints';
@@ -16,6 +9,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { ProcessModal } from '@features/process-component/process-modal/process-modal';
 import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
+import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
+import { SpringPageable } from '@core/core-dtos/pageable/pageable';
 
 @Injectable()
 export class ProcessService {

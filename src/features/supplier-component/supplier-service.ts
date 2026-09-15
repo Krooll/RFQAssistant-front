@@ -3,9 +3,7 @@ import { BaseHttpService } from '@core/services/base-http-service/base-http';
 import { ModalService } from '@core/services/modal-service/modal-service';
 import {
   CreateSupplierRequest,
-  PageRequestParams,
   ProcessDto,
-  SpringPageable,
   SupplierDto,
   UpdateSupplierRequest,
   UserDto,
@@ -17,6 +15,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { SupplierModal } from '@features/supplier-component/supplier-modal/supplier-modal';
 import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
+import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
+import { SpringPageable } from '@core/core-dtos/pageable/pageable';
 
 @Injectable()
 export class SupplierService {

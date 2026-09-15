@@ -16,7 +16,7 @@ import { NotificationService } from '@core/services/notification-service/notific
 import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
-import { RolesInterface } from '@core/dtos/roles/roles';
+import { RolesInterface } from '@core/core-dtos/roles/roles';
 
 @Component({
   selector: 'app-user-modal',

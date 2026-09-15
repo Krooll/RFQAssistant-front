@@ -1,9 +1,9 @@
 import { Component, inject, input, output } from '@angular/core';
-import { Application } from '@core/dtos/application/application';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { AuthorizationService } from '@core/services/auth-service/authorization';
 import { Button } from '@shared/shared-ui/button/button';
 import { ButtonConfiguration } from '@shared/model-ui/button-configuration/button-configuration';
+import { Application } from '@core/core-dtos/application/application';
 
 @Component({
   selector: 'app-navbar-menu',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthDto } from '@core/dtos';
-import { UserDataLocalStorage } from '@core/dtos/user-data-local-storage/user-data-local-storage';
+import { UserDataLocalStorage } from '@core/core-dtos/user-data-local-storage/user-data-local-storage';
 
 @Injectable({
   providedIn: 'root',

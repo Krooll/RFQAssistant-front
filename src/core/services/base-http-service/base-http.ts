@@ -3,8 +3,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { CreatePageParamsService } from '@core/services/create-page-params-service/create-page-params';
 import { environment } from '@env/environment';
 import { Endpoint } from '@env/endpoints';
-import { PageRequestParams, SpringPageable } from '@core/dtos';
 import { Observable } from 'rxjs';
+import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
+import { SpringPageable } from '@core/core-dtos/pageable/pageable';
 
 @Injectable({
   providedIn: 'root',

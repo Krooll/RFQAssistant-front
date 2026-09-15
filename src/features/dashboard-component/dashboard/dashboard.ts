@@ -1,9 +1,9 @@
 import { Component, computed, inject, Signal } from '@angular/core';
-import { Application } from '@core/dtos/application/application';
 import { UserDataService } from '@core/services/user-data-service/user-data';
 import { Router, RouterOutlet } from '@angular/router';
 import { RouteEndpoints } from '@env/route-endpoints';
 import { NavbarMenu } from '@shared/shared-ui/navbar-menu/navbar-menu';
+import { Application } from '@core/core-dtos/application/application';
 
 @Component({
   selector: 'app-dashboard-component',

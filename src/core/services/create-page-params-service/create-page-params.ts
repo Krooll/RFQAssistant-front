@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { PageRequestParams } from '@core/dtos/page-request-params/page-request-params';
 import { HttpParams } from '@angular/common/http';
+import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
 
 @Injectable({ providedIn: 'root' })
 export class CreatePageParamsService {

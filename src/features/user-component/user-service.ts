@@ -1,12 +1,6 @@
 import { DestroyRef, inject, Injectable, Injector, signal } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
-import {
-  CreateUserRequest,
-  PageRequestParams,
-  SpringPageable,
-  UpdateUserRequest,
-  UserDto,
-} from '@core/dtos';
+import { CreateUserRequest, UpdateUserRequest, UserDto } from '@core/dtos';
 import { Observable } from 'rxjs';
 import { Endpoint, Endpoints } from '@env/endpoints';
 import { HttpParams } from '@angular/common/http';
@@ -15,6 +9,8 @@ import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/mod
 import { UserModal } from '@features/user-component/user-modal/user-modal';
 import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
+import { SpringPageable } from '@core/core-dtos/pageable/pageable';
 
 @Injectable()
 export class UserService {
