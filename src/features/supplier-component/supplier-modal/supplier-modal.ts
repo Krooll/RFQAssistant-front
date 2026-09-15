@@ -189,7 +189,7 @@ export class SupplierModal implements OnInit {
       ?.valueChanges.pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe((selectedItem: ProcessDto) => {
         this._supplierComponentService.addSelectedProcessToList(selectedItem);
-        this.formGroup()?.get('processesIds')?.setValue(null, { emitEvent: false });
+        this.formGroup()?.get('processesIds')?.setValue('', { emitEvent: false });
       });
   }
 

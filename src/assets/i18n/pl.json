@@ -76,10 +76,6 @@
       "placeholders": {
         "login": "Wpisz swój login...",
         "password": "Wpisz hasło..."
-      },
-      "errors": {
-        "login": "Login jest wymagany...",
-        "password": "Hasło jest wymagane..."
       }
     }
   },
@@ -94,6 +90,14 @@
         "email": "Adres email",
         "disable": "Nieaktywny",
         "role": "Rola"
+      },
+      "placeholders": {
+        "username": "Wpisz nazwę użytkownika...",
+        "password": "Wpisz hasło...",
+        "name": "Wpisz imię...",
+        "surname": "Wpisz nazwisko...",
+        "email": "Wpisz adres email...",
+        "role": "Wybierz role..."
       }
     }
   },
@@ -104,6 +108,10 @@
         "name": "Nazwa",
         "description": "Opis",
         "disable": "Nieaktywny"
+      },
+      "placeholders": {
+        "name": "Wpisz nazwę...",
+        "description": "Wpisz opis..."
       }
     }
   },
@@ -119,7 +127,19 @@
         "phoneNumber": "Numer telefonu",
         "email": "Adres email",
         "process": "Procesy",
+        "selectedProcess": "Wybrane procesy",
+        "emptyProcessList": "Brak dodanych procesów...",
         "disable": "Nieaktywny"
+      },
+      "placeholders": {
+        "name": "Wpisz nazwę...",
+        "street": "Wpisz ulice...",
+        "city": "Wpisz miasto...",
+        "province": "Wpisz województwo...",
+        "country": "Wpisz kraj...",
+        "phoneNumber": "Wpisz numer tel. ...",
+        "email": "Wpisz adres email...",
+        "process": "Wybierz proces..."
       }
     }
   }

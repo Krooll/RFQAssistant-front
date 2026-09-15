@@ -2,20 +2,26 @@
   <form [formGroup]="formGroup()!" (ngSubmit)="onSubmit()">
     <div class="d-flex flex-column mt-4">
       @let login = 'login';
-      <label [for]="login">
-        {{ 'LOGIN_COMPONENT.form.labels.login' | translateFallback: 'Login' }}
-      </label>
+      <label [for]="login">{{ 'LOGIN_COMPONENT.form.labels.login' | translateFallback: 'Login' }}</label>
       <app-form-field>
-        <input type="text" class="mt-1 input" [formControlName]="login" />
+        <input
+          type="text"
+          class="mt-1 input"
+          [placeholder]="'LOGIN_COMPONENT.form.placeholders.login' | translateFallback: 'Wpisz swój login...'"
+          [formControlName]="login"
+        />
       </app-form-field>
     </div>
     <div class="d-flex flex-column mt-4">
       @let password = 'password';
-      <label [for]="password">
-        {{ 'LOGIN_COMPONENT.form.labels.password' | translateFallback: 'Hasło' }}
-      </label>
+      <label [for]="password">{{ 'LOGIN_COMPONENT.form.labels.password' | translateFallback: 'Hasło' }}</label>
       <app-form-field>
-        <input type="text" class="mt-1 input" [formControlName]="password" />
+        <input
+          type="password"
+          class="mt-1 input"
+          [placeholder]="'LOGIN_COMPONENT.form.placeholders.password' | translateFallback: 'Wpisz hasło...'"
+          [formControlName]="password"
+        />
       </app-form-field>
     </div>
     <app-button
