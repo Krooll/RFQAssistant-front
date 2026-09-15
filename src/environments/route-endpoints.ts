@@ -5,6 +5,7 @@ export const RouteEndpoints = {
   process: '/dashboard/process',
   project: '/dashboard/project',
   component: '/dashboard/technical-specification',
+  document: '/dashboard/document',
   unauthorized: '/dashboard/unauthorized',
   authLogin: '/auth/login',
   authRefresh: '/auth/refresh',
