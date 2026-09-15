@@ -10,9 +10,7 @@
     <form [formGroup]="formGroup()!">
       <div class="d-flex flex-column mt-4">
         @let name = 'name';
-        <label [for]="name">
-          {{ 'PROCESS_COMPONENT.form.labels.name' | translateFallback: 'Nazwa' }}
-        </label>
+        <label [for]="name">{{ 'PROCESS_COMPONENT.form.labels.name' | translateFallback: 'Nazwa' }}</label>
         <app-form-field>
           <input
             type="text"

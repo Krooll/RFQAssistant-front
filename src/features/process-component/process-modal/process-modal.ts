@@ -1,11 +1,5 @@
 import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProcessService } from '@features/process-component/process-service';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { CreateProcessRequest, ProcessDto, UpdateProcessRequest } from '@core/dtos';

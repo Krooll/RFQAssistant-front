@@ -16,9 +16,7 @@ export class UserDataService {
       !authResponse.accessToken ||
       !authResponse.refreshToken
     ) {
-      throw new Error(
-        '[UserDataService]: Brak odpowiedzi lub danych użytkownika podczas logowania',
-      );
+      throw new Error('[UserDataService]: Brak odpowiedzi lub danych użytkownika podczas logowania');
     }
 
     const expiresAt = Date.now() + authResponse.expiresIn * 1000;

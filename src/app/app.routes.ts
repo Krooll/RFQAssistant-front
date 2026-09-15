@@ -31,8 +31,7 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadComponent: () =>
-      import('@features/dashboard-component/dashboard/dashboard').then((m) => m.Dashboard),
+    loadComponent: () => import('@features/dashboard-component/dashboard/dashboard').then((m) => m.Dashboard),
     canActivate: [roleGuard],
     children: [
       {
@@ -63,24 +62,20 @@ export const routes: Routes = [
       },
       {
         path: 'process',
-        loadComponent: () =>
-          import('@features/process-component/process/process').then((m) => m.Process),
+        loadComponent: () => import('@features/process-component/process/process').then((m) => m.Process),
         canActivate: [roleGuard],
         data: { role: 'ROLE_ADMIN' },
       },
       {
         path: 'supplier',
-        loadComponent: () =>
-          import('@features/supplier-component/supplier/supplier').then((m) => m.Supplier),
+        loadComponent: () => import('@features/supplier-component/supplier/supplier').then((m) => m.Supplier),
         canActivate: [roleGuard],
         data: { role: 'ROLE_ADMIN' },
       },
       {
         path: 'unauthorized',
         loadComponent: () =>
-          import('@features/unauthorized-component/unauthorized/unauthorized').then(
-            (m) => m.Unauthorized,
-          ),
+          import('@features/unauthorized-component/unauthorized/unauthorized').then((m) => m.Unauthorized),
       },
     ],
   },

@@ -50,16 +50,10 @@ export class BaseHttpService {
   }
 
   public deleteData<T = void>(endpoint: Endpoint, id: number): Observable<T> {
-    return this._httpClient.delete(
-      this.generateUrlWithEndpoint(endpoint, true, id),
-    ) as Observable<T>;
+    return this._httpClient.delete(this.generateUrlWithEndpoint(endpoint, true, id)) as Observable<T>;
   }
 
-  private generateUrlWithEndpoint(
-    endpoint: Endpoint,
-    getByIdException: boolean,
-    id?: number,
-  ): string {
+  private generateUrlWithEndpoint(endpoint: Endpoint, getByIdException: boolean, id?: number): string {
     if (!endpoint || endpoint.trim().length === 0) {
       const errorMessage = '[BaseHttpService]: Endpoint nie może być pusty!';
       console.error(errorMessage);

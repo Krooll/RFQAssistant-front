@@ -18,8 +18,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class DeleteModal {
   private readonly _baseHttpService = inject(BaseHttpService);
-  private readonly _modalData =
-    inject<ModalDataConfiguration<{ id: number; endpoint: Endpoint }>>(MAT_DIALOG_DATA);
+  private readonly _modalData = inject<ModalDataConfiguration<{ id: number; endpoint: Endpoint }>>(MAT_DIALOG_DATA);
   private readonly _notificationService = inject(NotificationService);
   private readonly _modalService = inject(ModalService);
   private readonly _destroyRef = inject(DestroyRef);

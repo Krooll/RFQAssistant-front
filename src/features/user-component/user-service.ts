@@ -22,10 +22,7 @@ export class UserService {
   public totalElements = signal<number>(0);
   public userList = signal<UserDto[] | undefined>(undefined);
 
-  private getUsers(
-    pageParams: PageRequestParams,
-    extraPageParams: HttpParams,
-  ): Observable<SpringPageable<UserDto>> {
+  private getUsers(pageParams: PageRequestParams, extraPageParams: HttpParams): Observable<SpringPageable<UserDto>> {
     return this._baseHttpService.getPageData(Endpoints.user, pageParams, extraPageParams);
   }
 
@@ -34,17 +31,11 @@ export class UserService {
   }
 
   public createUser(createUserRequest: CreateUserRequest): Observable<UserDto> {
-    return this._baseHttpService.postData<UserDto, CreateUserRequest>(
-      Endpoints.user,
-      createUserRequest,
-    );
+    return this._baseHttpService.postData<UserDto, CreateUserRequest>(Endpoints.user, createUserRequest);
   }
 
   public updateUser(updateUserRequest: UpdateUserRequest): Observable<UserDto> {
-    return this._baseHttpService.patchData<UserDto, UpdateUserRequest>(
-      Endpoints.user,
-      updateUserRequest,
-    );
+    return this._baseHttpService.patchData<UserDto, UpdateUserRequest>(Endpoints.user, updateUserRequest);
   }
 
   public getAllUsers() {

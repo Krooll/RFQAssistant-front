@@ -17,5 +17,4 @@ export class CustomTranslateHttpLoader implements TranslateLoader {
   }
 }
 
-export const HttpLoaderFactory = (httpClient: HttpClient): TranslateLoader =>
-  new CustomTranslateHttpLoader(httpClient);
+export const HttpLoaderFactory = (httpClient: HttpClient): TranslateLoader => new CustomTranslateHttpLoader(httpClient);

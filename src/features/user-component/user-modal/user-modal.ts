@@ -4,13 +4,7 @@ import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/mod
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { CreateUserRequest, UpdateUserRequest, UserDto } from '@core/dtos';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NotificationService } from '@core/services/notification-service/notification-service';
 import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';

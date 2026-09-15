@@ -18,13 +18,11 @@ export class AuthorizationService {
   private readonly _router = inject(Router);
 
   public login(createAuthRequest: CreateAuthRequest): Observable<AuthDto> {
-    return this._baseHttpService
-      .postData<AuthDto, CreateAuthRequest>(Endpoints.authLogin, createAuthRequest)
-      .pipe(
-        tap((response) => {
-          this._userDataService.saveCurrentUserData(response);
-        }),
-      );
+    return this._baseHttpService.postData<AuthDto, CreateAuthRequest>(Endpoints.authLogin, createAuthRequest).pipe(
+      tap((response) => {
+        this._userDataService.saveCurrentUserData(response);
+      }),
+    );
   }
 
   public logout(): void {

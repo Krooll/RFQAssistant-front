@@ -1,9 +1,6 @@
 import { Component, computed, input, output } from '@angular/core';
 import { NgClass } from '@angular/common';
-import {
-  ButtonConfiguration,
-  ButtonType,
-} from '@shared/model-ui/button-configuration/button-configuration';
+import { ButtonConfiguration, ButtonType } from '@shared/model-ui/button-configuration/button-configuration';
 
 @Component({
   selector: 'app-button',

@@ -1,13 +1,7 @@
 import { DestroyRef, inject, Injectable, Injector, signal } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
 import { ModalService } from '@core/services/modal-service/modal-service';
-import {
-  CreateSupplierRequest,
-  ProcessDto,
-  SupplierDto,
-  UpdateSupplierRequest,
-  UserDto,
-} from '@core/dtos';
+import { CreateSupplierRequest, ProcessDto, SupplierDto, UpdateSupplierRequest, UserDto } from '@core/dtos';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Endpoint, Endpoints } from '@env/endpoints';
@@ -43,11 +37,7 @@ export class SupplierService {
     pageParamsService: PageRequestParams,
     extraPageParams: HttpParams,
   ): Observable<SpringPageable<SupplierDto>> {
-    return this._baseHttpService.getPageData(
-      Endpoints.supplier,
-      pageParamsService,
-      extraPageParams,
-    );
+    return this._baseHttpService.getPageData(Endpoints.supplier, pageParamsService, extraPageParams);
   }
 
   private getSupplierById(id: number): Observable<SupplierDto> {
@@ -196,9 +186,7 @@ export class SupplierService {
 
   removeSelectedProcessFromList(id: number | undefined): void {
     if (!id) return;
-    this.selectedProcessList.update((currentList) =>
-      (currentList ?? []).filter((process) => process.id !== id),
-    );
+    this.selectedProcessList.update((currentList) => (currentList ?? []).filter((process) => process.id !== id));
   }
 
   closeCurrentModal(reloadPage?: boolean) {
