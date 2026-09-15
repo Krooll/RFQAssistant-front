@@ -68,6 +68,22 @@ export interface paths {
     patch: operations['updateProcess'];
     trace?: never;
   };
+  '/document/upload': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations['uploadFile'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/component': {
     parameters: {
       query?: never;
@@ -175,6 +191,70 @@ export interface paths {
     put?: never;
     post?: never;
     delete: operations['deleteProcess'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/document': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['getAllDocuments'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/document/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['getDocumentById'];
+    put?: never;
+    post?: never;
+    delete: operations['delete'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/document/{id}/preview': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['previewFile'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/document/{id}/download': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['downloadFile'];
+    put?: never;
+    post?: never;
+    delete?: never;
     options?: never;
     head?: never;
     patch?: never;
@@ -296,6 +376,18 @@ export interface components {
       material?: string;
       description?: string;
       processes?: components['schemas']['ProcessDto'][];
+      documents?: components['schemas']['DocumentDto'][];
+    };
+    DocumentDto: {
+      /** Format: int64 */
+      id?: number;
+      /** Format: date-time */
+      creationDate?: string;
+      /** Format: date-time */
+      updateDate?: string;
+      name?: string;
+      description?: string;
+      sourceUrl?: string;
     };
     ProjectDto: {
       /** Format: int64 */
@@ -328,6 +420,7 @@ export interface components {
       material: string;
       description?: string;
       processesIds?: number[];
+      documentIds?: number[];
     };
     CreateRefreshTokenRequest: {
       refreshToken: string;
@@ -400,6 +493,7 @@ export interface components {
       material: string;
       description?: string;
       processesIds?: number[];
+      documentIds?: number[];
     };
     Pageable: {
       /** Format: int32 */
@@ -409,10 +503,10 @@ export interface components {
       sort?: string[];
     };
     PageUserDto: {
-      /** Format: int32 */
-      totalPages?: number;
       /** Format: int64 */
       totalElements?: number;
+      /** Format: int32 */
+      totalPages?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['UserDto'][];
@@ -429,12 +523,12 @@ export interface components {
     PageableObject: {
       /** Format: int64 */
       offset?: number;
-      paged?: boolean;
       sort?: components['schemas']['SortObject'];
-      /** Format: int32 */
-      pageNumber?: number;
+      paged?: boolean;
       /** Format: int32 */
       pageSize?: number;
+      /** Format: int32 */
+      pageNumber?: number;
       unpaged?: boolean;
     };
     SortObject: {
@@ -443,10 +537,10 @@ export interface components {
       unsorted?: boolean;
     };
     PageSupplierDto: {
-      /** Format: int32 */
-      totalPages?: number;
       /** Format: int64 */
       totalElements?: number;
+      /** Format: int32 */
+      totalPages?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['SupplierDto'][];
@@ -460,14 +554,14 @@ export interface components {
       pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
-    PageProjectDto: {
-      /** Format: int32 */
-      totalPages?: number;
+    PageSimpleProjectDto: {
       /** Format: int64 */
       totalElements?: number;
       /** Format: int32 */
+      totalPages?: number;
+      /** Format: int32 */
       size?: number;
-      content?: components['schemas']['ProjectDto'][];
+      content?: components['schemas']['SimpleProjectDto'][];
       /** Format: int32 */
       number?: number;
       first?: boolean;
@@ -478,11 +572,28 @@ export interface components {
       pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
+    SimpleProjectDto: {
+      /** Format: int64 */
+      id?: number;
+      /** Format: date-time */
+      creationDate?: string;
+      /** Format: date-time */
+      updateDate?: string;
+      /** Format: date-time */
+      validFrom?: string;
+      /** Format: date-time */
+      validTo?: string;
+      name?: string;
+      projectNumber?: string;
+      /** Format: date-time */
+      projectSOP?: string;
+      description?: string;
+    };
     PageProcessDto: {
-      /** Format: int32 */
-      totalPages?: number;
       /** Format: int64 */
       totalElements?: number;
+      /** Format: int32 */
+      totalPages?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['ProcessDto'][];
@@ -496,11 +607,29 @@ export interface components {
       pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
-    PageComponentDto: {
-      /** Format: int32 */
-      totalPages?: number;
+    PageDocumentDto: {
       /** Format: int64 */
       totalElements?: number;
+      /** Format: int32 */
+      totalPages?: number;
+      /** Format: int32 */
+      size?: number;
+      content?: components['schemas']['DocumentDto'][];
+      /** Format: int32 */
+      number?: number;
+      first?: boolean;
+      last?: boolean;
+      /** Format: int32 */
+      numberOfElements?: number;
+      sort?: components['schemas']['SortObject'];
+      pageable?: components['schemas']['PageableObject'];
+      empty?: boolean;
+    };
+    PageComponentDto: {
+      /** Format: int64 */
+      totalElements?: number;
+      /** Format: int32 */
+      totalPages?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['ComponentDto'][];
@@ -666,7 +795,7 @@ export interface operations {
       200: {
         headers: Record<string, unknown>;
         content: {
-          '*/*': components['schemas']['PageProjectDto'];
+          '*/*': components['schemas']['PageSimpleProjectDto'];
         };
       };
     };
@@ -779,6 +908,34 @@ export interface operations {
       };
     };
   };
+  uploadFile: {
+    parameters: {
+      query: {
+        name: string;
+        description?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        'multipart/form-data': {
+          /** Format: binary */
+          file: string;
+        };
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: Record<string, unknown>;
+        content: {
+          '*/*': components['schemas']['DocumentDto'];
+        };
+      };
+    };
+  };
   getAllComponents: {
     parameters: {
       query: {
@@ -845,14 +1002,16 @@ export interface operations {
   };
   refreshToken: {
     parameters: {
-      query: {
-        request: components['schemas']['CreateRefreshTokenRequest'];
-      };
+      query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    requestBody?: never;
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateRefreshTokenRequest'];
+      };
+    };
     responses: {
       /** @description OK */
       200: {
@@ -865,14 +1024,16 @@ export interface operations {
   };
   login: {
     parameters: {
-      query: {
-        request: components['schemas']['CreateAuthRequest'];
-      };
+      query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    requestBody?: never;
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateAuthRequest'];
+      };
+    };
     responses: {
       /** @description OK */
       200: {
@@ -999,11 +1160,11 @@ export interface operations {
   };
   getProcessById: {
     parameters: {
-      query: {
+      query?: never;
+      header?: never;
+      path: {
         id: number;
       };
-      header?: never;
-      path?: never;
       cookie?: never;
     };
     requestBody?: never;
@@ -1032,6 +1193,104 @@ export interface operations {
       200: {
         headers: Record<string, unknown>;
         content?: never;
+      };
+    };
+  };
+  getAllDocuments: {
+    parameters: {
+      query: {
+        pageable: components['schemas']['Pageable'];
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: Record<string, unknown>;
+        content: {
+          '*/*': components['schemas']['PageDocumentDto'];
+        };
+      };
+    };
+  };
+  getDocumentById: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: Record<string, unknown>;
+        content: {
+          '*/*': components['schemas']['DocumentDto'];
+        };
+      };
+    };
+  };
+  delete: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: Record<string, unknown>;
+        content?: never;
+      };
+    };
+  };
+  previewFile: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: Record<string, unknown>;
+        content: {
+          '*/*': string;
+        };
+      };
+    };
+  };
+  downloadFile: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: Record<string, unknown>;
+        content: {
+          '*/*': string;
+        };
       };
     };
   };
