@@ -1,7 +1,7 @@
 <div class="d-flex flex-column component-container">
   <div class="d-flex align-items-center justify-content-between">
     <h2>{{ 'PROJECT_COMPONENT.componentTitle' | translateFallback: 'Projekty' }}</h2>
-    <app-button [buttonType]="'button'" (emitButtonClick)="onAddButtonClicked()">
+    <app-button [buttonType]="ButtonTypes.button" (emitButtonClick)="onAddButtonClicked()">
       {{ 'BUTTONS.add' | translateFallback: 'Dodaj' }}
     </app-button>
   </div>

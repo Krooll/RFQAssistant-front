@@ -1,7 +1,8 @@
 import { Component, output } from '@angular/core';
 import { Button } from '@shared/shared-ui/button/button';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
-import { ItemListActions } from '@shared/model-ui/item-list-actions/item-list-actions';
+import { ItemListAction, ItemListActions } from '@shared/model-ui/item-list-actions/item-list-actions';
+import { ButtonTypes } from '@shared/model-ui/button-configuration/button-configuration';
 
 @Component({
   selector: 'app-item-list',
@@ -13,14 +14,16 @@ export class ItemList {
   infoButtonClickedOutput = output();
   deleteButtonClickedOutput = output();
 
-  onButtonCLicked(actionType: ItemListActions) {
+  onButtonCLicked(actionType: ItemListAction) {
     switch (actionType) {
-      case 'info':
+      case ItemListActions.info:
         this.infoButtonClickedOutput.emit();
         break;
-      case 'delete':
+      case ItemListActions.delete:
         this.deleteButtonClickedOutput.emit();
         break;
     }
   }
+
+  protected readonly ButtonTypes = ButtonTypes;
 }

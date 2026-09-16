@@ -3,6 +3,8 @@ import { inject } from '@angular/core';
 import { UserDataService } from '@core/services/user-data-service/user-data';
 import { roleGuard } from '@core/guards/role-guard/role-guard';
 import { loggedGuard } from '@core/guards/logged-guard/logged-guard';
+import { projectResolver } from '@features/project/resolver/project-resolver';
+import { Roles } from '@core/core-dtos/roles/roles';
 
 export const routes: Routes = [
   {
@@ -43,25 +45,38 @@ export const routes: Routes = [
         path: 'project',
         loadComponent: () => import('@features/project/project/project').then((m) => m.Project),
         canActivate: [roleGuard],
-        data: { roles: ['ROLE_ADMIN', 'ROLE_MANAGER'] },
+        data: { roles: [Roles.admin, Roles.manager] },
+      },
+      {
+        path: 'project/form',
+        loadComponent: () => import('@features/project/project-form/project-form').then((m) => m.ProjectForm),
+        canActivate: [roleGuard],
+        data: { roles: [Roles.admin] },
+      },
+      {
+        path: 'project/edit/form',
+        loadComponent: () => import('@features/project/project-form/project-form').then((m) => m.ProjectForm),
+        canActivate: [roleGuard],
+        resolve: { projectData: projectResolver },
+        data: { roles: [Roles.admin] },
       },
       {
         path: 'user',
         loadComponent: () => import('@features/user-component/user/user').then((m) => m.User),
         canActivate: [roleGuard],
-        data: { roles: ['ROLE_ADMIN'] },
+        data: { roles: [Roles.admin] },
       },
       {
         path: 'process',
         loadComponent: () => import('@features/process-component/process/process').then((m) => m.Process),
         canActivate: [roleGuard],
-        data: { roles: ['ROLE_ADMIN', 'ROLE_MANAGER'] },
+        data: { roles: [Roles.admin] },
       },
       {
         path: 'supplier',
         loadComponent: () => import('@features/supplier-component/supplier/supplier').then((m) => m.Supplier),
         canActivate: [roleGuard],
-        data: { roles: ['ROLE_ADMIN', 'ROLE_MANAGER'] },
+        data: { roles: [Roles.admin] },
       },
       {
         path: 'unauthorized',

@@ -4,6 +4,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { RouteEndpoints } from '@env/route-endpoints';
 import { NavbarMenu } from '@shared/shared-ui/navbar-menu/navbar-menu';
 import { Application } from '@core/core-dtos/application/application';
+import { Roles } from '@core/core-dtos/roles/roles';
 
 @Component({
   selector: 'app-dashboard-component',
@@ -21,28 +22,28 @@ export class Dashboard {
       name: 'NAVBAR.applicationList.name.projects',
       nameFallback: 'Projekty',
       route: RouteEndpoints.project,
-      expectedRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      expectedRoles: [Roles.admin, Roles.manager],
     },
     {
       id: 'supplier',
       name: 'NAVBAR.applicationList.name.supplier',
       nameFallback: 'Dostawcy',
       route: RouteEndpoints.supplier,
-      expectedRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      expectedRoles: [Roles.admin],
     },
     {
       id: 'process',
       name: 'NAVBAR.applicationList.name.process',
       nameFallback: 'Procesy',
       route: RouteEndpoints.process,
-      expectedRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      expectedRoles: [Roles.admin],
     },
     {
       id: 'user',
       name: 'NAVBAR.applicationList.name.user',
       nameFallback: 'Użytkownicy',
       route: RouteEndpoints.user,
-      expectedRoles: ['ROLE_ADMIN'],
+      expectedRoles: [Roles.admin],
     },
   ];
 

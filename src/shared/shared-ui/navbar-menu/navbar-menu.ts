@@ -2,7 +2,12 @@ import { Component, inject, input, output } from '@angular/core';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { AuthorizationService } from '@core/services/auth-service/authorization';
 import { Button } from '@shared/shared-ui/button/button';
-import { ButtonConfiguration } from '@shared/model-ui/button-configuration/button-configuration';
+import {
+  ButtonConfiguration,
+  ButtonSizes,
+  ButtonTypes,
+  ButtonVariants,
+} from '@shared/model-ui/button-configuration/button-configuration';
 import { Application } from '@core/core-dtos/application/application';
 
 @Component({
@@ -19,8 +24,8 @@ export class NavbarMenu {
   selectedApplication = output<string | undefined>();
 
   menuNavBarButtonConfig: ButtonConfiguration = {
-    variant: 'primary',
-    size: 'medium',
+    variant: ButtonVariants.primary,
+    size: ButtonSizes.medium,
     padding: '',
     margin: 'mt-1',
   };
@@ -34,4 +39,6 @@ export class NavbarMenu {
   protected logOut() {
     this._authorizationService.logout();
   }
+
+  protected readonly ButtonTypes = ButtonTypes;
 }

@@ -1,7 +1,7 @@
-import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
+import { ModalType } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 
 export interface ModalDataConfiguration<T> {
-  type: ModalTypes;
+  type: ModalType;
   title: string;
   titleFallback: string;
   data?: T;

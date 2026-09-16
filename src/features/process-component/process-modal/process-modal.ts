@@ -5,7 +5,7 @@ import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/mod
 import { CreateProcessRequest, ProcessDto, UpdateProcessRequest } from '@core/dtos';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationService } from '@core/services/notification-service/notification-service';
-import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
+import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
@@ -28,7 +28,7 @@ export class ProcessModal {
   protected formGroup = signal<FormGroup | undefined>(undefined);
 
   protected data = signal<ProcessDto | undefined>(undefined);
-  protected type = signal<ModalTypes | undefined>(undefined);
+  protected type = signal<ModalType | undefined>(undefined);
   protected title = signal<{ title: string; titleFallback: string }>({
     title: '',
     titleFallback: '',
@@ -70,7 +70,7 @@ export class ProcessModal {
       return;
     }
 
-    if (currentModalType === 'info') {
+    if (currentModalType === ModalTypes.info) {
       this.onUpdate();
       return;
     }
@@ -82,7 +82,7 @@ export class ProcessModal {
     const formValue = this.formGroup()?.getRawValue();
 
     switch (currentModalType) {
-      case 'create': {
+      case ModalTypes.create: {
         const createProcessPayload: CreateProcessRequest = {
           ...formValue,
           disable: !!formValue.disable,
@@ -91,7 +91,7 @@ export class ProcessModal {
         break;
       }
 
-      case 'update': {
+      case ModalTypes.update: {
         const updateProcessPayload: UpdateProcessRequest = {
           ...formValue,
           id: this.data()?.id,
@@ -103,7 +103,7 @@ export class ProcessModal {
   }
 
   private onUpdate(): void {
-    this.type.set('update');
+    this.type.set(ModalTypes.update);
     this.formGroup()?.enable();
   }
 

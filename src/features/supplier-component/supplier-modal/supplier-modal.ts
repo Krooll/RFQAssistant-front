@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationService } from '@core/services/notification-service/notification-service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SupplierService } from '@features/supplier-component/supplier-service';
-import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
+import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
@@ -29,7 +29,7 @@ export class SupplierModal implements OnInit {
   protected formGroup = signal<FormGroup | undefined>(undefined);
 
   protected data = signal<SupplierDto | undefined>(undefined);
-  protected type = signal<ModalTypes | undefined>(undefined);
+  protected type = signal<ModalType | undefined>(undefined);
   protected title = signal<{ title: string; titleFallback: string }>({
     title: '',
     titleFallback: '',
@@ -82,7 +82,7 @@ export class SupplierModal implements OnInit {
       return;
     }
 
-    if (currentModalType === 'info') {
+    if (currentModalType === ModalTypes.info) {
       this.onUpdate();
       return;
     }
@@ -94,7 +94,7 @@ export class SupplierModal implements OnInit {
     const formValue = this.formGroup()?.getRawValue();
 
     switch (currentModalType) {
-      case 'create': {
+      case ModalTypes.create: {
         const createUserPayload: CreateSupplierRequest = {
           ...formValue,
           disable: !!formValue.disable,
@@ -104,7 +104,7 @@ export class SupplierModal implements OnInit {
         break;
       }
 
-      case 'update': {
+      case ModalTypes.update: {
         const updateUserPayload: UpdateSupplierRequest = {
           ...formValue,
           id: this.data()?.id,
@@ -118,7 +118,7 @@ export class SupplierModal implements OnInit {
   }
 
   private onUpdate(): void {
-    this.type.set('update');
+    this.type.set(ModalTypes.update);
     this.formGroup()?.enable();
   }
 

@@ -2,8 +2,8 @@ import { Component, input, output } from '@angular/core';
 import { MatDialogActions, MatDialogContent } from '@angular/material/dialog';
 import { Button } from '@shared/shared-ui/button/button';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
-import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
-import { ButtonConfiguration } from '@shared/model-ui/button-configuration/button-configuration';
+import { ModalType } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
+import { ButtonConfiguration, ButtonVariants } from '@shared/model-ui/button-configuration/button-configuration';
 
 @Component({
   selector: 'app-modal-base',
@@ -12,12 +12,12 @@ import { ButtonConfiguration } from '@shared/model-ui/button-configuration/butto
   styleUrl: './modal-base.scss',
 })
 export class ModalBase {
-  public modalType = input.required<ModalTypes | undefined>();
+  public modalType = input.required<ModalType | undefined>();
   public modalTitle = input.required<{ title: string; titleFallback: string }>();
   public buttonDisabled = input<boolean | undefined>();
 
   closeButtonConfiguration: ButtonConfiguration = {
-    variant: 'transparent',
+    variant: ButtonVariants.transparent,
   };
 
   submitOutput = output<void>();

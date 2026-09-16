@@ -1,1 +1,6 @@
-export type ItemListActions = 'info' | 'delete';
+export const ItemListActions = {
+  info: 'info',
+  delete: 'delete',
+} as const;
+
+export type ItemListAction = (typeof ItemListActions)[keyof typeof ItemListActions];

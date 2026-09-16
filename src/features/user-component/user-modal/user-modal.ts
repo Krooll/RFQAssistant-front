@@ -2,7 +2,7 @@ import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
 import { UserService } from '@features/user-component/user-service';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
+import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { CreateUserRequest, UpdateUserRequest, UserDto } from '@core/dtos';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -10,7 +10,7 @@ import { NotificationService } from '@core/services/notification-service/notific
 import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
-import { RolesInterface } from '@core/core-dtos/roles/roles';
+import { Roles, RolesInterface } from '@core/core-dtos/roles/roles';
 
 @Component({
   selector: 'app-user-modal',
@@ -29,7 +29,7 @@ export class UserModal {
   protected formGroup = signal<FormGroup | undefined>(undefined);
 
   protected data = signal<UserDto | undefined>(undefined);
-  protected type = signal<ModalTypes | undefined>(undefined);
+  protected type = signal<ModalType | undefined>(undefined);
   protected title = signal<{ title: string; titleFallback: string }>({
     title: '',
     titleFallback: '',
@@ -39,17 +39,17 @@ export class UserModal {
     {
       label: 'ROLES.admin',
       labelFallback: 'Administrator',
-      role: 'ROLE_ADMIN',
+      role: Roles.admin,
     },
     {
       label: 'ROLES.MANAGER',
       labelFallback: 'Manager',
-      role: 'ROLE_MANAGER',
+      role: Roles.manager,
     },
     {
       label: 'ROLES.USER',
       labelFallback: 'Użytkownik',
-      role: 'ROLE_USER',
+      role: Roles.user,
     },
   ];
 
@@ -93,7 +93,7 @@ export class UserModal {
       return;
     }
 
-    if (currentModalType === 'info') {
+    if (currentModalType === ModalTypes.info) {
       this.onUpdate();
       return;
     }
@@ -105,7 +105,7 @@ export class UserModal {
     const formValue = this.formGroup()?.getRawValue();
 
     switch (currentModalType) {
-      case 'create': {
+      case ModalTypes.create: {
         const createUserPayload: CreateUserRequest = {
           ...formValue,
           disable: !!formValue.disable,
@@ -114,7 +114,7 @@ export class UserModal {
         break;
       }
 
-      case 'update': {
+      case ModalTypes.update: {
         const updateUserPayload: UpdateUserRequest = {
           ...formValue,
           id: this.data()?.id,
@@ -126,7 +126,7 @@ export class UserModal {
   }
 
   private onUpdate(): void {
-    this.type.set('update');
+    this.type.set(ModalTypes.update);
     this.formGroup()?.enable();
   }
 

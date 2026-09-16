@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthorizationService } from '@core/services/auth-service/authorization';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { Button } from '@shared/shared-ui/button/button';
-import { ButtonConfiguration } from '@shared/model-ui/button-configuration/button-configuration';
+import { ButtonConfiguration, ButtonTypes } from '@shared/model-ui/button-configuration/button-configuration';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouteEndpoints } from '@env/route-endpoints';
@@ -60,4 +60,6 @@ export class Login {
       this.formGroup()?.markAllAsTouched();
     }
   }
+
+  protected readonly ButtonTypes = ButtonTypes;
 }

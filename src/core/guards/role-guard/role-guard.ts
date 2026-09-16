@@ -11,7 +11,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
   const isTokenExpired = userDataService.isUserTokenExpired();
 
   if (!currentUserData || !currentUserData.user || isTokenExpired) {
-    return router.createUrlTree(['/auth/login'], {
+    return router.createUrlTree([RouteEndpoints.authLogin], {
       queryParams: { returnUrl: state.url },
     });
   }
