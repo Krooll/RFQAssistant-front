@@ -37,40 +37,31 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'user',
+        redirectTo: 'project',
       },
       {
         path: 'project',
         loadComponent: () => import('@features/project/project/project').then((m) => m.Project),
         canActivate: [roleGuard],
-        data: { role: 'ROLE_ADMIN' },
-      },
-      {
-        path: 'technical-specification',
-        loadComponent: () =>
-          import('@features/technical-specification-component/technical-specification/technical-specification').then(
-            (m) => m.TechnicalSpecification,
-          ),
-        canActivate: [roleGuard],
-        data: { role: 'ROLE_ADMIN' },
+        data: { roles: ['ROLE_ADMIN', 'ROLE_MANAGER'] },
       },
       {
         path: 'user',
         loadComponent: () => import('@features/user-component/user/user').then((m) => m.User),
         canActivate: [roleGuard],
-        data: { role: 'ROLE_ADMIN' },
+        data: { roles: ['ROLE_ADMIN'] },
       },
       {
         path: 'process',
         loadComponent: () => import('@features/process-component/process/process').then((m) => m.Process),
         canActivate: [roleGuard],
-        data: { role: 'ROLE_ADMIN' },
+        data: { roles: ['ROLE_ADMIN', 'ROLE_MANAGER'] },
       },
       {
         path: 'supplier',
         loadComponent: () => import('@features/supplier-component/supplier/supplier').then((m) => m.Supplier),
         canActivate: [roleGuard],
-        data: { role: 'ROLE_ADMIN' },
+        data: { roles: ['ROLE_ADMIN', 'ROLE_MANAGER'] },
       },
       {
         path: 'unauthorized',

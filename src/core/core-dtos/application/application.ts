@@ -5,5 +5,5 @@ export interface Application {
   name: string;
   nameFallback: string;
   route: RouteEndpoints;
-  expectedRole: string;
+  expectedRoles: string[];
 }

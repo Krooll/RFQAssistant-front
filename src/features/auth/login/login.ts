@@ -52,7 +52,18 @@ export class Login {
         .login(payload)
         .pipe(takeUntilDestroyed(this._destroyRef))
         .subscribe({
-          next: () => {
+          next: (data) => {
+            if (data.accessToken) {
+              const payloadBase64 = data.accessToken.split('.')[1];
+              const decodedPayload = JSON.parse(atob(payloadBase64));
+
+              console.log('=== ZAWARTOŚĆ TOKENA JWT (PAYLOAD) ===');
+              console.log(decodedPayload);
+              console.log(
+                'Role/Authorities w JWT:',
+                decodedPayload.roles || decodedPayload.scope || decodedPayload.authorities,
+              );
+            }
             this._router.navigateByUrl(RouteEndpoints.dashboard);
           },
         });

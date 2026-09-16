@@ -19,7 +19,7 @@ export class NavbarMenu {
   selectedApplication = output<string | undefined>();
 
   menuNavBarButtonConfig: ButtonConfiguration = {
-    variant: 'transparent',
+    variant: 'primary',
     size: 'medium',
     padding: '',
     margin: 'mt-1',

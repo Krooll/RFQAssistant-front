@@ -21,35 +21,28 @@ export class Dashboard {
       name: 'NAVBAR.applicationList.name.projects',
       nameFallback: 'Projekty',
       route: RouteEndpoints.project,
-      expectedRole: 'ROLE_ADMIN',
-    },
-    {
-      id: 'technical-specification-component',
-      name: 'NAVBAR.applicationList.name.components',
-      nameFallback: 'Komponenty',
-      route: RouteEndpoints.component,
-      expectedRole: 'ROLE_ADMIN',
+      expectedRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
     },
     {
       id: 'supplier',
       name: 'NAVBAR.applicationList.name.supplier',
       nameFallback: 'Dostawcy',
       route: RouteEndpoints.supplier,
-      expectedRole: 'ROLE_ADMIN',
+      expectedRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
     },
     {
       id: 'process',
       name: 'NAVBAR.applicationList.name.process',
       nameFallback: 'Procesy',
       route: RouteEndpoints.process,
-      expectedRole: 'ROLE_ADMIN',
+      expectedRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
     },
     {
       id: 'user',
       name: 'NAVBAR.applicationList.name.user',
       nameFallback: 'Użytkownicy',
       route: RouteEndpoints.user,
-      expectedRole: 'ROLE_ADMIN',
+      expectedRoles: ['ROLE_ADMIN'],
     },
   ];
 
@@ -61,7 +54,7 @@ export class Dashboard {
       return [];
     }
 
-    return this.applicationList.filter((item) => item.expectedRole === currentUserRole);
+    return this.applicationList.filter((item) => item.expectedRoles.includes(currentUserRole));
   });
 
   protected navigateToSelectedApp(url: string | undefined) {
