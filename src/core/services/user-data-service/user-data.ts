@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AuthDto } from '@core/dtos';
 import { UserDataLocalStorage } from '@core/core-dtos/user-data-local-storage/user-data-local-storage';
+import { jwtDecode } from 'jwt-decode';
+import { Token } from '@core/core-dtos/token/token';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +12,6 @@ export class UserDataService {
     if (
       !authResponse ||
       !authResponse.user ||
-      authResponse.expiresIn === undefined ||
-      authResponse.expiresIn === null ||
       !authResponse.tokenType ||
       !authResponse.accessToken ||
       !authResponse.refreshToken
@@ -19,11 +19,8 @@ export class UserDataService {
       throw new Error('[UserDataService]: Brak odpowiedzi lub danych użytkownika podczas logowania');
     }
 
-    const expiresAt = Date.now() + authResponse.expiresIn * 1000;
-
     const currentUserData: UserDataLocalStorage = {
       user: authResponse.user,
-      expiresIn: expiresAt,
       tokenType: authResponse.tokenType,
     };
 
@@ -62,17 +59,30 @@ export class UserDataService {
     return localStorage.getItem('refreshToken');
   }
 
-  public isUserTokenExpired(): boolean {
-    const currentUserData = this.getUserDataFromLocalStorage();
+  private decodeAccessToken(accessToken: string): Token | null {
+    try {
+      return jwtDecode(accessToken);
+    } catch (error) {
+      console.error('[UserDataService]: Błąd dekodowania JWT', error);
+      return null;
+    }
+  }
 
-    if (!currentUserData) {
-      console.error('[UserDataService]: Błąd podczas pobierania danych użytkownika z localStorage');
+  public isUserTokenExpired(): boolean {
+    const token = this.getUserAccessToken();
+    if (!token) {
       return true;
     }
 
-    const expTime = currentUserData.expiresIn;
+    const decodedToken = this.decodeAccessToken(token);
+
+    if (!decodedToken || !decodedToken.exp) {
+      return true;
+    }
+
+    const expTimeMs = decodedToken.exp * 1000;
     const marginInMs = 30 * 1000;
 
-    return Date.now() >= Number(expTime) - marginInMs;
+    return Date.now() >= expTimeMs - marginInMs;
   }
 }
