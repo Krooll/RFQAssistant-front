@@ -1,1 +1,36 @@
-<p>project works!</p>
+<div class="d-flex flex-column component-container">
+  <div class="d-flex align-items-center justify-content-between">
+    <h2>{{ 'PROJECT_COMPONENT.componentTitle' | translateFallback: 'Projekty' }}</h2>
+    <app-button [buttonType]="'button'" (emitButtonClick)="onAddButtonClicked()">
+      {{ 'BUTTONS.add' | translateFallback: 'Dodaj' }}
+    </app-button>
+  </div>
+  <div class="list-container">
+    @for(item of _projectComponentService.projectList(); track item.id) {
+    <app-item-list
+      (infoButtonClickedOutput)="onInfoButtonClicked(item.id)"
+      (deleteButtonClickedOutput)="onDeleteButtonCLicked(item.id)"
+    >
+      <div class="d-flex flex-column">
+        <p>
+          <span class="font-weight-bold">{{ 'PROJECT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:</span>
+          {{ item.name }}
+        </p>
+        <p>
+          <span class="font-weight-bold">
+            {{ 'PROJECT_COMPONENT.form.labels.surname' | translateFallback: 'Opis'}}:
+          </span>
+          {{ item.description }}
+        </p>
+      </div>
+    </app-item-list>
+    }
+  </div>
+  <div class="w-100">
+    <app-paginator
+      (pageChange)="_projectComponentService.updatePageParams($event)"
+      [totalElements]="_projectComponentService.totalElements()"
+      [pageParams]="_projectComponentService.pageParams()"
+    ></app-paginator>
+  </div>
+</div>

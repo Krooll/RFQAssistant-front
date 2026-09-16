@@ -3,10 +3,11 @@ import { UserService } from '@features/user-component/user-service';
 import { Button } from '@shared/shared-ui/button/button';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { Paginator } from '@shared/shared-ui/paginator/paginator';
+import { ItemList } from '@shared/shared-ui/item-list/item-list';
 
 @Component({
   selector: 'app-user',
-  imports: [Button, TranslateFallbackPipe, Paginator],
+  imports: [Button, TranslateFallbackPipe, Paginator, ItemList],
   providers: [UserService],
   templateUrl: './user.html',
   styleUrl: './user.scss',

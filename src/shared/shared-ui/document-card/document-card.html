@@ -1,0 +1,8 @@
+<div class="card-container d-flex flex-column">
+  <p>{{documentData().name}}</p>
+  <p>{{documentData().description}}</p>
+  <div class="d-flex align-items-center justify-content-between">
+    <app-button (emitButtonClick)="onDownloadClick(documentData()?.id)">sciagnij</app-button>
+    <app-button (emitButtonClick)="onDownloadClick(documentData()?.id)">podglad</app-button>
+  </div>
+</div>

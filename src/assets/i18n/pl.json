@@ -142,5 +142,18 @@
         "process": "Wybierz proces..."
       }
     }
+  },
+  "PROJECT_COMPONENT": {
+    "componentTitle": "Projekty",
+    "form": {
+      "labels": {
+        "name": "Nazwa",
+        "description": "Opis"
+      },
+      "placeholders": {
+        "name": "Wpisz nazwę...",
+        "description": "Wpisz opis..."
+      }
+    }
   }
 }

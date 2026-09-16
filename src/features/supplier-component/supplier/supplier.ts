@@ -3,10 +3,11 @@ import { SupplierService } from '@features/supplier-component/supplier-service';
 import { Button } from '@shared/shared-ui/button/button';
 import { Paginator } from '@shared/shared-ui/paginator/paginator';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
+import { ItemList } from '@shared/shared-ui/item-list/item-list';
 
 @Component({
   selector: 'app-supplier-component',
-  imports: [Button, Paginator, TranslateFallbackPipe],
+  imports: [Button, Paginator, TranslateFallbackPipe, ItemList],
   providers: [SupplierService],
   templateUrl: './supplier.html',
   styleUrl: './supplier.scss',
