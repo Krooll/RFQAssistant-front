@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, OnDestroy, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProcessService } from '@features/process-component/process-service';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
@@ -17,7 +17,7 @@ import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe
   templateUrl: './process-modal.html',
   styleUrl: './process-modal.scss',
 })
-export class ProcessModal {
+export class ProcessModal implements OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _processComponentService = inject(ProcessService);
   private readonly _modalData = inject<ModalDataConfiguration<ProcessDto>>(MAT_DIALOG_DATA);
@@ -52,6 +52,10 @@ export class ProcessModal {
         this.updateStateAndPatchForm();
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.resetCurrentForm();
   }
 
   private loadData(): void {
@@ -151,7 +155,6 @@ export class ProcessModal {
 
   protected closeCurrentModal(reloadPage?: boolean): void {
     this._processComponentService.closeCurrentModal(reloadPage ? reloadPage : false);
-    this.resetCurrentForm();
   }
 
   private resetCurrentForm(): void {

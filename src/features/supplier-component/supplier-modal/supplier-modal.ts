@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { CreateSupplierRequest, ProcessDto, SupplierDto, UpdateSupplierRequest } from '@core/dtos';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -18,7 +18,7 @@ import { Button } from '@shared/shared-ui/button/button';
   templateUrl: './supplier-modal.html',
   styleUrl: './supplier-modal.scss',
 })
-export class SupplierModal implements OnInit {
+export class SupplierModal implements OnInit, OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
   readonly _supplierComponentService = inject(SupplierService);
   private readonly _modalData = inject<ModalDataConfiguration<SupplierDto>>(MAT_DIALOG_DATA);
@@ -64,6 +64,10 @@ export class SupplierModal implements OnInit {
 
   ngOnInit() {
     this.subscribeFormChanges();
+  }
+
+  ngOnDestroy() {
+    this.resetCurrentForm();
   }
 
   private loadData(): void {
@@ -180,7 +184,6 @@ export class SupplierModal implements OnInit {
 
   protected closeCurrentModal(reloadPage?: boolean): void {
     this._supplierComponentService.closeCurrentModal(reloadPage ? reloadPage : false);
-    this.resetCurrentForm();
   }
 
   private subscribeFormChanges(): void {

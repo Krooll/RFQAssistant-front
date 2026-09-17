@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, OnDestroy, signal } from '@angular/core';
 import { UserService } from '@features/user-component/user-service';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -18,7 +18,7 @@ import { Roles, RolesInterface } from '@core/core-dtos/roles/roles';
   templateUrl: './user-modal.html',
   styleUrl: './user-modal.scss',
 })
-export class UserModal {
+export class UserModal implements OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _userComponentService = inject(UserService);
   private readonly _modalData = inject<ModalDataConfiguration<UserDto>>(MAT_DIALOG_DATA);
@@ -75,6 +75,10 @@ export class UserModal {
         this.updateStateAndPatchForm();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.resetCurrentForm();
   }
 
   private loadData(): void {
@@ -177,7 +181,6 @@ export class UserModal {
 
   protected closeCurrentModal(reloadPage?: boolean): void {
     this._userComponentService.closeCurrentModal(reloadPage ? reloadPage : false);
-    this.resetCurrentForm();
   }
 
   private resetCurrentForm(): void {
