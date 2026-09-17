@@ -356,6 +356,8 @@ export interface components {
       description?: string;
       metrics: components['schemas']['MetricsDto'][];
       componentIds: number[];
+      /** @enum {string} */
+      status?: 'ACTIVE' | 'INACTIVE' | 'SUSPENDED';
     };
     MetricsDto: {
       /** Format: date-time */
@@ -405,8 +407,12 @@ export interface components {
       /** Format: date-time */
       projectSOP?: string;
       description?: string;
-      metricsByDate?: Record<string, components['schemas']['MetricsDto']>;
+      metricsByDate?: {
+        [key: string]: components['schemas']['MetricsDto'];
+      };
       components?: components['schemas']['ComponentDto'][];
+      /** @enum {string} */
+      status?: 'ACTIVE' | 'INACTIVE' | 'SUSPENDED';
     };
     CreateProcessRequest: {
       name: string;
@@ -474,6 +480,8 @@ export interface components {
       description?: string;
       metrics: components['schemas']['MetricsDto'][];
       componentIds?: number[];
+      /** @enum {string} */
+      status?: 'ACTIVE' | 'INACTIVE' | 'SUSPENDED';
     };
     UpdateProcessRequest: {
       /** Format: int64 */
@@ -501,10 +509,10 @@ export interface components {
       sort?: string[];
     };
     PageUserDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['UserDto'][];
@@ -514,19 +522,19 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      pageable?: components['schemas']['PageableObject'];
       sort?: components['schemas']['SortObject'];
+      pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
     PageableObject: {
       /** Format: int64 */
       offset?: number;
       paged?: boolean;
-      /** Format: int32 */
-      pageNumber?: number;
+      sort?: components['schemas']['SortObject'];
       /** Format: int32 */
       pageSize?: number;
-      sort?: components['schemas']['SortObject'];
+      /** Format: int32 */
+      pageNumber?: number;
       unpaged?: boolean;
     };
     SortObject: {
@@ -535,10 +543,10 @@ export interface components {
       unsorted?: boolean;
     };
     PageSupplierDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['SupplierDto'][];
@@ -548,15 +556,15 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      pageable?: components['schemas']['PageableObject'];
       sort?: components['schemas']['SortObject'];
+      pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
     PageSimpleProjectDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['SimpleProjectDto'][];
@@ -566,8 +574,8 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      pageable?: components['schemas']['PageableObject'];
       sort?: components['schemas']['SortObject'];
+      pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
     SimpleProjectDto: {
@@ -586,12 +594,14 @@ export interface components {
       /** Format: date-time */
       projectSOP?: string;
       description?: string;
+      /** @enum {string} */
+      status?: 'ACTIVE' | 'INACTIVE' | 'SUSPENDED';
     };
     PageProcessDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['ProcessDto'][];
@@ -601,15 +611,15 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      pageable?: components['schemas']['PageableObject'];
       sort?: components['schemas']['SortObject'];
+      pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
     PageDocumentDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['DocumentDto'][];
@@ -619,15 +629,15 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      pageable?: components['schemas']['PageableObject'];
       sort?: components['schemas']['SortObject'];
+      pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
     PageComponentDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['ComponentDto'][];
@@ -637,8 +647,8 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      pageable?: components['schemas']['PageableObject'];
       sort?: components['schemas']['SortObject'];
+      pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
   };
@@ -663,7 +673,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['PageUserDto'];
         };
@@ -685,7 +697,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['UserDto'];
         };
@@ -707,7 +721,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['UserDto'];
         };
@@ -727,7 +743,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['PageSupplierDto'];
         };
@@ -749,7 +767,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['SupplierDto'];
         };
@@ -771,7 +791,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['SupplierDto'];
         };
@@ -791,7 +813,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['PageSimpleProjectDto'];
         };
@@ -813,7 +837,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['ProjectDto'];
         };
@@ -835,7 +861,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['ProjectDto'];
         };
@@ -855,7 +883,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['PageProcessDto'];
         };
@@ -877,7 +907,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['ProcessDto'];
         };
@@ -899,7 +931,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['ProcessDto'];
         };
@@ -927,7 +961,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['DocumentDto'];
         };
@@ -947,7 +983,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['PageComponentDto'];
         };
@@ -969,7 +1007,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['ComponentDto'];
         };
@@ -991,7 +1031,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['ComponentDto'];
         };
@@ -1013,7 +1055,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['AuthDto'];
         };
@@ -1035,7 +1079,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['AuthDto'];
         };
@@ -1055,7 +1101,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['UserDto'];
         };
@@ -1075,7 +1123,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content?: never;
       };
     };
@@ -1093,7 +1143,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['SupplierDto'];
         };
@@ -1113,7 +1165,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content?: never;
       };
     };
@@ -1131,7 +1185,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['ProjectDto'];
         };
@@ -1151,7 +1207,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content?: never;
       };
     };
@@ -1169,7 +1227,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['ProcessDto'];
         };
@@ -1189,7 +1249,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content?: never;
       };
     };
@@ -1207,7 +1269,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['PageDocumentDto'];
         };
@@ -1227,7 +1291,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['DocumentDto'];
         };
@@ -1247,7 +1313,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content?: never;
       };
     };
@@ -1265,7 +1333,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': string;
         };
@@ -1285,7 +1355,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': string;
         };
@@ -1305,7 +1377,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content: {
           '*/*': components['schemas']['ComponentDto'];
         };
@@ -1325,7 +1399,9 @@ export interface operations {
     responses: {
       /** @description OK */
       200: {
-        headers: Record<string, unknown>;
+        headers: {
+          [name: string]: unknown;
+        };
         content?: never;
       };
     };
