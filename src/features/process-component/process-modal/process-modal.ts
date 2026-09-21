@@ -40,7 +40,7 @@ export class ProcessModal implements OnDestroy {
     this.formGroup.set(
       this._formBuilder.group({
         name: ['', [Validators.required]],
-        description: [''],
+        description: ['', [Validators.required, Validators.maxLength(500)]],
         disable: [''],
       }),
     );

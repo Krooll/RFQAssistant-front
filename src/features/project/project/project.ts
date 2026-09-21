@@ -26,7 +26,7 @@ export class Project implements OnInit {
   }
 
   protected onInfoButtonClicked(id: number | undefined) {
-    this._projectComponentService.getCurrentProjectId(id, this._injector);
+    this._projectComponentService.routeToCurrentProject(id);
   }
 
   protected onDeleteButtonCLicked(id: number | undefined) {

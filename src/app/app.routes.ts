@@ -48,13 +48,7 @@ export const routes: Routes = [
         data: { roles: [Roles.admin, Roles.manager] },
       },
       {
-        path: 'project/form',
-        loadComponent: () => import('@features/project/project-form/project-form').then((m) => m.ProjectForm),
-        canActivate: [roleGuard],
-        data: { roles: [Roles.admin] },
-      },
-      {
-        path: 'project/edit/form/:id',
+        path: 'project/form/:id',
         loadComponent: () => import('@features/project/project-form/project-form').then((m) => m.ProjectForm),
         canActivate: [roleGuard],
         resolve: { projectData: projectResolver },

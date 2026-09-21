@@ -1,6 +1,6 @@
 import { Component, DestroyRef, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ComponentDto, CreateComponentRequest, ProcessDto, UpdateComponentRequest, UserDto } from '@core/dtos';
+import { ComponentDto, CreateComponentRequest, ProcessDto, UpdateComponentRequest } from '@core/dtos';
 import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -16,6 +16,7 @@ import {
   ButtonSizes,
   ButtonVariants,
 } from '@shared/model-ui/button-configuration/button-configuration';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-technical-specification-component-modal',
@@ -26,14 +27,17 @@ import {
 })
 export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
-  private readonly _modalData = inject<ModalDataConfiguration<UserDto>>(MAT_DIALOG_DATA);
+  private readonly _modalData = inject<ModalDataConfiguration<ComponentDto>>(MAT_DIALOG_DATA);
   readonly _technicalSpecificationComponentService = inject(TechnicalSpecificationComponentService);
   private readonly _notificationService = inject(NotificationService);
+  private readonly _activatedRoute = inject(ActivatedRoute);
 
   private readonly _destroyRef = inject(DestroyRef);
   protected formGroup = signal<FormGroup | undefined>(undefined);
 
-  protected data = signal<UserDto | undefined>(undefined);
+  private readonly currentProjectId = signal<number | undefined>(undefined);
+
+  protected data = signal<ComponentDto | undefined>(undefined);
   protected type = signal<ModalType | undefined>(undefined);
   protected title = signal<{ title: string; titleFallback: string }>({
     title: '',
@@ -46,8 +50,8 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
   };
 
   constructor() {
+    this.currentProjectId.set(this._activatedRoute.snapshot.params['id']);
     this._technicalSpecificationComponentService.getAllProcesses();
-    this.loadData();
 
     this.formGroup.set(
       this._formBuilder.group({
@@ -55,7 +59,7 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
         revision: ['', Validators.required],
         name: ['', Validators.required],
         material: [''],
-        description: [''],
+        description: ['', Validators.maxLength(500)],
         processesIds: [''],
       }),
     );
@@ -70,6 +74,7 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.loadData();
     this.subscribeFormChanges();
   }
 
@@ -108,8 +113,10 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
       case ModalTypes.create: {
         const createComponentRequest: CreateComponentRequest = {
           ...formValue,
+          projectId: this.currentProjectId(),
           processesIds: this.extractProcessesIds(),
         };
+
         this.createComponent(createComponentRequest);
         break;
       }

@@ -59,7 +59,7 @@ export class UserModal implements OnDestroy {
     this.formGroup.set(
       this._formBuilder.group({
         username: ['', [Validators.required]],
-        password: ['', [Validators.required]],
+        password: [''],
         name: [''],
         surname: [''],
         email: ['', [Validators.required, Validators.email]],

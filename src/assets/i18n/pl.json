@@ -68,7 +68,8 @@
     "edit": "Edytuj",
     "delete": "Usuń",
     "add": "Dodaj",
-    "info": "Więcej informacji"
+    "info": "Więcej informacji",
+    "back": "Wróć"
   },
   "FORM_VALIDATION_TEXTS": {
     "required": "To pole jest wymagane...",

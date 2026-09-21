@@ -1,5 +1,5 @@
 import { ApplicationConfig, inject, provideAppInitializer } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideTranslateService, TranslateLoader, TranslateService } from '@ngx-translate/core';
@@ -11,7 +11,7 @@ import { ErrorInterceptor } from '@core/interceptors/errorInterceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
+    provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([AuthInterceptor, ErrorInterceptor])),
     provideTranslateService({
       fallbackLang: 'pl',

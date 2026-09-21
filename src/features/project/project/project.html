@@ -19,10 +19,8 @@
           {{ item.projectNumber }}
         </p>
         <p>
-          <span class="font-weight-bold">
-            {{ 'PROJECT_COMPONENT.form.labels.projectSOP' | translateFallback: 'SOP projektu'}}:
-          </span>
-          {{ item.projectSOP }}
+          <span class="font-weight-bold">{{ 'PROJECT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:</span>
+          {{ item.name }}
         </p>
         <p>
           <span class="font-weight-bold">
@@ -35,22 +33,6 @@
             {{ 'PROJECT_COMPONENT.form.labels.validTo' | translateFallback: 'Data do'}}:
           </span>
           {{ item.validTo }}
-        </p>
-        <p>
-          <span class="font-weight-bold">
-            {{ 'PROJECT_COMPONENT.form.labels.status' | translateFallback: 'Status projektu'}}:
-          </span>
-          {{ item.status }}
-        </p>
-        <p>
-          <span class="font-weight-bold">{{ 'PROJECT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:</span>
-          {{ item.name }}
-        </p>
-        <p>
-          <span class="font-weight-bold">
-            {{ 'PROJECT_COMPONENT.form.labels.surname' | translateFallback: 'Opis'}}:
-          </span>
-          {{ item.description }}
         </p>
       </div>
     </app-item-list>

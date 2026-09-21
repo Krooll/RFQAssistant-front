@@ -3,13 +3,13 @@ import { ProjectDto } from '@core/dtos';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { Button } from '@shared/shared-ui/button/button';
-import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { ProjectFormService } from '@features/project/project-form-service';
 import { ItemList } from '@shared/shared-ui/item-list/item-list';
+import { FormField } from '@shared/shared-ui/form-field/form-field';
 
 @Component({
   selector: 'app-project-form',
-  imports: [TranslateFallbackPipe, FormsModule, ReactiveFormsModule, Button, FormField, ItemList],
+  imports: [TranslateFallbackPipe, FormsModule, ReactiveFormsModule, Button, ItemList, FormField],
   providers: [ProjectFormService],
   templateUrl: './project-form.html',
   styleUrl: './project-form.scss',
@@ -43,7 +43,7 @@ export class ProjectForm implements OnDestroy {
         projectSOP: ['', Validators.required],
         //metrics: ['', Validators.required],
         //componentIds: ['', Validators.required],
-        description: [''],
+        description: ['', Validators.maxLength(500)],
         status: [''],
       }),
     );
@@ -73,6 +73,8 @@ export class ProjectForm implements OnDestroy {
       description: this.projectData()?.description,
       status: this.projectData()?.status,
     });
+
+    this.formGroup()?.disable();
   }
 
   onAddComponentButtonClick() {
@@ -83,7 +85,15 @@ export class ProjectForm implements OnDestroy {
     this._projectFormService.showDeleteModal(id, this._injector);
   }
 
-  onClose() {
+  onEditProjectFormButtonClick() {
+    this.formGroup()?.enable();
+  }
+
+  onAbort() {
+    this.formGroup()?.disable();
+  }
+
+  backToProjectMainPage() {
     this._projectFormService.closeFormAndRouteToProjectList();
   }
 

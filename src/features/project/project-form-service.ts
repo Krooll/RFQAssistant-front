@@ -34,22 +34,6 @@ export class ProjectFormService {
     return this._baseHttpService.getPageDataById(Endpoints.component, id);
   }
 
-  public getCurrentComponentById(id: number | undefined, injector: Injector) {
-    if (!id) {
-      return;
-    }
-
-    this.getComponentById(id)
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe({
-        next: (response) => {
-          if (response) {
-            this.showInfoComponentModal(response, injector);
-          }
-        },
-      });
-  }
-
   public showCreateComponentModal(injector: Injector) {
     const createModalConfiguration: ModalDataConfiguration<ComponentDto> = {
       type: 'create',
@@ -66,8 +50,7 @@ export class ProjectFormService {
       .subscribe({
         next: (reloadPage: boolean) => {
           if (reloadPage) {
-            console.log('dodano komponent');
-            //this.getAllUsers();
+            //dobrze przemyslec sposob odswiezania aktualnego projektu po akcji dodawania komponentu
           }
         },
       });
@@ -88,7 +71,7 @@ export class ProjectFormService {
       .subscribe({
         next: (reloadPage: boolean) => {
           if (reloadPage) {
-            //this.getAllUsers();
+            //dobrze przemyslec sposob odswiezania aktualnego projektu po akcji edytowania komponentu
           }
         },
       });
@@ -103,7 +86,7 @@ export class ProjectFormService {
       type: 'delete',
       title: 'MODALS.component.delete',
       titleFallback: 'Usuń komponent',
-      data: { id: id, endpoint: Endpoints.user },
+      data: { id: id, endpoint: Endpoints.component },
     };
 
     this._modalService
@@ -115,14 +98,10 @@ export class ProjectFormService {
       .subscribe({
         next: (reloadPage: boolean) => {
           if (reloadPage) {
-            //this.getAllUsers();
+            //dobrze przemyslec sposob odswiezania aktualnego projektu po akcji edytowania komponentu
           }
         },
       });
-  }
-
-  public closeCurrentModal(reloadPage?: boolean) {
-    this._modalService.closeCurrentModal(reloadPage);
   }
 
   closeFormAndRouteToProjectList() {

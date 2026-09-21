@@ -10,6 +10,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
+import { Router } from '@angular/router';
+import { RouteEndpoints } from '@env/route-endpoints';
 
 @Component({
   selector: 'app-project-modal',
@@ -22,6 +24,7 @@ export class ProjectModal implements OnDestroy {
   private readonly _projectComponentService = inject(ProjectService);
   private readonly _modalData = inject<ModalDataConfiguration<SimpleProjectDto>>(MAT_DIALOG_DATA);
   private readonly _notificationService = inject(NotificationService);
+  private readonly _router = inject(Router);
 
   private readonly _destroyRef = inject(DestroyRef);
 
@@ -43,11 +46,6 @@ export class ProjectModal implements OnDestroy {
         validTo: ['', Validators.required],
         name: ['', Validators.required],
         projectNumber: ['', Validators.required],
-        projectSOP: ['', Validators.required],
-        //metrics: ['', Validators.required],
-        //componentIds: ['', Validators.required],
-        description: [''],
-        status: [''],
       }),
     );
 
@@ -129,6 +127,7 @@ export class ProjectModal implements OnDestroy {
           if (response) {
             this._notificationService.showSuccess('Sukces!');
             this.closeCurrentModal(true);
+            this._router.navigateByUrl(RouteEndpoints.projectForm + '/' + response.id);
           }
         },
       });

@@ -286,9 +286,9 @@ export interface components {
       name?: string;
       surname?: string;
       email: string;
-      disable: boolean;
       /** @enum {string} */
       role: 'ROLE_USER' | 'ROLE_ADMIN' | 'ROLE_MANAGER';
+      disable?: boolean;
     };
     UserDto: {
       /** Format: int64 */
@@ -351,19 +351,6 @@ export interface components {
       validTo: string;
       name: string;
       projectNumber: string;
-      /** Format: date-time */
-      projectSOP: string;
-      description?: string;
-      metrics?: components['schemas']['MetricsDto'][];
-      componentIds?: number[];
-      /** @enum {string} */
-      status?: 'ACTIVE' | 'INACTIVE' | 'SUSPENDED';
-    };
-    MetricsDto: {
-      /** Format: date-time */
-      date?: string;
-      basic?: number;
-      basicWithPercent?: number;
     };
     ComponentDto: {
       /** Format: int64 */
@@ -390,6 +377,12 @@ export interface components {
       name?: string;
       description?: string;
       sourceUrl?: string;
+    };
+    MetricsDto: {
+      /** Format: date-time */
+      date?: string;
+      basic?: number;
+      basicWithPercent?: number;
     };
     ProjectDto: {
       /** Format: int64 */
@@ -418,13 +411,14 @@ export interface components {
       disable: boolean;
     };
     CreateComponentRequest: {
+      /** Format: int64 */
+      projectId: number;
       number: string;
       revision: string;
       name: string;
       material: string;
       description?: string;
       processesIds?: number[];
-      documentIds?: number[];
     };
     CreateRefreshTokenRequest: {
       refreshToken: string;
@@ -443,7 +437,7 @@ export interface components {
       /** Format: int64 */
       id: number;
       username: string;
-      password: string;
+      password?: string;
       name?: string;
       surname?: string;
       email: string;
@@ -476,8 +470,7 @@ export interface components {
       /** Format: date-time */
       projectSOP: string;
       description?: string;
-      metrics: components['schemas']['MetricsDto'][];
-      componentIds?: number[];
+      metrics?: components['schemas']['MetricsDto'][];
       /** @enum {string} */
       status?: 'ACTIVE' | 'INACTIVE' | 'SUSPENDED';
     };
@@ -497,7 +490,6 @@ export interface components {
       material: string;
       description?: string;
       processesIds?: number[];
-      documentIds?: number[];
     };
     Pageable: {
       /** Format: int32 */
@@ -527,8 +519,8 @@ export interface components {
     PageableObject: {
       /** Format: int64 */
       offset?: number;
-      sort?: components['schemas']['SortObject'];
       paged?: boolean;
+      sort?: components['schemas']['SortObject'];
       /** Format: int32 */
       pageNumber?: number;
       /** Format: int32 */
@@ -917,6 +909,7 @@ export interface operations {
   uploadFile: {
     parameters: {
       query: {
+        componentId: number;
         name: string;
         description?: string;
       };

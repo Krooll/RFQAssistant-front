@@ -1,19 +1,107 @@
 <div class="component-container d-flex flex-column">
-  @if (!editMode()) {
-  <h2>{{ 'PROJECT_COMPONENT.componentFormTitle' | translateFallback: 'Nowy projekt' }}</h2>
-  } @else {
-  <h2>{{ 'PROJECT_COMPONENT.componentFormEditTitle' | translateFallback: 'Edytuj projekt' }}</h2>
-  }
+  <div class="d-flex justify-content-end">
+    <app-button (emitButtonClick)="onEditProjectFormButtonClick()">
+      {{ 'PROJECT_COMPONENT.componentFormEditTitle' | translateFallback: 'Edytuj projekt' }}
+    </app-button>
+    <app-button (emitButtonClick)="onAddComponentButtonClick()">
+      {{ 'PROJECT_COMPONENT.form.addComponentButton' | translateFallback: 'Dodaj komponent' }}
+    </app-button>
+  </div>
   <div class="list-container d-flex justify-content-between flex-wrap">
     <div class="project-form-container d-flex flex-column p-1">
       <h3>{{ 'PROJECT_COMPONENT.projectFormSectionTitle' | translateFallback: 'Projekt' }}</h3>
+      <form [formGroup]="formGroup()!">
+        <div class="d-flex flex-column mt-4">
+          @let name = 'name';
+          <label [for]="name">{{ 'PROJECT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa projektu' }}</label>
+          <app-form-field>
+            <input
+              type="text"
+              class="mt-1 input"
+              [placeholder]="'PROJECT_COMPONENT.form.placeholders.name' | translateFallback: 'Wpisz nazwę projektu...'"
+              [id]="name"
+              [formControlName]="name"
+            />
+          </app-form-field>
+        </div>
+        <div class="d-flex flex-column mt-4">
+          @let projectNumber = 'projectNumber';
+          <label [for]="projectNumber">
+            {{ 'PROJECT_COMPONENT.form.labels.projectNumber' | translateFallback: 'Numer projektu' }}
+          </label>
+          <app-form-field>
+            <input
+              type="text"
+              class="mt-1 input"
+              [placeholder]="'PROJECT_COMPONENT.form.placeholders.projectNumber' | translateFallback: 'Wpisz numer projektu...'"
+              [id]="projectNumber"
+              [formControlName]="projectNumber"
+            />
+          </app-form-field>
+        </div>
+        <div class="d-flex flex-column mt-4">
+          @let projectSOP = 'projectSOP';
+          <label [for]="projectSOP">
+            {{ 'PROJECT_COMPONENT.form.labels.projectSOP' | translateFallback: 'SOP projektu' }}
+          </label>
+          <app-form-field>
+            <input
+              type="date"
+              class="mt-1 input"
+              [placeholder]="'PROJECT_COMPONENT.form.placeholders.projectSOP' | translateFallback: 'Wpisz SOP projektu...'"
+              [id]="projectSOP"
+              [formControlName]="projectSOP"
+            />
+          </app-form-field>
+        </div>
+        <div class="d-flex flex-column mt-4">
+          @let validFrom = 'validFrom';
+          <label [for]="validFrom">
+            {{ 'PROJECT_COMPONENT.form.labels.validFrom' | translateFallback: 'Data od' }}
+          </label>
+          <app-form-field>
+            <input
+              type="date"
+              class="mt-1 input"
+              [placeholder]="'PROJECT_COMPONENT.form.placeholders.validFrom' | translateFallback: 'Dodaj date od...'"
+              [id]="validFrom"
+              [formControlName]="validFrom"
+            />
+          </app-form-field>
+        </div>
+        <div class="d-flex flex-column mt-4">
+          @let validTo = 'validTo';
+          <label [for]="validTo">{{ 'PROJECT_COMPONENT.form.labels.validTo' | translateFallback: 'Data do' }}</label>
+          <app-form-field>
+            <input
+              type="date"
+              class="mt-1 input"
+              [placeholder]="'PROJECT_COMPONENT.form.placeholders.validTo' | translateFallback: 'Dodaj date do...'"
+              [id]="validTo"
+              [formControlName]="validTo"
+            />
+          </app-form-field>
+        </div>
+        <div class="d-flex flex-column mt-4">
+          @let description = 'description';
+          <label [for]="description">
+            {{ 'PROJECT_COMPONENT.form.labels.description' | translateFallback: 'Opis projektu' }}
+          </label>
+          <app-form-field>
+            <textarea
+              type="text"
+              class="mt-1 input"
+              [placeholder]="'PROJECT_COMPONENT.form.placeholders.description' | translateFallback: 'Wpisz opis projektu...'"
+              [id]="description"
+              [formControlName]="description"
+            ></textarea>
+          </app-form-field>
+        </div>
+      </form>
     </div>
     <div class="project-component-container p-1">
-      <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex">
         <h3>{{ 'PROJECT_COMPONENT.componentFormSectionTitle' | translateFallback: 'Komponenty' }}</h3>
-        <app-button (emitButtonClick)="onAddComponentButtonClick()">
-          {{ 'PROJECT_COMPONENT.form.addComponentButton' | translateFallback: 'Dodaj komponent' }}
-        </app-button>
       </div>
       <div class="modal-list-container d-flex flex-column">
         @for(component of projectData()?.components; track projectData()?.id) {
@@ -26,7 +114,10 @@
     </div>
   </div>
   <div class="d-flex justify-content-end align-items-end">
-    <app-button (emitButtonClick)="onClose()">{{ 'BUTTONS.abort' | translateFallback: 'Anuluj' }}</app-button>
+    <app-button (emitButtonClick)="backToProjectMainPage()">
+      {{ 'BUTTONS.back' | translateFallback: 'Wróć' }}
+    </app-button>
+    <app-button (emitButtonClick)="onAbort()">{{ 'BUTTONS.abort' | translateFallback: 'Anuluj' }}</app-button>
     <app-button [buttonDisabled]="formGroup()?.invalid" (emitButtonClick)="onSubmit()">
       {{ 'BUTTONS.save' | translateFallback: 'Zapisz' }}
     </app-button>

@@ -7,18 +7,19 @@ import { Observable } from 'rxjs';
 import { SpringPageable } from '@core/core-dtos/pageable/pageable';
 import { Endpoint, Endpoints } from '@env/endpoints';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Router } from '@angular/router';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
 import { ModalService } from '@core/services/modal-service/modal-service';
 import { ProjectModal } from '@features/project/project-modal/project-modal';
+import { Router } from '@angular/router';
+import { RouteEndpoints } from '@env/route-endpoints';
 
 @Injectable()
 export class ProjectService {
   private readonly _baseHttpService = inject(BaseHttpService);
   private readonly _destroyRef = inject(DestroyRef);
-  private readonly _router = inject(Router);
   private readonly _modalService = inject(ModalService);
+  private readonly _router = inject(Router);
 
   public pageParams = signal<PageRequestParams>({ page: 0, size: 10 });
   public totalElements = signal<number>(0);
@@ -59,20 +60,6 @@ export class ProjectService {
     this.getAllProjects();
   }
 
-  public getCurrentProjectId(id: number | undefined, injector: Injector) {
-    if (!id) return;
-
-    this.getProjectById(id)
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe({
-        next: (response: SimpleProjectDto) => {
-          if (response) {
-            this.showInfoProjectModal(response, injector);
-          }
-        },
-      });
-  }
-
   public showCreateProjectModal(injector: Injector) {
     const createModalConfiguration: ModalDataConfiguration<ProjectDto> = {
       type: 'create',
@@ -80,40 +67,14 @@ export class ProjectService {
       titleFallback: 'Dodaj nowy projekt',
     };
 
-    this._modalService
-      .openModal(ProjectModal, createModalConfiguration, {
-        injector: injector,
-      })
-      .afterClosed()
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe({
-        next: (reloadPage: boolean) => {
-          if (reloadPage) {
-            this.getAllProjects();
-          }
-        },
-      });
+    this._modalService.openModal(ProjectModal, createModalConfiguration, {
+      injector: injector,
+    });
   }
 
-  public showInfoProjectModal(response: SimpleProjectDto, injector: Injector) {
-    const createModalConfiguration: ModalDataConfiguration<SimpleProjectDto> = {
-      type: 'info',
-      title: 'MODALS.project.info',
-      titleFallback: 'Więcej informacji',
-      data: response,
-    };
-
-    this._modalService
-      .openModal(ProjectModal, createModalConfiguration, { injector: injector })
-      .afterClosed()
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe({
-        next: (reloadPage: boolean) => {
-          if (reloadPage) {
-            this.getAllProjects();
-          }
-        },
-      });
+  public routeToCurrentProject(id: number | undefined) {
+    if (!id) return;
+    this._router.navigateByUrl(RouteEndpoints.projectForm + '/' + id);
   }
 
   public showDeleteModal(id: number | undefined, injector: Injector) {
