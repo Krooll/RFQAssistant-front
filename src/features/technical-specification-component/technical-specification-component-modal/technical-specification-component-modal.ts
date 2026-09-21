@@ -1,14 +1,14 @@
 import { Component, DestroyRef, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ComponentDto, CreateComponentRequest, ProcessDto, UpdateComponentRequest, UserDto } from '@core/dtos';
+import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
-import { CreateSupplierRequest, ProcessDto, SupplierDto, UpdateSupplierRequest } from '@core/dtos';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationService } from '@core/services/notification-service/notification-service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SupplierService } from '@features/supplier-component/supplier-service';
-import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormField } from '@shared/shared-ui/form-field/form-field';
+import { TechnicalSpecificationComponentService } from '@features/technical-specification-component/technical-specification-component-service';
 import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
+import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { Button } from '@shared/shared-ui/button/button';
 import {
@@ -18,22 +18,22 @@ import {
 } from '@shared/model-ui/button-configuration/button-configuration';
 
 @Component({
-  selector: 'app-supplier-modal',
-  imports: [FormField, ModalBase, ReactiveFormsModule, TranslateFallbackPipe, Button],
-  templateUrl: './supplier-modal.html',
-  styleUrl: './supplier-modal.scss',
+  selector: 'app-technical-specification-component-modal',
+  imports: [ModalBase, FormsModule, ReactiveFormsModule, FormField, TranslateFallbackPipe, Button],
+  providers: [TechnicalSpecificationComponentService],
+  templateUrl: './technical-specification-component-modal.html',
+  styleUrl: './technical-specification-component-modal.scss',
 })
-export class SupplierModal implements OnInit, OnDestroy {
+export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
-  readonly _supplierComponentService = inject(SupplierService);
-  private readonly _modalData = inject<ModalDataConfiguration<SupplierDto>>(MAT_DIALOG_DATA);
+  private readonly _modalData = inject<ModalDataConfiguration<UserDto>>(MAT_DIALOG_DATA);
+  readonly _technicalSpecificationComponentService = inject(TechnicalSpecificationComponentService);
   private readonly _notificationService = inject(NotificationService);
 
   private readonly _destroyRef = inject(DestroyRef);
-
   protected formGroup = signal<FormGroup | undefined>(undefined);
 
-  protected data = signal<SupplierDto | undefined>(undefined);
+  protected data = signal<UserDto | undefined>(undefined);
   protected type = signal<ModalType | undefined>(undefined);
   protected title = signal<{ title: string; titleFallback: string }>({
     title: '',
@@ -46,27 +46,24 @@ export class SupplierModal implements OnInit, OnDestroy {
   };
 
   constructor() {
-    this._supplierComponentService.getAllProcesses();
+    this._technicalSpecificationComponentService.getAllProcesses();
     this.loadData();
 
     this.formGroup.set(
       this._formBuilder.group({
-        name: ['', [Validators.required]],
-        street: ['', [Validators.required]],
-        city: ['', [Validators.required]],
-        province: ['', [Validators.required]],
-        country: ['', [Validators.required]],
-        phoneNumber: ['', [Validators.required]],
-        emailAddress: ['', [Validators.required, Validators.email]],
-        disable: [''],
+        number: ['', Validators.required],
+        revision: ['', Validators.required],
+        name: ['', Validators.required],
+        material: [''],
+        description: [''],
         processesIds: [''],
       }),
     );
 
     effect(() => {
-      const supplierData: SupplierDto | undefined = this.data();
+      const componentData: ComponentDto | undefined = this.data();
 
-      if (supplierData?.id) {
+      if (componentData?.id) {
         this.updateStateAndPatchForm();
       }
     });
@@ -109,23 +106,21 @@ export class SupplierModal implements OnInit, OnDestroy {
 
     switch (currentModalType) {
       case ModalTypes.create: {
-        const createUserPayload: CreateSupplierRequest = {
+        const createComponentRequest: CreateComponentRequest = {
           ...formValue,
-          disable: !!formValue.disable,
           processesIds: this.extractProcessesIds(),
         };
-        this.createSupplier(createUserPayload);
+        this.createComponent(createComponentRequest);
         break;
       }
 
       case ModalTypes.update: {
-        const updateUserPayload: UpdateSupplierRequest = {
+        const updateComponentRequest: UpdateComponentRequest = {
           ...formValue,
           id: this.data()?.id,
-          disable: !!formValue.disable,
           processesIds: this.extractProcessesIds(),
         };
-        this.updateSupplier(updateUserPayload);
+        this.updateComponent(updateComponentRequest);
         break;
       }
     }
@@ -136,12 +131,12 @@ export class SupplierModal implements OnInit, OnDestroy {
     this.formGroup()?.enable();
   }
 
-  private createSupplier(payload: CreateSupplierRequest): void {
-    this._supplierComponentService
-      .createSupplier(payload)
+  private createComponent(payload: CreateComponentRequest): void {
+    this._technicalSpecificationComponentService
+      .createComponent(payload)
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
-        next: (response: SupplierDto) => {
+        next: (response: ComponentDto) => {
           if (response) {
             this._notificationService.showSuccess('Sukces!');
             this.closeCurrentModal(true);
@@ -150,12 +145,12 @@ export class SupplierModal implements OnInit, OnDestroy {
       });
   }
 
-  private updateSupplier(payload: UpdateSupplierRequest): void {
-    this._supplierComponentService
-      .updateSupplier(payload)
+  private updateComponent(payload: UpdateComponentRequest): void {
+    this._technicalSpecificationComponentService
+      .updateComponent(payload)
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
-        next: (response: SupplierDto) => {
+        next: (response: ComponentDto) => {
           if (response) {
             this._notificationService.showSuccess('Sukces!');
             this.closeCurrentModal(true);
@@ -165,20 +160,15 @@ export class SupplierModal implements OnInit, OnDestroy {
   }
 
   private updateStateAndPatchForm(): void {
-    const supplierData: SupplierDto | undefined = this.data();
-    this._supplierComponentService.selectedProcessList.set(supplierData?.processes);
+    const componentData: ComponentDto | undefined = this.data();
 
-    if (supplierData?.id) {
+    if (componentData?.id) {
       this.formGroup()?.patchValue({
-        name: supplierData?.name,
-        street: supplierData?.street,
-        city: supplierData?.city,
-        province: supplierData?.province,
-        country: supplierData?.country,
-        phoneNumber: supplierData?.phoneNumber,
-        emailAddress: supplierData?.emailAddress,
-        disable: supplierData?.disable,
-        processesIds: null,
+        number: componentData.number,
+        revision: componentData.revision,
+        name: componentData.name,
+        material: componentData.material,
+        description: componentData.description,
       });
 
       this.formGroup()?.disable();
@@ -186,14 +176,10 @@ export class SupplierModal implements OnInit, OnDestroy {
   }
 
   private extractProcessesIds(): number[] | undefined {
-    return this._supplierComponentService
+    return this._technicalSpecificationComponentService
       .selectedProcessList()
       ?.map((process) => process.id)
       .filter((id) => id !== undefined);
-  }
-
-  protected closeCurrentModal(reloadPage?: boolean): void {
-    this._supplierComponentService.closeCurrentModal(reloadPage ? reloadPage : false);
   }
 
   private subscribeFormChanges(): void {
@@ -201,14 +187,17 @@ export class SupplierModal implements OnInit, OnDestroy {
       ?.get('processesIds')
       ?.valueChanges.pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe((selectedItem: ProcessDto) => {
-        this._supplierComponentService.addSelectedProcessToList(selectedItem);
+        this._technicalSpecificationComponentService.addSelectedProcessToList(selectedItem);
         this.formGroup()?.get('processesIds')?.setValue('', { emitEvent: false });
       });
   }
 
+  protected closeCurrentModal(reloadPage?: boolean): void {
+    this._technicalSpecificationComponentService.closeCurrentModal(reloadPage ? reloadPage : false);
+  }
+
   private resetCurrentForm(): void {
     this.formGroup()?.reset();
-    this._supplierComponentService.selectedProcessList.set([]);
   }
 
   private isFormValid(): boolean {

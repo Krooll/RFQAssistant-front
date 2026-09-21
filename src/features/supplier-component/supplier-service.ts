@@ -77,7 +77,7 @@ export class SupplierService {
       });
   }
 
-  updatePageParams(params: PageRequestParams) {
+  public updatePageParams(params: PageRequestParams) {
     this.pageParams.set(params);
     this.getAllSuppliers();
   }
@@ -98,7 +98,7 @@ export class SupplierService {
       });
   }
 
-  showCreateSupplierModal(injector: Injector) {
+  public showCreateSupplierModal(injector: Injector) {
     const createModalConfiguration: ModalDataConfiguration<SupplierDto> = {
       type: 'create',
       title: 'MODALS.supplier.create',
@@ -120,7 +120,7 @@ export class SupplierService {
       });
   }
 
-  showInfoSupplierModal(response: SupplierDto, injector: Injector) {
+  public showInfoSupplierModal(response: SupplierDto, injector: Injector) {
     const createModalConfiguration: ModalDataConfiguration<UserDto> = {
       type: 'info',
       title: 'MODALS.supplier.info',
@@ -141,7 +141,7 @@ export class SupplierService {
       });
   }
 
-  showDeleteModal(id: number | undefined, injector: Injector) {
+  public showDeleteModal(id: number | undefined, injector: Injector) {
     if (!id) {
       return;
     }
@@ -168,7 +168,7 @@ export class SupplierService {
       });
   }
 
-  addSelectedProcessToList(item: ProcessDto): void {
+  public addSelectedProcessToList(item: ProcessDto): void {
     if (!item?.id) {
       return;
     }
@@ -184,12 +184,12 @@ export class SupplierService {
     });
   }
 
-  removeSelectedProcessFromList(id: number | undefined): void {
+  public removeSelectedProcessFromList(id: number | undefined): void {
     if (!id) return;
     this.selectedProcessList.update((currentList) => (currentList ?? []).filter((process) => process.id !== id));
   }
 
-  closeCurrentModal(reloadPage?: boolean) {
+  public closeCurrentModal(reloadPage?: boolean) {
     this._modalService.closeCurrentModal(reloadPage);
   }
 }

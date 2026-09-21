@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Injector, OnInit } from '@angular/core';
 import { Button } from '@shared/shared-ui/button/button';
 import { Paginator } from '@shared/shared-ui/paginator/paginator';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
@@ -15,21 +15,22 @@ import { ButtonTypes } from '@shared/model-ui/button-configuration/button-config
 })
 export class Project implements OnInit {
   protected readonly _projectComponentService = inject(ProjectService);
+  private readonly _injector = inject(Injector);
 
   ngOnInit() {
     this._projectComponentService.getAllProjects();
   }
 
   protected onAddButtonClicked() {
-    //this._projectComponentService.showCreateUserModal(this._injector);
+    this._projectComponentService.showCreateProjectModal(this._injector);
   }
 
   protected onInfoButtonClicked(id: number | undefined) {
-    //this._projectComponentService.getCurrentUserById(id, this._injector);
+    this._projectComponentService.getCurrentProjectId(id, this._injector);
   }
 
   protected onDeleteButtonCLicked(id: number | undefined) {
-    //this._projectComponentService.showDeleteModal(id, this._injector);
+    this._projectComponentService.showDeleteModal(id, this._injector);
   }
 
   protected readonly ButtonTypes = ButtonTypes;

@@ -1,36 +1,102 @@
-import { Component, computed, effect, inject, input, signal } from '@angular/core';
+import { Component, computed, effect, inject, Injector, input, OnDestroy, signal } from '@angular/core';
 import { ProjectDto } from '@core/dtos';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
+import { Button } from '@shared/shared-ui/button/button';
+import { FormField } from '@shared/shared-ui/form-field/form-field';
+import { ProjectFormService } from '@features/project/project-form-service';
+import { ItemList } from '@shared/shared-ui/item-list/item-list';
 
 @Component({
   selector: 'app-project-form',
-  imports: [],
+  imports: [TranslateFallbackPipe, FormsModule, ReactiveFormsModule, Button, FormField, ItemList],
+  providers: [ProjectFormService],
   templateUrl: './project-form.html',
   styleUrl: './project-form.scss',
 })
-export class ProjectForm {
+export class ProjectForm implements OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
+  private readonly _projectFormService = inject(ProjectFormService);
+  private readonly _injector = inject(Injector);
 
   protected projectData = input<ProjectDto>();
 
-  protected isEditMode = computed(() => !!this.projectData()?.id);
+  protected editMode = computed(() => !!this.projectData()?.id);
 
   protected formGroup = signal<FormGroup | undefined>(undefined);
 
   constructor() {
     effect(() => {
       const projectData = this.projectData();
-      if (projectData?.id) {
+      const editMode = this.editMode();
+      if (editMode && projectData?.id) {
         this.updateStateAndPatchForm();
       }
     });
 
     this.formGroup.set(
       this._formBuilder.group({
+        validFrom: ['', Validators.required],
+        validTo: ['', Validators.required],
         name: ['', Validators.required],
+        projectNumber: ['', Validators.required],
+        projectSOP: ['', Validators.required],
+        //metrics: ['', Validators.required],
+        //componentIds: ['', Validators.required],
+        description: [''],
+        status: [''],
       }),
     );
   }
 
-  private updateStateAndPatchForm() {}
+  ngOnDestroy() {
+    this.clearForm();
+  }
+
+  protected onSubmit(): void {
+    if (!this.isFormValid()) {
+      return;
+    }
+
+    const formData = this.formGroup()?.getRawValue();
+  }
+
+  private updateStateAndPatchForm() {
+    this.formGroup()?.patchValue({
+      validFrom: this.projectData()?.validFrom,
+      validTo: this.projectData()?.validTo,
+      name: this.projectData()?.name,
+      projectNumber: this.projectData()?.projectNumber,
+      projectSOP: this.projectData()?.projectSOP,
+      //metrics: this.projectData()?.metricsByDate,
+      //componentIds: this.projectData()?.components,
+      description: this.projectData()?.description,
+      status: this.projectData()?.status,
+    });
+  }
+
+  onAddComponentButtonClick() {
+    this._projectFormService.showCreateComponentModal(this._injector);
+  }
+
+  onDeleteComponentButtonClick(id: number | undefined) {
+    this._projectFormService.showDeleteModal(id, this._injector);
+  }
+
+  onClose() {
+    this._projectFormService.closeFormAndRouteToProjectList();
+  }
+
+  clearForm() {
+    this.formGroup()?.reset();
+  }
+
+  private isFormValid(): boolean {
+    if (this.formGroup()?.invalid) {
+      this.formGroup()?.markAllAsTouched();
+      return false;
+    }
+
+    return true;
+  }
 }

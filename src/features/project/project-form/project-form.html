@@ -1,1 +1,34 @@
-<p>project-form works!</p>
+<div class="component-container d-flex flex-column">
+  @if (!editMode()) {
+  <h2>{{ 'PROJECT_COMPONENT.componentFormTitle' | translateFallback: 'Nowy projekt' }}</h2>
+  } @else {
+  <h2>{{ 'PROJECT_COMPONENT.componentFormEditTitle' | translateFallback: 'Edytuj projekt' }}</h2>
+  }
+  <div class="list-container d-flex justify-content-between flex-wrap">
+    <div class="project-form-container d-flex flex-column p-1">
+      <h3>{{ 'PROJECT_COMPONENT.projectFormSectionTitle' | translateFallback: 'Projekt' }}</h3>
+    </div>
+    <div class="project-component-container p-1">
+      <div class="d-flex align-items-center justify-content-between">
+        <h3>{{ 'PROJECT_COMPONENT.componentFormSectionTitle' | translateFallback: 'Komponenty' }}</h3>
+        <app-button (emitButtonClick)="onAddComponentButtonClick()">
+          {{ 'PROJECT_COMPONENT.form.addComponentButton' | translateFallback: 'Dodaj komponent' }}
+        </app-button>
+      </div>
+      <div class="modal-list-container d-flex flex-column">
+        @for(component of projectData()?.components; track projectData()?.id) {
+        <app-item-list (deleteButtonClickedOutput)="onDeleteComponentButtonClick(component.id)">
+          <p>{{ component.name }}</p>
+          <p>{{ component.description }}</p>
+        </app-item-list>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end align-items-end">
+    <app-button (emitButtonClick)="onClose()">{{ 'BUTTONS.abort' | translateFallback: 'Anuluj' }}</app-button>
+    <app-button [buttonDisabled]="formGroup()?.invalid" (emitButtonClick)="onSubmit()">
+      {{ 'BUTTONS.save' | translateFallback: 'Zapisz' }}
+    </app-button>
+  </div>
+</div>

@@ -18,6 +18,8 @@ export class ModalService {
     const dialogRef = this._matDialog.open(component, {
       data,
       maxHeight: '99vh',
+      width: 'auto',
+      maxWidth: 'calc(100vw - 2rem)',
       disableClose: true,
       ...config,
     });

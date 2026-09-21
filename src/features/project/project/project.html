@@ -13,6 +13,36 @@
     >
       <div class="d-flex flex-column">
         <p>
+          <span class="font-weight-bold">
+            {{ 'PROJECT_COMPONENT.form.labels.projectNumber' | translateFallback: 'Numer projektu'}}:
+          </span>
+          {{ item.projectNumber }}
+        </p>
+        <p>
+          <span class="font-weight-bold">
+            {{ 'PROJECT_COMPONENT.form.labels.projectSOP' | translateFallback: 'SOP projektu'}}:
+          </span>
+          {{ item.projectSOP }}
+        </p>
+        <p>
+          <span class="font-weight-bold">
+            {{ 'PROJECT_COMPONENT.form.labels.validFrom' | translateFallback: 'Data od'}}:
+          </span>
+          {{ item.validFrom }}
+        </p>
+        <p>
+          <span class="font-weight-bold">
+            {{ 'PROJECT_COMPONENT.form.labels.validTo' | translateFallback: 'Data do'}}:
+          </span>
+          {{ item.validTo }}
+        </p>
+        <p>
+          <span class="font-weight-bold">
+            {{ 'PROJECT_COMPONENT.form.labels.status' | translateFallback: 'Status projektu'}}:
+          </span>
+          {{ item.status }}
+        </p>
+        <p>
           <span class="font-weight-bold">{{ 'PROJECT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:</span>
           {{ item.name }}
         </p>

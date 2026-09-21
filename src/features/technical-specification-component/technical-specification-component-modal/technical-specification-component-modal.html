@@ -1,0 +1,134 @@
+<app-modal-base
+  [modalTitle]="title()"
+  [modalType]="type()"
+  (submitOutput)="onSubmit()"
+  (closeOutput)="closeCurrentModal()"
+  (updateOutput)="onSubmit()"
+  [buttonDisabled]="formGroup()?.invalid"
+>
+  <div class="d-flex flex-column">
+    <form class="d-flex justify-content-between" [formGroup]="formGroup()!">
+      <div class="modal-split-container p-1">
+        <div class="d-flex flex-column mt-4">
+          @let number = 'number';
+          <label [for]="number">
+            {{ 'COMPONENT_COMPONENT.form.labels.number' | translateFallback: 'Numer komponentu' }}
+          </label>
+          <app-form-field>
+            <input
+              type="text"
+              class="mt-1 input"
+              [placeholder]="'COMPONENT_COMPONENT.form.placeholders.number' | translateFallback: 'Wpisz numer komponentu...'"
+              [id]="number"
+              [formControlName]="number"
+            />
+          </app-form-field>
+        </div>
+        <div class="d-flex flex-column mt-4">
+          @let revision = 'revision';
+          <label [for]="number">
+            {{ 'COMPONENT_COMPONENT.form.labels.revision' | translateFallback: 'Rewizja komponentu' }}
+          </label>
+          <app-form-field>
+            <input
+              type="text"
+              class="mt-1 input"
+              [placeholder]="'COMPONENT_COMPONENT.form.placeholders.revision' | translateFallback: 'Wpisz rewizję komponentu...'"
+              [id]="revision"
+              [formControlName]="revision"
+            />
+          </app-form-field>
+        </div>
+        <div class="d-flex flex-column mt-4">
+          @let material = 'material';
+          <label [for]="material">
+            {{ 'COMPONENT_COMPONENT.form.labels.material' | translateFallback: 'Materiał' }}
+          </label>
+          <app-form-field>
+            <input
+              type="text"
+              class="mt-1 input"
+              [placeholder]="'COMPONENT_COMPONENT.form.placeholders.material' | translateFallback: 'Wpisz materiał...'"
+              [id]="material"
+              [formControlName]="material"
+            />
+          </app-form-field>
+        </div>
+        <div class="d-flex flex-column mt-4">
+          @let name = 'name';
+          <label [for]="name">
+            {{ 'COMPONENT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa komponentu' }}
+          </label>
+          <app-form-field>
+            <input
+              type="text"
+              class="mt-1 input"
+              [placeholder]="'COMPONENT_COMPONENT.form.placeholders.name' | translateFallback: 'Wpisz nazwę komponentu...'"
+              [id]="name"
+              [formControlName]="name"
+            />
+          </app-form-field>
+        </div>
+        <div class="d-flex flex-column mt-4">
+          @let description = 'description';
+          <label [for]="description">
+            {{ 'COMPONENT_COMPONENT.form.labels.description' | translateFallback: 'Opis' }}
+          </label>
+          <app-form-field>
+            <input
+              type="text"
+              class="mt-1 input"
+              [placeholder]="'COMPONENT_COMPONENT.form.placeholders.description' | translateFallback: 'Wpisz opis komponentu...'"
+              [id]="description"
+              [formControlName]="description"
+            />
+          </app-form-field>
+        </div>
+      </div>
+      <div class="modal-split-container p-1">
+        <div class="d-flex flex-column mt-4">
+          @let processesIds = 'processesIds';
+          <label [id]="processesIds" [for]="processesIds">
+            {{ 'SUPPLIER_COMPONENT.form.labels.role' | translateFallback: 'Procesy' }}
+          </label>
+          <app-form-field>
+            <select class="mt-1 input" [id]="processesIds" [formControlName]="processesIds">
+              <!-- prettier-ignore -->
+              <option [ngValue]="''" hidden disabled selected>
+                {{'SUPPLIER_COMPONENT.form.placeholders.process' | translateFallback: 'Wybierz proces...'}}
+              </option>
+              @for(item of _technicalSpecificationComponentService.processList(); track $index) {
+              <option [ngValue]="item">{{item.name}}</option>
+              }
+            </select>
+          </app-form-field>
+        </div>
+        @if(_technicalSpecificationComponentService.selectedProcessList()?.length){
+        <div class="modal-list-container">
+          <!-- prettier-ignore -->
+          <p>{{ 'SUPPLIER_COMPONENT.form.labels.selectedProcess' | translateFallback: 'Wybrane procesy'}}:
+            </p>
+          @for (item of _technicalSpecificationComponentService.selectedProcessList(); track $index) {
+          <div class="d-flex align-items-center">
+            <p>{{item.name}}</p>
+            <app-button
+              class="ms-2"
+              [buttonConfiguration]="buttonConfiguration"
+              [buttonDisabled]="formGroup()?.disabled"
+              (emitButtonClick)="_technicalSpecificationComponentService.removeSelectedProcessFromList(item.id)"
+            >
+              x
+            </app-button>
+          </div>
+          }
+        </div>
+        } @else {
+        <!-- prettier-ignore -->
+        <p>
+            {{ 'SUPPLIER_COMPONENT.form.labels.emptyProcessList' | translateFallback: 'Brak dodanych procesów...'}}
+          </p>
+        }
+      </div>
+    </form>
+  </div>
+</app-modal-base>

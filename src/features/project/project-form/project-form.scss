@@ -1,0 +1,23 @@
+.project-form-container {
+  min-width: 20rem;
+  width: 40%;
+}
+
+.project-component-container {
+  min-width: 20rem;
+  width: 58%;
+}
+
+h3 {
+  border-bottom: 1px solid;
+}
+
+@media (max-width: 1050px) {
+  .project-form-container {
+    width: 100%;
+  }
+
+  .project-component-container {
+    width: 100%;
+  }
+}

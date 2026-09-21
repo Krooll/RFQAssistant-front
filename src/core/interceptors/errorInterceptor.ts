@@ -16,7 +16,7 @@ export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
           break;
 
         case 401:
-          errorMessage = 'Twoja sesja wygasła. Zaloguj się ponownie.';
+          errorMessage = error.error?.message ? error.error.message : 'Twoja sesja wygasła. Zaloguj się ponownie.';
           break;
 
         case 403:

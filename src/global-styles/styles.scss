@@ -111,6 +111,11 @@ body {
   overflow-y: auto;
 }
 
+.list-item {
+  border: 1px solid black;
+  border-radius: 0.25rem;
+}
+
 .input {
   height: 2rem;
   padding: 0.25rem;
@@ -118,7 +123,12 @@ body {
   border: 1px solid black;
 }
 
-.list-item {
-  border: 1px solid black;
-  border-radius: 0.25rem;
+.modal-split-container {
+  min-width: 20rem;
+}
+
+.modal-list-container {
+  height: 15rem;
+  border: 2px solid;
+  overflow-y: auto;
 }

@@ -8,7 +8,7 @@
 >
   <div class="d-flex flex-column">
     <form class="d-flex justify-content-between" [formGroup]="formGroup()!">
-      <div style="min-width: 15rem; padding: 0.5rem">
+      <div class="list-container">
         <div class="d-flex flex-column mt-4">
           @let name = 'name';
           <label [for]="name">{{ 'SUPPLIER_COMPONENT.form.labels.name' | translateFallback: 'Nazwa' }}</label>
@@ -120,7 +120,7 @@
           </app-form-field>
         </div>
       </div>
-      <div style="min-width: 15rem; padding: 0.5rem">
+      <div class="list-container">
         <div class="d-flex flex-column mt-4">
           @let processesIds = 'processesIds';
           <label [id]="processesIds" [for]="processesIds">
@@ -148,6 +148,7 @@
             <p>{{item.name}}</p>
             <app-button
               class="ms-2"
+              [buttonConfiguration]="buttonConfiguration"
               [buttonDisabled]="formGroup()?.disabled"
               (emitButtonClick)="_supplierComponentService.removeSelectedProcessFromList(item.id)"
             >

@@ -51,7 +51,7 @@ export class UserService {
       });
   }
 
-  updatePageParams(params: PageRequestParams) {
+  public updatePageParams(params: PageRequestParams) {
     this.pageParams.set(params);
     this.getAllUsers();
   }
@@ -72,7 +72,7 @@ export class UserService {
       });
   }
 
-  showCreateUserModal(injector: Injector) {
+  public showCreateUserModal(injector: Injector) {
     const createModalConfiguration: ModalDataConfiguration<UserDto> = {
       type: 'create',
       title: 'MODALS.user.create',
@@ -94,7 +94,7 @@ export class UserService {
       });
   }
 
-  showInfoUserModal(response: UserDto, injector: Injector) {
+  public showInfoUserModal(response: UserDto, injector: Injector) {
     const createModalConfiguration: ModalDataConfiguration<UserDto> = {
       type: 'info',
       title: 'MODALS.user.info',
@@ -115,7 +115,7 @@ export class UserService {
       });
   }
 
-  showDeleteModal(id: number | undefined, injector: Injector) {
+  public showDeleteModal(id: number | undefined, injector: Injector) {
     if (!id) {
       return;
     }
@@ -142,7 +142,7 @@ export class UserService {
       });
   }
 
-  closeCurrentModal(reloadPage?: boolean) {
+  public closeCurrentModal(reloadPage?: boolean) {
     this._modalService.closeCurrentModal(reloadPage);
   }
 }

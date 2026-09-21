@@ -42,6 +42,18 @@
       "delete": "Usuń dostawcę",
       "info": "Więcej informacji"
     },
+    "project": {
+      "create": "Dodaj nowy projekt",
+      "edit": "Edytuj projekt",
+      "delete": "Usuń projekt",
+      "info": "Więcej informacji"
+    },
+    "component": {
+      "create": "Dodaj nowy komponent",
+      "edit": "Edytuj komponent",
+      "delete": "Usuń komponent",
+      "info": "Więcej informacji"
+    },
     "delete": {
       "title": "Uwaga!",
       "text": "Czy na pewno chcesz usunąc tę pozycję?"
@@ -145,13 +157,50 @@
   },
   "PROJECT_COMPONENT": {
     "componentTitle": "Projekty",
+    "componentFormTitle": "Nowy projekt",
+    "componentFormEditTitle": "Edytuj projekt",
+    "projectFormSectionTitle": "Projekt",
+    "componentFormSectionTitle": "Komponenty",
+    "documentFormSectionTitle": "Dokumenty",
+    "form": {
+      "addComponentButton": "Dodaj komponent",
+      "labels": {
+        "validFrom": "Data od",
+        "validTo": "Data do",
+        "name": "Nazwa",
+        "description": "Opis",
+        "projectNumber": "Numer projektu",
+        "projectSOP": "SOP projektu",
+        "metrics": "Metryka",
+        "component": "Komponenty",
+        "document": "Dokumenty",
+        "status": "Status projektu"
+      },
+      "placeholders": {
+        "validFrom": "Wybierz datę od...",
+        "validTo": "Wybierz datę do...",
+        "name": "Wpisz nazwę...",
+        "description": "Wpisz opis...",
+        "projectNumber": "Wpisz numer projektu...",
+        "projectSOP": "Wpisz SOP projektu...",
+        "status": "Wybierz status projektu"
+      }
+    }
+  },
+  "COMPONENT_COMPONENT": {
     "form": {
       "labels": {
-        "name": "Nazwa",
+        "number": "Numer komponentu",
+        "revision": "Rewizja komponentu",
+        "name": "Nazwa komponentu",
+        "material": "Materiał",
         "description": "Opis"
       },
       "placeholders": {
-        "name": "Wpisz nazwę...",
+        "number": "Wpisz numer komponentu...",
+        "revision": "Wpisz rewizję komponentu...",
+        "name": "Wpisz nazwę komponentu...",
+        "material": "Wpisz materiał...",
         "description": "Wpisz opis..."
       }
     }
