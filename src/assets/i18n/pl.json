@@ -76,7 +76,9 @@
     "add": "Dodaj",
     "info": "Więcej informacji",
     "back": "Wróć",
-    "document": "Dodaj dokument"
+    "document": "Dodaj dokument",
+    "download": "Pobierz",
+    "preview": "Podgląd"
   },
   "FORM_VALIDATION_TEXTS": {
     "required": "To pole jest wymagane...",

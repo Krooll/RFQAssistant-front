@@ -10,11 +10,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
-import { Button } from '@shared/shared-ui/button/button';
 
 @Component({
   selector: 'app-document-modal',
-  imports: [ModalBase, FormField, FormsModule, TranslateFallbackPipe, ReactiveFormsModule, Button],
+  imports: [ModalBase, FormField, FormsModule, TranslateFallbackPipe, ReactiveFormsModule],
   providers: [DocumentService],
   templateUrl: './document-modal.html',
   styleUrl: './document-modal.scss',

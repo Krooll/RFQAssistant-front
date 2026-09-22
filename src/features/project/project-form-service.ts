@@ -2,7 +2,7 @@ import { DestroyRef, inject, Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouteEndpoints } from '@env/route-endpoints';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
-import { ComponentDto, CreateProjectRequest, DocumentDto, ProjectDto, UpdateProjectRequest } from '@core/dtos';
+import { ComponentDto, DocumentDto, ProjectDto } from '@core/dtos';
 import { Observable } from 'rxjs';
 import { Endpoint, Endpoints } from '@env/endpoints';
 import { ModalService } from '@core/services/modal-service/modal-service';
@@ -11,6 +11,7 @@ import { TechnicalSpecificationComponentModal } from '@features/technical-specif
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
 import { DocumentModal } from '@features/document-component/document-modal/document-modal';
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class ProjectFormService {
@@ -19,15 +20,11 @@ export class ProjectFormService {
   private readonly _modalService = inject(ModalService);
   private readonly _destroyRef = inject(DestroyRef);
 
-  public createProject(createProjectRequest: CreateProjectRequest): Observable<ProjectDto> {
-    return this._baseHttpService.postData(Endpoints.project, createProjectRequest);
+  private downloadFile(id: number) {
+    return this._baseHttpService.downloadFile(Endpoints.documentDownload, id);
   }
 
-  public updateProject(updateProjectRequest: UpdateProjectRequest): Observable<ProjectDto> {
-    return this._baseHttpService.patchData(Endpoints.project, updateProjectRequest);
-  }
-
-  public getProjectById(id: number): Observable<ProjectDto> {
+  private getProjectById(id: number): Observable<ProjectDto> {
     return this._baseHttpService.getPageDataById(Endpoints.project, id);
   }
 
@@ -96,7 +93,7 @@ export class ProjectFormService {
       });
   }
 
-  public showDeleteModal(id: number | undefined, injector: Injector) {
+  public showDeleteComponentModal(id: number | undefined, injector: Injector) {
     if (!id) {
       return;
     }
@@ -123,6 +120,41 @@ export class ProjectFormService {
       });
   }
 
+  public downloadCurrentFile(id: number | undefined) {
+    if (!id) return;
+
+    this.downloadFile(id)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (response: HttpResponse<Blob>) => {
+          const blob = response.body;
+          if (!blob) return;
+
+          const contentDisposition = response.headers.get('content-disposition');
+          let filename = `document_${id}.pdf`;
+
+          if (contentDisposition) {
+            const matches = /filename="?([^"]+)"?/.exec(contentDisposition);
+            if (matches && matches[1]) {
+              filename = matches[1];
+            }
+          }
+
+          const fileUrl = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = fileUrl;
+          link.download = filename;
+
+          document.body.appendChild(link);
+          link.click();
+
+          document.body.removeChild(link);
+          URL.revokeObjectURL(fileUrl);
+        },
+        error: (err) => console.error('Błąd pobierania pliku:', err),
+      });
+  }
+
   public showCreateDocumentModal(id: number | undefined, injector: Injector) {
     if (!id) return;
 
@@ -141,6 +173,33 @@ export class ProjectFormService {
         next: (reloadPage: boolean) => {
           if (reloadPage) {
             //dobrze przemyslec sposob odswiezania aktualnego projektu po akcji dodania dokumentu
+          }
+        },
+      });
+  }
+
+  public showDeleteDocumentModal(id: number | undefined, injector: Injector) {
+    if (!id) {
+      return;
+    }
+
+    const createModalConfiguration: ModalDataConfiguration<{ id: number; endpoint: Endpoint }> = {
+      type: 'delete',
+      title: 'MODALS.document.delete',
+      titleFallback: 'Usuń dokument',
+      data: { id: id, endpoint: Endpoints.document },
+    };
+
+    this._modalService
+      .openModal(DeleteModal, createModalConfiguration, {
+        injector: injector,
+      })
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (reloadPage: boolean) => {
+          if (reloadPage) {
+            //dobrze przemyslec sposob odswiezania aktualnego projektu po akcji usuwania dokumnetu
           }
         },
       });

@@ -6,10 +6,11 @@ import { Button } from '@shared/shared-ui/button/button';
 import { ProjectFormService } from '@features/project/project-form-service';
 import { ItemList } from '@shared/shared-ui/item-list/item-list';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
+import { DocumentCard } from '@shared/shared-ui/document-card/document-card';
 
 @Component({
   selector: 'app-project-form',
-  imports: [TranslateFallbackPipe, FormsModule, ReactiveFormsModule, Button, ItemList, FormField],
+  imports: [TranslateFallbackPipe, FormsModule, ReactiveFormsModule, Button, ItemList, FormField, DocumentCard],
   providers: [ProjectFormService],
   templateUrl: './project-form.html',
   styleUrl: './project-form.scss',
@@ -69,7 +70,6 @@ export class ProjectForm implements OnDestroy {
       projectNumber: this.projectData()?.projectNumber,
       projectSOP: this.projectData()?.projectSOP,
       //metrics: this.projectData()?.metricsByDate,
-      //componentIds: this.projectData()?.components,
       description: this.projectData()?.description,
       status: this.projectData()?.status,
     });
@@ -86,11 +86,19 @@ export class ProjectForm implements OnDestroy {
   }
 
   protected onDeleteComponentButtonClick(id: number | undefined) {
-    this._projectFormService.showDeleteModal(id, this._injector);
+    this._projectFormService.showDeleteComponentModal(id, this._injector);
   }
 
-  protected onDocumentComponentButtonClick(id: number | undefined) {
+  protected onAddDocumentComponentButtonClick(id: number | undefined) {
     this._projectFormService.showCreateDocumentModal(id, this._injector);
+  }
+
+  protected onDeleteDocumentButtonClick(id: number | undefined) {
+    this._projectFormService.showDeleteDocumentModal(id, this._injector);
+  }
+
+  protected onDownloadDocumentButtonClick(id: number | undefined) {
+    this._projectFormService.downloadCurrentFile(id);
   }
 
   protected onAbort() {

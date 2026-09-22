@@ -1,6 +1,10 @@
 .card-container {
-  height: 25rem;
-  width: 25rem;
+  height: auto;
+  min-width: 13rem;
   border: 1px solid;
   border-radius: 0.25rem;
+}
+
+p {
+  margin: 0.15rem;
 }

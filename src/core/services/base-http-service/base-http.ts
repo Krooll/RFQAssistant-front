@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { CreatePageParamsService } from '@core/services/create-page-params-service/create-page-params';
 import { environment } from '@env/environment';
 import { Endpoint } from '@env/endpoints';
@@ -53,12 +53,21 @@ export class BaseHttpService {
     return this._httpClient.delete(this.generateUrlWithEndpoint(endpoint, true, id)) as Observable<T>;
   }
 
+  public downloadFile(endpoint: Endpoint, id: number): Observable<HttpResponse<Blob>> {
+    return this._httpClient.get(this.generateUrlWithEndpoint(endpoint, true, id), {
+      responseType: 'blob',
+      observe: 'response',
+    });
+  }
+
   private generateUrlWithEndpoint(endpoint: Endpoint, getByIdException: boolean, id?: number): string {
     if (!endpoint || endpoint.trim().length === 0) {
       const errorMessage = '[BaseHttpService]: Endpoint nie może być pusty!';
       console.error(errorMessage);
       throw new Error(errorMessage);
     }
+
+    let url = `${this.baseUrl}${endpoint}`;
 
     if (getByIdException) {
       if (id === undefined || id === null) {
@@ -67,9 +76,13 @@ export class BaseHttpService {
         throw new Error(idErrorMessage);
       }
 
-      return `${this.baseUrl}${endpoint}/` + id;
+      if (url.includes(':id')) {
+        url = url.replace(':id', id.toString());
+      } else {
+        url = `${url}/${id}`;
+      }
     }
 
-    return `${this.baseUrl}${endpoint}`;
+    return url;
   }
 }

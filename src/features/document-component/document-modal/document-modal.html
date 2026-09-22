@@ -7,11 +7,8 @@
   [buttonDisabled]="formGroup()?.invalid"
 >
   <div class="d-flex flex-column">
-    <input #inputFile type="file" accept=".pdf" (change)="onFileSelected($event)" />
-    @if(type() === 'create') {
-    <app-button (emitButtonClick)="inputFile.click()">
-      {{'BUTTONS.document' | translateFallback: 'Dodaj dokument'}}
-    </app-button>
+    @if(type() === 'create'){
+    <input type="file" accept=".pdf" (change)="onFileSelected($event)" />
     }
     <form [formGroup]="formGroup()!">
       <div class="d-flex flex-column mt-4">

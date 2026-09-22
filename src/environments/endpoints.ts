@@ -6,7 +6,7 @@ export const Endpoints = {
   component: '/component',
   document: '/document',
   documentUpload: '/document/upload',
-  documentDownload: '/document/download',
+  documentDownload: '/document/:id/download',
   documentPreview: '/document/preview',
   authLogin: '/auth/login',
   authRefresh: '/auth/refresh',
