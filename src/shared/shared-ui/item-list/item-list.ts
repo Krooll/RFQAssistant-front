@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Button } from '@shared/shared-ui/button/button';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { ItemListAction, ItemListActions } from '@shared/model-ui/item-list-actions/item-list-actions';
@@ -11,10 +11,13 @@ import { ButtonTypes } from '@shared/model-ui/button-configuration/button-config
   styleUrl: './item-list.scss',
 })
 export class ItemList {
+  documentButtonVisibility = input<boolean>(false);
+
   infoButtonClickedOutput = output();
   deleteButtonClickedOutput = output();
+  documentButtonClickedOutput = output();
 
-  onButtonCLicked(actionType: ItemListAction) {
+  protected onButtonCLicked(actionType: ItemListAction) {
     switch (actionType) {
       case ItemListActions.info:
         this.infoButtonClickedOutput.emit();
@@ -22,6 +25,8 @@ export class ItemList {
       case ItemListActions.delete:
         this.deleteButtonClickedOutput.emit();
         break;
+      case ItemListActions.document:
+        this.documentButtonClickedOutput.emit();
     }
   }
 

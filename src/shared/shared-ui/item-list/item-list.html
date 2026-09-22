@@ -1,6 +1,11 @@
 <div class="d-flex justify-content-between list-item mt-2 mb-2 p-2">
   <ng-content></ng-content>
   <div class="d-flex">
+    @if(documentButtonVisibility()) {
+    <app-button [buttonType]="ButtonTypes.button" (emitButtonClick)="onButtonCLicked('document')">
+      {{ 'BUTTONS.document' | translateFallback: 'Dodaj dokument' }}
+    </app-button>
+    }
     <app-button [buttonType]="ButtonTypes.button" (emitButtonClick)="onButtonCLicked('info')">
       {{ 'BUTTONS.info' | translateFallback: 'Więcej informacji' }}
     </app-button>

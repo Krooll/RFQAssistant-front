@@ -77,27 +77,32 @@ export class ProjectForm implements OnDestroy {
     this.formGroup()?.disable();
   }
 
-  onAddComponentButtonClick() {
+  protected onAddComponentButtonClick() {
     this._projectFormService.showCreateComponentModal(this._injector);
   }
 
-  onDeleteComponentButtonClick(id: number | undefined) {
+  protected onInfoComponentButtonClick(id: number | undefined) {
+    this._projectFormService.getCurrentComponentById(id, this._injector);
+  }
+
+  protected onDeleteComponentButtonClick(id: number | undefined) {
     this._projectFormService.showDeleteModal(id, this._injector);
   }
 
-  onEditProjectFormButtonClick() {
-    this.formGroup()?.enable();
+  protected onDocumentComponentButtonClick(id: number | undefined) {
+    this._projectFormService.showCreateDocumentModal(id, this._injector);
   }
 
-  onAbort() {
+  protected onAbort() {
     this.formGroup()?.disable();
   }
 
-  backToProjectMainPage() {
+  protected backToProjectMainPage() {
     this._projectFormService.closeFormAndRouteToProjectList();
+    this.clearForm();
   }
 
-  clearForm() {
+  private clearForm() {
     this.formGroup()?.reset();
   }
 

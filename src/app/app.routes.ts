@@ -52,7 +52,7 @@ export const routes: Routes = [
         loadComponent: () => import('@features/project/project-form/project-form').then((m) => m.ProjectForm),
         canActivate: [roleGuard],
         resolve: { projectData: projectResolver },
-        data: { roles: [Roles.admin] },
+        data: { roles: [Roles.admin, Roles.manager] },
       },
       {
         path: 'user',

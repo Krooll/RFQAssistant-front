@@ -54,6 +54,12 @@
       "delete": "Usuń komponent",
       "info": "Więcej informacji"
     },
+    "document": {
+      "create": "Dodaj nowy dokument",
+      "edit": "Edytuj dokument",
+      "delete": "Usuń dokument",
+      "info": "Więcej informacji"
+    },
     "delete": {
       "title": "Uwaga!",
       "text": "Czy na pewno chcesz usunąc tę pozycję?"
@@ -69,7 +75,8 @@
     "delete": "Usuń",
     "add": "Dodaj",
     "info": "Więcej informacji",
-    "back": "Wróć"
+    "back": "Wróć",
+    "document": "Dodaj dokument"
   },
   "FORM_VALIDATION_TEXTS": {
     "required": "To pole jest wymagane...",
@@ -202,6 +209,18 @@
         "revision": "Wpisz rewizję komponentu...",
         "name": "Wpisz nazwę komponentu...",
         "material": "Wpisz materiał...",
+        "description": "Wpisz opis..."
+      }
+    }
+  },
+  "DOCUMENT_COMPONENT": {
+    "form": {
+      "labels": {
+        "name": "Nazwa dokumentu",
+        "description": "Opis"
+      },
+      "placeholders": {
+        "name": "Wpisz nazwę dokumentu...",
         "description": "Wpisz opis..."
       }
     }

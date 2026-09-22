@@ -1,8 +1,5 @@
 <div class="component-container d-flex flex-column">
   <div class="d-flex justify-content-end">
-    <app-button (emitButtonClick)="onEditProjectFormButtonClick()">
-      {{ 'PROJECT_COMPONENT.componentFormEditTitle' | translateFallback: 'Edytuj projekt' }}
-    </app-button>
     <app-button (emitButtonClick)="onAddComponentButtonClick()">
       {{ 'PROJECT_COMPONENT.form.addComponentButton' | translateFallback: 'Dodaj komponent' }}
     </app-button>
@@ -100,14 +97,19 @@
       </form>
     </div>
     <div class="project-component-container p-1">
-      <div class="d-flex">
-        <h3>{{ 'PROJECT_COMPONENT.componentFormSectionTitle' | translateFallback: 'Komponenty' }}</h3>
-      </div>
-      <div class="modal-list-container d-flex flex-column">
-        @for(component of projectData()?.components; track projectData()?.id) {
-        <app-item-list (deleteButtonClickedOutput)="onDeleteComponentButtonClick(component.id)">
-          <p>{{ component.name }}</p>
-          <p>{{ component.description }}</p>
+      <h3>{{ 'PROJECT_COMPONENT.componentFormSectionTitle' | translateFallback: 'Komponenty' }}</h3>
+      <div class="project-component-list d-flex flex-column">
+        @for(component of projectData()?.components; track component.id) {
+        <app-item-list
+          [documentButtonVisibility]="true"
+          (documentButtonClickedOutput)="onDocumentComponentButtonClick(component.id)"
+          (infoButtonClickedOutput)="onInfoComponentButtonClick(component.id)"
+          (deleteButtonClickedOutput)="onDeleteComponentButtonClick(component.id)"
+        >
+          <div class="d-flex flex-column">
+            <p>{{ component.name }}</p>
+            <p>{{ component.description }}</p>
+          </div>
         </app-item-list>
         }
       </div>

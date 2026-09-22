@@ -2,7 +2,7 @@ import { DestroyRef, inject, Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouteEndpoints } from '@env/route-endpoints';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
-import { ComponentDto, CreateProjectRequest, ProjectDto, UpdateProjectRequest } from '@core/dtos';
+import { ComponentDto, CreateProjectRequest, DocumentDto, ProjectDto, UpdateProjectRequest } from '@core/dtos';
 import { Observable } from 'rxjs';
 import { Endpoint, Endpoints } from '@env/endpoints';
 import { ModalService } from '@core/services/modal-service/modal-service';
@@ -10,6 +10,7 @@ import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/mod
 import { TechnicalSpecificationComponentModal } from '@features/technical-specification-component/technical-specification-component-modal/technical-specification-component-modal';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
+import { DocumentModal } from '@features/document-component/document-modal/document-modal';
 
 @Injectable()
 export class ProjectFormService {
@@ -32,6 +33,24 @@ export class ProjectFormService {
 
   private getComponentById(id: number): Observable<ComponentDto> {
     return this._baseHttpService.getPageDataById(Endpoints.component, id);
+  }
+
+  private getDocumentById(id: number): Observable<DocumentDto> {
+    return this._baseHttpService.getPageDataById(Endpoints.document, id);
+  }
+
+  public getCurrentComponentById(id: number | undefined, injector: Injector) {
+    if (!id) return;
+
+    this.getComponentById(id)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (response: ComponentDto) => {
+          if (response) {
+            this.showInfoComponentModal(response, injector);
+          }
+        },
+      });
   }
 
   public showCreateComponentModal(injector: Injector) {
@@ -98,7 +117,30 @@ export class ProjectFormService {
       .subscribe({
         next: (reloadPage: boolean) => {
           if (reloadPage) {
-            //dobrze przemyslec sposob odswiezania aktualnego projektu po akcji edytowania komponentu
+            //dobrze przemyslec sposob odswiezania aktualnego projektu po akcji usuwania komponentu
+          }
+        },
+      });
+  }
+
+  public showCreateDocumentModal(id: number | undefined, injector: Injector) {
+    if (!id) return;
+
+    const createModalConfiguration: ModalDataConfiguration<{ componentId: number; data: DocumentDto | null }> = {
+      type: 'create',
+      title: 'MODALS.document.create',
+      titleFallback: 'Dodaj dokument',
+      data: { componentId: id, data: null },
+    };
+
+    this._modalService
+      .openModal(DocumentModal, createModalConfiguration, { injector: injector })
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (reloadPage: boolean) => {
+          if (reloadPage) {
+            //dobrze przemyslec sposob odswiezania aktualnego projektu po akcji dodania dokumentu
           }
         },
       });

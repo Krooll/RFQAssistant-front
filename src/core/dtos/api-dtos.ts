@@ -410,6 +410,14 @@ export interface components {
       description: string;
       disable: boolean;
     };
+    CreateDocumentRequest: {
+      /** Format: int64 */
+      componentId: number;
+      name: string;
+      description?: string;
+      /** Format: binary */
+      file: string;
+    };
     CreateComponentRequest: {
       /** Format: int64 */
       projectId: number;
@@ -499,10 +507,10 @@ export interface components {
       sort?: string[];
     };
     PageUserDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['UserDto'][];
@@ -510,9 +518,9 @@ export interface components {
       number?: number;
       first?: boolean;
       last?: boolean;
+      sort?: components['schemas']['SortObject'];
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
@@ -533,10 +541,10 @@ export interface components {
       unsorted?: boolean;
     };
     PageSupplierDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['SupplierDto'][];
@@ -544,17 +552,17 @@ export interface components {
       number?: number;
       first?: boolean;
       last?: boolean;
+      sort?: components['schemas']['SortObject'];
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
     PageSimpleProjectDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['SimpleProjectDto'][];
@@ -562,9 +570,9 @@ export interface components {
       number?: number;
       first?: boolean;
       last?: boolean;
+      sort?: components['schemas']['SortObject'];
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
@@ -588,10 +596,10 @@ export interface components {
       status?: 'ACTIVE' | 'INACTIVE' | 'SUSPENDED';
     };
     PageProcessDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['ProcessDto'][];
@@ -599,17 +607,17 @@ export interface components {
       number?: number;
       first?: boolean;
       last?: boolean;
+      sort?: components['schemas']['SortObject'];
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
     PageDocumentDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['DocumentDto'][];
@@ -617,17 +625,17 @@ export interface components {
       number?: number;
       first?: boolean;
       last?: boolean;
+      sort?: components['schemas']['SortObject'];
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
     PageComponentDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['ComponentDto'][];
@@ -635,9 +643,9 @@ export interface components {
       number?: number;
       first?: boolean;
       last?: boolean;
+      sort?: components['schemas']['SortObject'];
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
@@ -908,21 +916,14 @@ export interface operations {
   };
   uploadFile: {
     parameters: {
-      query: {
-        componentId: number;
-        name: string;
-        description?: string;
-      };
+      query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
     requestBody?: {
       content: {
-        'multipart/form-data': {
-          /** Format: binary */
-          file: string;
-        };
+        'multipart/form-data': components['schemas']['CreateDocumentRequest'];
       };
     };
     responses: {
