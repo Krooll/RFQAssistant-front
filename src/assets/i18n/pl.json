@@ -172,6 +172,10 @@
     "projectFormSectionTitle": "Projekt",
     "componentFormSectionTitle": "Komponenty",
     "documentFormSectionTitle": "Dokumenty",
+    "sectionButtons": {
+      "general": "Ogólne",
+      "components": "Komponenty"
+    },
     "form": {
       "addComponentButton": "Dodaj komponent",
       "labels": {
@@ -184,7 +188,10 @@
         "metrics": "Metryka",
         "component": "Komponenty",
         "document": "Dokumenty",
-        "status": "Status projektu"
+        "status": "Status projektu",
+        "selectedComponentProcesses": "Wybrane procesy",
+        "emptyDocumentList": "Brak dodanych dokumentów...",
+        "emptyProcessList": "Brak wybranych procesów..."
       },
       "placeholders": {
         "validFrom": "Wybierz datę od...",

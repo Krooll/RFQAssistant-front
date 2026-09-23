@@ -47,10 +47,6 @@ export class TechnicalSpecificationComponentService {
       });
   }
 
-  public closeCurrentModal(reloadPage?: boolean) {
-    this._modalService.closeCurrentModal(reloadPage);
-  }
-
   public addSelectedProcessToList(item: ProcessDto): void {
     if (!item?.id) {
       return;
@@ -70,5 +66,9 @@ export class TechnicalSpecificationComponentService {
   public removeSelectedProcessFromList(id: number | undefined): void {
     if (!id) return;
     this.selectedProcessList.update((currentList) => (currentList ?? []).filter((process) => process.id !== id));
+  }
+
+  public closeCurrentModal(reloadPage?: boolean) {
+    this._modalService.closeCurrentModal(reloadPage);
   }
 }

@@ -16,14 +16,14 @@ export class ModalBase {
   public modalTitle = input.required<{ title: string; titleFallback: string }>();
   public buttonDisabled = input<boolean | undefined>();
 
-  closeButtonConfiguration: ButtonConfiguration = {
+  protected closeButtonConfiguration: ButtonConfiguration = {
     variant: ButtonVariants.transparent,
   };
 
-  submitOutput = output<void>();
-  closeOutput = output<void>();
-  deleteOutput = output<void>();
-  updateOutput = output<void>();
+  protected submitOutput = output<void>();
+  protected closeOutput = output<void>();
+  protected deleteOutput = output<void>();
+  protected updateOutput = output<void>();
 
   protected submitButtonClicked() {
     this.submitOutput.emit();

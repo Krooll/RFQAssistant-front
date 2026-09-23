@@ -1,7 +1,7 @@
-import { Component, DestroyRef, effect, inject, OnDestroy, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
-import { CreateProjectRequest, SimpleProjectDto, UpdateProjectRequest, UserDto } from '@core/dtos';
+import { CreateProjectRequest, SimpleProjectDto, UserDto } from '@core/dtos';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationService } from '@core/services/notification-service/notification-service';
 import { ProjectService } from '@features/project/project-service';
@@ -12,6 +12,7 @@ import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
 import { Router } from '@angular/router';
 import { RouteEndpoints } from '@env/route-endpoints';
+import { DateService } from '@core/services/date-service/date-service';
 
 @Component({
   selector: 'app-project-modal',
@@ -24,6 +25,7 @@ export class ProjectModal implements OnDestroy {
   private readonly _projectComponentService = inject(ProjectService);
   private readonly _modalData = inject<ModalDataConfiguration<SimpleProjectDto>>(MAT_DIALOG_DATA);
   private readonly _notificationService = inject(NotificationService);
+  private readonly _dateService = inject(DateService);
   private readonly _router = inject(Router);
 
   private readonly _destroyRef = inject(DestroyRef);
@@ -48,14 +50,6 @@ export class ProjectModal implements OnDestroy {
         projectNumber: ['', Validators.required],
       }),
     );
-
-    effect(() => {
-      const projectData: SimpleProjectDto | undefined = this.data();
-
-      if (projectData?.id) {
-        this.updateStateAndPatchForm();
-      }
-    });
   }
 
   ngOnDestroy(): void {
@@ -78,11 +72,6 @@ export class ProjectModal implements OnDestroy {
       return;
     }
 
-    if (currentModalType === ModalTypes.info) {
-      this.onUpdate();
-      return;
-    }
-
     if (!this.isFormValid()) {
       return;
     }
@@ -99,23 +88,7 @@ export class ProjectModal implements OnDestroy {
         this.createProject(createProjectRequest);
         break;
       }
-
-      case ModalTypes.update: {
-        const updateProjectRequest: UpdateProjectRequest = {
-          ...formValue,
-          id: this.data()?.id,
-          validFrom: this.changeDateToISOString(formValue.validFrom),
-          validTo: this.changeDateToISOString(formValue.validTo),
-        };
-        this.updateProject(updateProjectRequest);
-        break;
-      }
     }
-  }
-
-  private onUpdate(): void {
-    this.type.set(ModalTypes.update);
-    this.formGroup()?.enable();
   }
 
   private createProject(payload: CreateProjectRequest): void {
@@ -133,42 +106,8 @@ export class ProjectModal implements OnDestroy {
       });
   }
 
-  private updateProject(payload: UpdateProjectRequest): void {
-    this._projectComponentService
-      .updateProject(payload)
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe({
-        next: (response: UserDto) => {
-          if (response) {
-            this._notificationService.showSuccess('Sukces!');
-            this.closeCurrentModal(true);
-          }
-        },
-      });
-  }
-
-  private updateStateAndPatchForm(): void {
-    const projectData: SimpleProjectDto | undefined = this.data();
-
-    if (projectData?.id) {
-      this.formGroup()?.patchValue({
-        validFrom: projectData.validFrom,
-        validTo: projectData.validTo,
-        name: projectData.name,
-        projectNumber: projectData.projectNumber,
-        projectSOP: projectData.projectSOP,
-        //metrics: ['', Validators.required],
-        //componentIds: ['', Validators.required],
-        description: projectData.description,
-        status: projectData.status,
-      });
-
-      this.formGroup()?.disable();
-    }
-  }
-
   private changeDateToISOString(date: string): string {
-    return new Date(date).toISOString();
+    return this._dateService.changeDateToISOString(date);
   }
 
   protected closeCurrentModal(reloadPage?: boolean): void {

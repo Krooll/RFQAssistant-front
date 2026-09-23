@@ -7,6 +7,7 @@ import {
   ButtonVariants,
 } from '@shared/model-ui/button-configuration/button-configuration';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
+import { DocumentCardAction, documentCardActions } from '@shared/model-ui/document-card-actions/document-card-actions';
 
 @Component({
   selector: 'app-document-card',
@@ -15,10 +16,11 @@ import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe
   styleUrl: './document-card.scss',
 })
 export class DocumentCard {
-  documentData = input.required<DocumentDto>();
+  public documentData = input.required<DocumentDto>();
 
-  downloadActionOutput = output<number>();
-  deleteActionOutput = output<number>();
+  protected downloadActionOutput = output<number>();
+  protected deleteActionOutput = output<number>();
+  protected previewActionOutput = output<number>();
 
   protected buttonConfiguration: ButtonConfiguration = {
     variant: ButtonVariants.primary,
@@ -30,13 +32,21 @@ export class DocumentCard {
     size: ButtonSizes.small,
   };
 
-  protected onDownloadClick(id: number | undefined) {
+  protected onActionButtonClick(type: DocumentCardAction, id: number | undefined): void {
     if (!id) return;
-    this.downloadActionOutput.emit(id);
+
+    switch (type) {
+      case documentCardActions.download:
+        this.downloadActionOutput.emit(id);
+        break;
+      case documentCardActions.delete:
+        this.deleteActionOutput.emit(id);
+        break;
+      case documentCardActions.preview:
+        this.previewActionOutput.emit(id);
+        break;
+    }
   }
 
-  protected onDeleteClick(id: number | undefined) {
-    if (!id) return;
-    this.deleteActionOutput.emit(id);
-  }
+  protected readonly documentCardActions = documentCardActions;
 }

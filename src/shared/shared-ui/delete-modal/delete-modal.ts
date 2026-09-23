@@ -43,7 +43,7 @@ export class DeleteModal {
     this.data.set(this._modalData.data);
   }
 
-  onDelete() {
+  protected onDelete() {
     const endpoint = this.data()?.endpoint;
     const id = this.data()?.id;
 
@@ -62,7 +62,7 @@ export class DeleteModal {
       });
   }
 
-  closeCurrentModal(reloadPage?: boolean) {
+  protected closeCurrentModal(reloadPage?: boolean) {
     this._modalService.closeCurrentModal(reloadPage);
   }
 }

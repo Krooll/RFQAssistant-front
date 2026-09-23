@@ -23,7 +23,6 @@ export class UserModal implements OnDestroy {
   private readonly _userComponentService = inject(UserService);
   private readonly _modalData = inject<ModalDataConfiguration<UserDto>>(MAT_DIALOG_DATA);
   private readonly _notificationService = inject(NotificationService);
-
   private readonly _destroyRef = inject(DestroyRef);
 
   protected formGroup = signal<FormGroup | undefined>(undefined);

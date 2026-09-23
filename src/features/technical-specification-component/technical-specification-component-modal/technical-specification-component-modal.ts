@@ -168,6 +168,7 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
 
   private updateStateAndPatchForm(): void {
     const componentData: ComponentDto | undefined = this.data();
+    this._technicalSpecificationComponentService.selectedProcessList.set(componentData?.processes);
 
     if (componentData?.id) {
       this.formGroup()?.patchValue({

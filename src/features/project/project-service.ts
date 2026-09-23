@@ -32,10 +32,6 @@ export class ProjectService {
     return this._baseHttpService.getPageData(Endpoints.project, pageParams, extraParams);
   }
 
-  private getProjectById(id: number): Observable<SimpleProjectDto> {
-    return this._baseHttpService.getPageDataById(Endpoints.project, id);
-  }
-
   public createProject(createProjectRequest: CreateProjectRequest): Observable<ProjectDto> {
     return this._baseHttpService.postData(Endpoints.project, createProjectRequest);
   }
@@ -72,11 +68,6 @@ export class ProjectService {
     });
   }
 
-  public routeToCurrentProject(id: number | undefined) {
-    if (!id) return;
-    this._router.navigateByUrl(RouteEndpoints.projectForm + '/' + id);
-  }
-
   public showDeleteModal(id: number | undefined, injector: Injector) {
     if (!id) {
       return;
@@ -102,6 +93,11 @@ export class ProjectService {
           }
         },
       });
+  }
+
+  public routeToCurrentProject(id: number | undefined) {
+    if (!id) return;
+    this._router.navigateByUrl(RouteEndpoints.projectForm + '/' + id);
   }
 
   public closeCurrentModal(reloadPage?: boolean) {

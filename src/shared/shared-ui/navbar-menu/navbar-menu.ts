@@ -21,9 +21,9 @@ export class NavbarMenu {
 
   readonly applicationList = input.required<Application[]>();
 
-  selectedApplication = output<string | undefined>();
+  protected selectedApplication = output<string | undefined>();
 
-  menuNavBarButtonConfig: ButtonConfiguration = {
+  protected menuNavBarButtonConfig: ButtonConfiguration = {
     variant: ButtonVariants.primary,
     size: ButtonSizes.medium,
     padding: '',

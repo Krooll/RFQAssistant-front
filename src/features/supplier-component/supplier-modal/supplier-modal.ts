@@ -28,7 +28,6 @@ export class SupplierModal implements OnInit, OnDestroy {
   readonly _supplierComponentService = inject(SupplierService);
   private readonly _modalData = inject<ModalDataConfiguration<SupplierDto>>(MAT_DIALOG_DATA);
   private readonly _notificationService = inject(NotificationService);
-
   private readonly _destroyRef = inject(DestroyRef);
 
   protected formGroup = signal<FormGroup | undefined>(undefined);
@@ -40,7 +39,7 @@ export class SupplierModal implements OnInit, OnDestroy {
     titleFallback: '',
   });
 
-  buttonConfiguration: ButtonConfiguration = {
+  protected buttonConfiguration: ButtonConfiguration = {
     variant: ButtonVariants.transparent,
     size: ButtonSizes.small,
   };
@@ -192,10 +191,6 @@ export class SupplierModal implements OnInit, OnDestroy {
       .filter((id) => id !== undefined);
   }
 
-  protected closeCurrentModal(reloadPage?: boolean): void {
-    this._supplierComponentService.closeCurrentModal(reloadPage ? reloadPage : false);
-  }
-
   private subscribeFormChanges(): void {
     this.formGroup()
       ?.get('processesIds')
@@ -204,6 +199,10 @@ export class SupplierModal implements OnInit, OnDestroy {
         this._supplierComponentService.addSelectedProcessToList(selectedItem);
         this.formGroup()?.get('processesIds')?.setValue('', { emitEvent: false });
       });
+  }
+
+  protected closeCurrentModal(reloadPage?: boolean): void {
+    this._supplierComponentService.closeCurrentModal(reloadPage ? reloadPage : false);
   }
 
   private resetCurrentForm(): void {

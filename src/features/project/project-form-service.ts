@@ -1,8 +1,8 @@
-import { DestroyRef, inject, Injectable, Injector } from '@angular/core';
+import { DestroyRef, inject, Injectable, Injector, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouteEndpoints } from '@env/route-endpoints';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
-import { ComponentDto, DocumentDto, ProjectDto } from '@core/dtos';
+import { ComponentDto, DocumentDto, ProjectDto, UpdateProjectRequest } from '@core/dtos';
 import { Observable } from 'rxjs';
 import { Endpoint, Endpoints } from '@env/endpoints';
 import { ModalService } from '@core/services/modal-service/modal-service';
@@ -11,7 +11,8 @@ import { TechnicalSpecificationComponentModal } from '@features/technical-specif
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
 import { DocumentModal } from '@features/document-component/document-modal/document-modal';
-import { HttpResponse } from '@angular/common/http';
+import { SectionButtons, SectionButtonsTypes } from '@features/project/section-buttons/section-buttons';
+import { ProjectStatuses } from '@features/project/project-status/project-status';
 
 @Injectable()
 export class ProjectFormService {
@@ -20,20 +21,43 @@ export class ProjectFormService {
   private readonly _modalService = inject(ModalService);
   private readonly _destroyRef = inject(DestroyRef);
 
-  private downloadFile(id: number) {
-    return this._baseHttpService.downloadFile(Endpoints.documentDownload, id);
+  public activeProjectFormSection = signal<string>(SectionButtonsTypes.general);
+
+  public sectionButtonsList: SectionButtons[] = [
+    {
+      type: SectionButtonsTypes.general,
+      label: 'PROJECT_COMPONENT.sectionButtons.general',
+      labelTranslateFallback: 'Ogólne',
+    },
+    {
+      type: SectionButtonsTypes.component,
+      label: 'PROJECT_COMPONENT.sectionButtons.components',
+      labelTranslateFallback: 'Komponenty',
+    },
+  ];
+
+  public statusList: { value: string }[] = [
+    {
+      value: ProjectStatuses.active,
+    },
+    {
+      value: ProjectStatuses.inactive,
+    },
+    {
+      value: ProjectStatuses.suspended,
+    },
+  ];
+
+  public updateProject(payload: UpdateProjectRequest): Observable<ProjectDto> {
+    return this._baseHttpService.patchData(Endpoints.project, payload);
   }
 
-  private getProjectById(id: number): Observable<ProjectDto> {
+  public getProjectById(id: number): Observable<ProjectDto> {
     return this._baseHttpService.getPageDataById(Endpoints.project, id);
   }
 
   private getComponentById(id: number): Observable<ComponentDto> {
     return this._baseHttpService.getPageDataById(Endpoints.component, id);
-  }
-
-  private getDocumentById(id: number): Observable<DocumentDto> {
-    return this._baseHttpService.getPageDataById(Endpoints.document, id);
   }
 
   public getCurrentComponentById(id: number | undefined, injector: Injector) {
@@ -50,26 +74,18 @@ export class ProjectFormService {
       });
   }
 
-  public showCreateComponentModal(injector: Injector) {
+  public showCreateComponentModal(injector: Injector): Observable<boolean> {
     const createModalConfiguration: ModalDataConfiguration<ComponentDto> = {
       type: 'create',
       title: 'MODALS.component.create',
       titleFallback: 'Dodaj nowy komponent',
     };
 
-    this._modalService
+    return this._modalService
       .openModal(TechnicalSpecificationComponentModal, createModalConfiguration, {
         injector: injector,
       })
-      .afterClosed()
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe({
-        next: (reloadPage: boolean) => {
-          if (reloadPage) {
-            //dobrze przemyslec sposob odswiezania aktualnego projektu po akcji dodawania komponentu
-          }
-        },
-      });
+      .afterClosed();
   }
 
   public showInfoComponentModal(response: ComponentDto, injector: Injector) {
@@ -93,11 +109,7 @@ export class ProjectFormService {
       });
   }
 
-  public showDeleteComponentModal(id: number | undefined, injector: Injector) {
-    if (!id) {
-      return;
-    }
-
+  public showDeleteComponentModal(id: number, injector: Injector): Observable<boolean> {
     const createModalConfiguration: ModalDataConfiguration<{ id: number; endpoint: Endpoint }> = {
       type: 'delete',
       title: 'MODALS.component.delete',
@@ -105,59 +117,14 @@ export class ProjectFormService {
       data: { id: id, endpoint: Endpoints.component },
     };
 
-    this._modalService
+    return this._modalService
       .openModal(DeleteModal, createModalConfiguration, {
         injector: injector,
       })
-      .afterClosed()
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe({
-        next: (reloadPage: boolean) => {
-          if (reloadPage) {
-            //dobrze przemyslec sposob odswiezania aktualnego projektu po akcji usuwania komponentu
-          }
-        },
-      });
+      .afterClosed();
   }
 
-  public downloadCurrentFile(id: number | undefined) {
-    if (!id) return;
-
-    this.downloadFile(id)
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe({
-        next: (response: HttpResponse<Blob>) => {
-          const blob = response.body;
-          if (!blob) return;
-
-          const contentDisposition = response.headers.get('content-disposition');
-          let filename = `document_${id}.pdf`;
-
-          if (contentDisposition) {
-            const matches = /filename="?([^"]+)"?/.exec(contentDisposition);
-            if (matches && matches[1]) {
-              filename = matches[1];
-            }
-          }
-
-          const fileUrl = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = fileUrl;
-          link.download = filename;
-
-          document.body.appendChild(link);
-          link.click();
-
-          document.body.removeChild(link);
-          URL.revokeObjectURL(fileUrl);
-        },
-        error: (err) => console.error('Błąd pobierania pliku:', err),
-      });
-  }
-
-  public showCreateDocumentModal(id: number | undefined, injector: Injector) {
-    if (!id) return;
-
+  public showCreateDocumentModal(id: number, injector: Injector): Observable<boolean> {
     const createModalConfiguration: ModalDataConfiguration<{ componentId: number; data: DocumentDto | null }> = {
       type: 'create',
       title: 'MODALS.document.create',
@@ -165,24 +132,10 @@ export class ProjectFormService {
       data: { componentId: id, data: null },
     };
 
-    this._modalService
-      .openModal(DocumentModal, createModalConfiguration, { injector: injector })
-      .afterClosed()
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe({
-        next: (reloadPage: boolean) => {
-          if (reloadPage) {
-            //dobrze przemyslec sposob odswiezania aktualnego projektu po akcji dodania dokumentu
-          }
-        },
-      });
+    return this._modalService.openModal(DocumentModal, createModalConfiguration, { injector: injector }).afterClosed();
   }
 
-  public showDeleteDocumentModal(id: number | undefined, injector: Injector) {
-    if (!id) {
-      return;
-    }
-
+  public showDeleteDocumentModal(id: number, injector: Injector): Observable<boolean> {
     const createModalConfiguration: ModalDataConfiguration<{ id: number; endpoint: Endpoint }> = {
       type: 'delete',
       title: 'MODALS.document.delete',
@@ -190,22 +143,18 @@ export class ProjectFormService {
       data: { id: id, endpoint: Endpoints.document },
     };
 
-    this._modalService
+    return this._modalService
       .openModal(DeleteModal, createModalConfiguration, {
         injector: injector,
       })
-      .afterClosed()
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe({
-        next: (reloadPage: boolean) => {
-          if (reloadPage) {
-            //dobrze przemyslec sposob odswiezania aktualnego projektu po akcji usuwania dokumnetu
-          }
-        },
-      });
+      .afterClosed();
   }
 
-  closeFormAndRouteToProjectList() {
+  public toggleFormSection(type: string) {
+    this.activeProjectFormSection.set(type);
+  }
+
+  public closeFormAndRouteToProjectList() {
     this._router.navigateByUrl(RouteEndpoints.project);
   }
 }

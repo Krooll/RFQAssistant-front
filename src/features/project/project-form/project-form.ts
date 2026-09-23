@@ -1,5 +1,5 @@
-import { Component, computed, effect, inject, Injector, input, OnDestroy, signal } from '@angular/core';
-import { ProjectDto } from '@core/dtos';
+import { Component, DestroyRef, effect, inject, Injector, model, OnDestroy, signal } from '@angular/core';
+import { ProjectDto, UpdateProjectRequest } from '@core/dtos';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { Button } from '@shared/shared-ui/button/button';
@@ -7,6 +7,10 @@ import { ProjectFormService } from '@features/project/project-form-service';
 import { ItemList } from '@shared/shared-ui/item-list/item-list';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { DocumentCard } from '@shared/shared-ui/document-card/document-card';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SectionButtonsTypes } from '@features/project/section-buttons/section-buttons';
+import { DateService } from '@core/services/date-service/date-service';
+import { DownloadService } from '@core/services/download-service/download-service';
 
 @Component({
   selector: 'app-project-form',
@@ -17,20 +21,20 @@ import { DocumentCard } from '@shared/shared-ui/document-card/document-card';
 })
 export class ProjectForm implements OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
-  private readonly _projectFormService = inject(ProjectFormService);
+  readonly _projectFormService = inject(ProjectFormService);
   private readonly _injector = inject(Injector);
+  private readonly _destroyRef = inject(DestroyRef);
+  private readonly _dateService = inject(DateService);
+  private readonly _downloadService = inject(DownloadService);
 
-  protected projectData = input<ProjectDto>();
-
-  protected editMode = computed(() => !!this.projectData()?.id);
+  protected projectData = model<ProjectDto>();
 
   protected formGroup = signal<FormGroup | undefined>(undefined);
 
   constructor() {
     effect(() => {
       const projectData = this.projectData();
-      const editMode = this.editMode();
-      if (editMode && projectData?.id) {
+      if (projectData?.id) {
         this.updateStateAndPatchForm();
       }
     });
@@ -43,7 +47,6 @@ export class ProjectForm implements OnDestroy {
         projectNumber: ['', Validators.required],
         projectSOP: ['', Validators.required],
         //metrics: ['', Validators.required],
-        //componentIds: ['', Validators.required],
         description: ['', Validators.maxLength(500)],
         status: [''],
       }),
@@ -60,16 +63,38 @@ export class ProjectForm implements OnDestroy {
     }
 
     const formData = this.formGroup()?.getRawValue();
+
+    const updateProjectRequest: UpdateProjectRequest = {
+      ...formData,
+      id: this.projectData()?.id,
+      validTo: this._dateService.changeDateToISOString(formData.validTo),
+      validFrom: this._dateService.changeDateToISOString(formData.validFrom),
+      projectSOP: this._dateService.changeDateToISOString(formData.projectSOP),
+    };
+
+    this.updateProject(updateProjectRequest);
   }
 
-  private updateStateAndPatchForm() {
+  private updateProject(payload: UpdateProjectRequest) {
+    this._projectFormService
+      .updateProject(payload)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (response) => {
+          if (response) {
+            this.getProjectById(this.projectData()?.id);
+          }
+        },
+      });
+  }
+
+  private updateStateAndPatchForm(): void {
     this.formGroup()?.patchValue({
-      validFrom: this.projectData()?.validFrom,
-      validTo: this.projectData()?.validTo,
+      validFrom: this._dateService.formatIsoToInputDate(this.projectData()?.validFrom),
+      validTo: this._dateService.formatIsoToInputDate(this.projectData()?.validTo),
       name: this.projectData()?.name,
       projectNumber: this.projectData()?.projectNumber,
-      projectSOP: this.projectData()?.projectSOP,
-      //metrics: this.projectData()?.metricsByDate,
+      projectSOP: this._dateService.formatIsoToInputDate(this.projectData()?.projectSOP),
       description: this.projectData()?.description,
       status: this.projectData()?.status,
     });
@@ -77,8 +102,31 @@ export class ProjectForm implements OnDestroy {
     this.formGroup()?.disable();
   }
 
-  protected onAddComponentButtonClick() {
-    this._projectFormService.showCreateComponentModal(this._injector);
+  private getProjectById(id: number | undefined) {
+    if (!id) return;
+    this._projectFormService
+      .getProjectById(id)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (response: ProjectDto) => {
+          if (response) {
+            this.projectData.set(response);
+          }
+        },
+      });
+  }
+
+  protected onAddComponentButtonClick(): void {
+    this._projectFormService
+      .showCreateComponentModal(this._injector)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (reloadPage: boolean) => {
+          if (reloadPage) {
+            this.getProjectById(this.projectData()?.id);
+          }
+        },
+      });
   }
 
   protected onInfoComponentButtonClick(id: number | undefined) {
@@ -86,31 +134,67 @@ export class ProjectForm implements OnDestroy {
   }
 
   protected onDeleteComponentButtonClick(id: number | undefined) {
-    this._projectFormService.showDeleteComponentModal(id, this._injector);
+    if (!id) return;
+
+    this._projectFormService
+      .showDeleteComponentModal(id, this._injector)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (reloadPage: boolean) => {
+          if (reloadPage) {
+            this.getProjectById(this.projectData()?.id);
+          }
+        },
+      });
   }
 
   protected onAddDocumentComponentButtonClick(id: number | undefined) {
-    this._projectFormService.showCreateDocumentModal(id, this._injector);
+    if (!id) return;
+
+    this._projectFormService
+      .showCreateDocumentModal(id, this._injector)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (reloadPage: boolean) => {
+          if (reloadPage) {
+            this.getProjectById(this.projectData()?.id);
+          }
+        },
+      });
   }
 
   protected onDeleteDocumentButtonClick(id: number | undefined) {
-    this._projectFormService.showDeleteDocumentModal(id, this._injector);
+    if (!id) return;
+
+    this._projectFormService
+      .showDeleteDocumentModal(id, this._injector)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (reloadPage: boolean) => {
+          if (reloadPage) {
+            this.getProjectById(this.projectData()?.id);
+          }
+        },
+      });
   }
 
   protected onDownloadDocumentButtonClick(id: number | undefined) {
-    this._projectFormService.downloadCurrentFile(id);
+    this._downloadService.downloadCurrentFile(id);
   }
 
-  protected onAbort() {
+  protected onPreviewDocumentButtonClick(id: number | undefined) {
+    this._downloadService.previewCurrentFile(id);
+  }
+
+  protected onEdit(): void {
+    this.formGroup()?.enable();
+  }
+
+  protected onAbort(): void {
     this.formGroup()?.disable();
   }
 
-  protected backToProjectMainPage() {
-    this._projectFormService.closeFormAndRouteToProjectList();
-    this.clearForm();
-  }
-
-  private clearForm() {
+  private clearForm(): void {
     this.formGroup()?.reset();
   }
 
@@ -122,4 +206,6 @@ export class ProjectForm implements OnDestroy {
 
     return true;
   }
+
+  protected readonly SectionButtonsTypes = SectionButtonsTypes;
 }

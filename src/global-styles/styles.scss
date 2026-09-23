@@ -23,6 +23,7 @@ body {
   color: var(--text-color);
 }
 
+//THEMES
 .dark-mode {
   --main-background: #{map.get(colors.$colors, 'black100')};
 }
@@ -31,8 +32,7 @@ body {
   --main-background: #{map.get(colors.$colors, 'light-gray100')};
 }
 
-/* styles.scss */
-
+//SNACKBAR
 .snackbar-error {
   --mat-snack-bar-button-color: #ffffff;
   .mdc-snackbar__surface {
@@ -77,6 +77,10 @@ body {
   }
 }
 
+p {
+  margin: 0.15rem;
+}
+
 .overflow-auto {
   overflow: auto;
 }
@@ -89,6 +93,7 @@ body {
   font-weight: bold;
 }
 
+//CONTAINERS
 .body-container {
   height: 100%;
   width: 100%;
@@ -111,18 +116,6 @@ body {
   overflow-y: auto;
 }
 
-.list-item {
-  border: 1px solid black;
-  border-radius: 0.25rem;
-}
-
-.input {
-  height: 2rem;
-  padding: 0.25rem;
-  border-radius: 0.25rem;
-  border: 1px solid black;
-}
-
 .modal-split-container {
   min-width: 20rem;
 }
@@ -131,3 +124,21 @@ body {
   height: 15rem;
   overflow-y: auto;
 }
+
+//ITEMS
+.list-item {
+  border: 1px solid black;
+  border-radius: 0.25rem;
+}
+
+input,
+select,
+textarea {
+  font-family: 'Inter', sans-serif !important;
+  min-height: 2rem;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  border: 1px solid;
+}
+
+

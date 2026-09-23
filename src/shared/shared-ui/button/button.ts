@@ -16,12 +16,12 @@ import {
 export class Button<T> {
   emitButtonClick = output<T | void>();
 
-  dataToEmit = input<T>();
-  buttonType = input<ButtonType>();
-  buttonConfiguration = input<ButtonConfiguration>({});
-  buttonDisabled = input<boolean>();
+  public dataToEmit = input<T>();
+  public buttonType = input<ButtonType>();
+  public buttonConfiguration = input<ButtonConfiguration>({});
+  public buttonDisabled = input<boolean>();
 
-  defaultButtonConfig: ButtonConfiguration = {
+  protected defaultButtonConfig: ButtonConfiguration = {
     variant: ButtonVariants.primary,
     size: ButtonSizes.medium,
     margin: '',

@@ -11,11 +11,11 @@ import { ButtonTypes } from '@shared/model-ui/button-configuration/button-config
   styleUrl: './item-list.scss',
 })
 export class ItemList {
-  documentButtonVisibility = input<boolean>(false);
+  public documentButtonVisibility = input<boolean>(false);
 
-  infoButtonClickedOutput = output();
-  deleteButtonClickedOutput = output();
-  documentButtonClickedOutput = output();
+  protected infoButtonClickedOutput = output();
+  protected deleteButtonClickedOutput = output();
+  protected documentButtonClickedOutput = output();
 
   protected onButtonCLicked(actionType: ItemListAction) {
     switch (actionType) {
