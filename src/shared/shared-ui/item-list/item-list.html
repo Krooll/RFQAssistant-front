@@ -1,6 +1,6 @@
-<div class="d-flex justify-content-between list-item mt-2 mb-2 p-2">
+<div class="d-flex justify-content-between list-item mt-2 mb-2 p-2 relative">
   <ng-content></ng-content>
-  <div class="d-flex">
+  <div class="d-flex absolute absolute-container">
     @if(documentButtonVisibility()) {
     <app-button [buttonType]="ButtonTypes.button" (emitButtonClick)="onButtonCLicked('document')">
       {{ 'BUTTONS.document' | translateFallback: 'Dodaj dokument' }}

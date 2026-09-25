@@ -1,0 +1,67 @@
+<div class="d-flex flex-column">
+  <div class="d-flex justify-content-end">
+    <app-button [buttonDisabled]="isInputDisabled()" (emitButtonClick)="onMetricConfigButtonClick()">
+      {{ 'METRIC_COMPONENT.configButtonTitle' | translateFallback: 'Konfiguracja' }}
+    </app-button>
+  </div>
+  <h3>{{ 'METRIC_COMPONENT.form.title' | translateFallback: 'Metryka' }}</h3>
+  @if (generatedMetricList().length > 0) {
+  <div class="table-container mt-3">
+    <table>
+      <thead>
+        <tr>
+          <th class="text-align-center">{{ 'METRIC_COMPONENT.yearTitle' | translateFallback: 'Rok'}}</th>
+          @for (metric of generatedMetricList(); track $index) {
+          <th class="text-align-center relative">
+            {{ metric.date | date:'yyyy' }}
+            <app-button
+              [buttonDisabled]="isInputDisabled()"
+              class="absolute absolute-close-button"
+              [buttonConfiguration]="deleteButtonConfiguration"
+              (emitButtonClick)="onDeleteCurrentSingleTable($index)"
+            >
+              x
+            </app-button>
+          </th>
+
+          }
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-align-center">{{ 'METRIC_COMPONENT.basicTitle' | translateFallback: 'Podstawa'}}</td>
+          @for (metric of generatedMetricList(); track $index) {
+          <td>
+            <input
+              [disabled]="isInputDisabled()"
+              type="number"
+              [value]="metric.basic ?? ''"
+              (input)="onUpdateMetricButtonClick($index, $any($event.target).valueAsNumber)"
+              (paste)="onPasteMetricButtonClick($event, $index)"
+              placeholder="0"
+            />
+          </td>
+          }
+        </tr>
+        <tr>
+          <td class="text-align-center">
+            {{ 'METRIC_COMPONENT.basicTitle' | translateFallback: 'Podstawa'}} + {{ percent() }}%
+          </td>
+          @for (metric of generatedMetricList(); track $index) {
+          <td>
+            <input
+              [disabled]="isInputDisabled()"
+              type="number"
+              [value]="metric.basicWithPercent ?? ''"
+              readonly
+              tabindex="-1"
+              class="readonly-cell"
+            />
+          </td>
+          }
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  }
+</div>

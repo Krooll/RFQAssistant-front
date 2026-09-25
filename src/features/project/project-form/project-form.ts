@@ -12,7 +12,7 @@ import { SectionButtonsTypes } from '@features/project/types/section-buttons/sec
 import { DateService } from '@core/services/date-service/date-service';
 import { DownloadService } from '@core/services/download-service/download-service';
 import { ProjectMetricService } from '@features/project/services/project-metric-service';
-import { DatePipe } from '@angular/common';
+import { ProjectMetrics } from '@features/project/project-metrics/project-metrics';
 
 @Component({
   selector: 'app-project-form',
@@ -24,7 +24,7 @@ import { DatePipe } from '@angular/common';
     ItemList,
     FormField,
     DocumentCard,
-    DatePipe,
+    ProjectMetrics,
   ],
   providers: [ProjectFormService, ProjectMetricService],
   templateUrl: './project-form.html',
@@ -201,19 +201,20 @@ export class ProjectForm implements OnDestroy {
       .subscribe({
         next: (metricFormData: { metricsYears: number; metricsPercent: number }) => {
           const sop = this.projectData()?.projectSOP;
+          const currentMetricList = this.projectData()?.metrics;
           if (metricFormData && sop) {
-            this._metricService.generateMetricList(metricFormData, sop);
+            this._metricService.generateMetricList(metricFormData, sop, currentMetricList);
           }
         },
       });
   }
 
-  protected onPaste(event: ClipboardEvent, index: number): void {
-    event.preventDefault();
-    const clipboardText = event.clipboardData?.getData('text');
+  protected onPaste(event: { event: ClipboardEvent; index: number }): void {
+    event.event.preventDefault();
+    const clipboardText = event.event.clipboardData?.getData('text');
 
     if (clipboardText) {
-      this._metricService.pasteMetrics(index, clipboardText);
+      this._metricService.pasteMetrics(event.index, clipboardText);
     }
   }
 

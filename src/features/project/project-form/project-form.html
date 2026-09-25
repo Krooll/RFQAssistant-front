@@ -18,8 +18,8 @@
     }
   </div>
   @switch(_projectFormService.activeProjectFormSection()) { @case (SectionButtonsTypes.general) {
+  <h3>{{ 'PROJECT_COMPONENT.projectFormSectionTitle' | translateFallback: 'Projekt' }}</h3>
   <div class="list-container">
-    <h3>{{ 'PROJECT_COMPONENT.projectFormSectionTitle' | translateFallback: 'Projekt' }}</h3>
     <form [formGroup]="formGroup()!">
       <div class="d-flex justify-content-between">
         <div class="p-1 w-100">
@@ -129,59 +129,15 @@
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-end">
-        <app-button (emitButtonClick)="onProjectMetricButtonClick()">Skonfiguruj metrykę</app-button>
-      </div>
-      <h3>{{ 'PROJECT_COMPONENT.metricFormSectionTitle' | translateFallback: 'Metryka' }}</h3>
-      <div class="d-flex flex-wrap">
-        @if (_metricService.generatedMetricList().length > 0) {
-        <div style="overflow-x: auto" class="d-flex">
-          <table class="metrics-table">
-            <thead>
-              <tr>
-                <th class="row-header">Rok</th>
-                @for (metric of _metricService.generatedMetricList(); track $index) {
-                <th>{{ metric.date | date:'yyyy' }}</th>
-                }
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Rząd 1: Basic (Wpisywanie / Wklejanie z Excela) -->
-              <tr>
-                <td class="row-header">Basic</td>
-                @for (metric of _metricService.generatedMetricList(); track $index) {
-                <td>
-                  <input
-                    type="number"
-                    [value]="metric.basic ?? ''"
-                    (input)="_metricService.updateMetric($index, $any($event.target).valueAsNumber)"
-                    (paste)="onPaste($event, $index)"
-                    placeholder="0"
-                  />
-                </td>
-                }
-              </tr>
-
-              <!-- Rząd 2: Basic + % (Podgląd - Readonly) -->
-              <tr>
-                <td class="row-header">Basic + {{ _metricService.percent() }}%</td>
-                @for (metric of _metricService.generatedMetricList(); track $index) {
-                <td>
-                  <input
-                    type="number"
-                    [value]="metric.basicWithPercent ?? ''"
-                    readonly
-                    tabindex="-1"
-                    class="readonly-cell"
-                  />
-                </td>
-                }
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        }
-      </div>
+      <app-project-metrics
+        [percent]="_metricService.percent()"
+        [generatedMetricList]="_metricService.generatedMetricList()"
+        [isInputDisabled]="formGroup()?.disabled"
+        (metricPasteButtonEmit)="onPaste($event)"
+        (metricUpdateButtonEmit)="_metricService.updateMetric($event)"
+        (metricConfigButtonEmit)="onProjectMetricButtonClick()"
+        (metricDeleteButtonEmit)="_metricService.deleteCurrentMetric($event)"
+      ></app-project-metrics>
       <div class="d-flex justify-content-end mt-1">
         @if(!formGroup()?.disabled) {
         <app-button (emitButtonClick)="onAbort()">{{ 'BUTTONS.abort' | translateFallback: 'Anuluj' }}</app-button>
@@ -194,44 +150,44 @@
   </div>
   } @case (SectionButtonsTypes.component) {
   <h3>{{ 'PROJECT_COMPONENT.componentFormSectionTitle' | translateFallback: 'Komponenty' }}</h3>
-  <div class="list-container p-1">
-    <div class="project-component-container d-flex flex-column p-1">
-      <div class="project-component-list">
-        @for(component of projectData()?.components; track component.id) {
-        <app-item-list
-          [documentButtonVisibility]="true"
-          (documentButtonClickedOutput)="onAddDocumentComponentButtonClick(component.id)"
-          (infoButtonClickedOutput)="onInfoComponentButtonClick(component.id)"
-          (deleteButtonClickedOutput)="onDeleteComponentButtonClick(component.id)"
-        >
-          <div class="d-flex flex-column w-100">
-            <p>
-              {{'PROJECT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:
-              <span>{{ component.name }}</span>
-            </p>
-            <p>
-              {{'PROJECT_COMPONENT.form.labels.description' | translateFallback: 'Opis'}}:
-              <span>{{ component.description }}</span>
-            </p>
-            <p>{{'PROJECT_COMPONENT.documentFormSectionTitle' | translateFallback: 'Dokumenty'}}:</p>
-            <div class="d-flex w-100 flex-wrap">
-              @if(component.documents?.length) { @for(document of component.documents; track document.id) {
-              <app-document-card
-                (previewActionOutput)="onPreviewDocumentButtonClick(document?.id)"
-                (downloadActionOutput)="onDownloadDocumentButtonClick(document?.id)"
-                (deleteActionOutput)="onDeleteDocumentButtonClick(document?.id)"
-                [documentData]="document"
-              ></app-document-card>
-              } } @else {
-              <!-- prettier-ignore -->
-              <p>{{'PROJECT_COMPONENT.form.labels.emptyDocumentList' | translateFallback: 'Brak dodanych dokumentów...'}}</p>
-              }
-            </div>
-          </div>
-        </app-item-list>
-        }
+  <div class="list-container">
+    @for(component of projectData()?.components; track component.id) {
+    <app-item-list
+      [documentButtonVisibility]="true"
+      (documentButtonClickedOutput)="onAddDocumentComponentButtonClick(component.id)"
+      (infoButtonClickedOutput)="onInfoComponentButtonClick(component.id)"
+      (deleteButtonClickedOutput)="onDeleteComponentButtonClick(component.id)"
+    >
+      <div class="d-flex flex-column w-100">
+        <p>
+          <span class="font-weight-bold">{{'PROJECT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:</span>
+          {{ component.name }}
+        </p>
+        <p>
+          <span class="font-weight-bold">
+            {{'PROJECT_COMPONENT.form.labels.description' | translateFallback: 'Opis'}}:
+          </span>
+          {{ component.description }}
+        </p>
+        <p class="font-weight-bold">
+          {{'PROJECT_COMPONENT.documentFormSectionTitle' | translateFallback: 'Dokumenty'}}:
+        </p>
+        <div class="d-flex flex-wrap mt-2">
+          @if(component.documents?.length) { @for(document of component.documents; track document.id) {
+          <app-document-card
+            (previewActionOutput)="onPreviewDocumentButtonClick(document?.id)"
+            (downloadActionOutput)="onDownloadDocumentButtonClick(document?.id)"
+            (deleteActionOutput)="onDeleteDocumentButtonClick(document?.id)"
+            [documentData]="document"
+          ></app-document-card>
+          } } @else {
+          <!-- prettier-ignore -->
+          <p>{{'PROJECT_COMPONENT.form.labels.emptyDocumentList' | translateFallback: 'Brak dodanych dokumentów...'}}</p>
+          }
+        </div>
       </div>
-    </div>
+    </app-item-list>
+    }
   </div>
   } }
 </div>

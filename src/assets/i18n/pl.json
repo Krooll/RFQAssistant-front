@@ -244,5 +244,13 @@
         "description": "Wpisz opis..."
       }
     }
+  },
+  "METRIC_COMPONENT": {
+    "configButtonTitle": "Konfiguracja",
+    "yearTitle": "Rok",
+    "basicTitle": "Podstawa",
+    "form": {
+      "title": "Metryka"
+    }
   }
 }

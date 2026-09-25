@@ -17,7 +17,7 @@ export class ItemList {
   protected deleteButtonClickedOutput = output();
   protected documentButtonClickedOutput = output();
 
-  protected onButtonCLicked(actionType: ItemListAction) {
+  protected onButtonCLicked(actionType: ItemListAction): void {
     switch (actionType) {
       case ItemListActions.info:
         this.infoButtonClickedOutput.emit();
