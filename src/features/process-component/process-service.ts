@@ -11,6 +11,7 @@ import { ProcessModal } from '@features/process-component/process-modal/process-
 import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
 import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
 import { SpringPageable } from '@core/core-dtos/pageable/pageable';
+import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 
 @Injectable()
 export class ProcessService {
@@ -41,7 +42,7 @@ export class ProcessService {
     return this._baseHttpService.patchData(Endpoints.process, updateProcessRequest);
   }
 
-  getAllProcess() {
+  getAllProcess(): void {
     this.getProcesses(this.pageParams(), new HttpParams())
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
@@ -54,12 +55,12 @@ export class ProcessService {
       });
   }
 
-  updatePageParams(params: PageRequestParams) {
+  updatePageParams(params: PageRequestParams): void {
     this.pageParams.set(params);
     this.getAllProcess();
   }
 
-  getCurrentProcessById(id: number | undefined, injector: Injector) {
+  getCurrentProcessById(id: number | undefined, injector: Injector): void {
     if (!id) {
       return;
     }
@@ -75,9 +76,9 @@ export class ProcessService {
       });
   }
 
-  showCreateProcessModal(injector: Injector) {
+  showCreateProcessModal(injector: Injector): void {
     const createModalConfiguration: ModalDataConfiguration<UserDto> = {
-      type: 'create',
+      type: ModalTypes.create,
       title: 'MODALS.process.create',
       titleFallback: 'Dodaj nowy Process',
     };
@@ -97,9 +98,9 @@ export class ProcessService {
       });
   }
 
-  showInfoProcessModal(response: ProcessDto, injector: Injector) {
+  showInfoProcessModal(response: ProcessDto, injector: Injector): void {
     const createModalConfiguration: ModalDataConfiguration<ProcessDto> = {
-      type: 'info',
+      type: ModalTypes.info,
       title: 'MODALS.process.info',
       titleFallback: 'Więcej informacji',
       data: response,
@@ -118,13 +119,13 @@ export class ProcessService {
       });
   }
 
-  showDeleteModal(id: number | undefined, injector: Injector) {
+  showDeleteModal(id: number | undefined, injector: Injector): void {
     if (!id) {
       return;
     }
 
     const createModalConfiguration: ModalDataConfiguration<{ id: number; endpoint: Endpoint }> = {
-      type: 'delete',
+      type: ModalTypes.delete,
       title: 'MODALS.user.delete',
       titleFallback: 'Usuń użytkownika',
       data: { id: id, endpoint: Endpoints.process },
@@ -145,7 +146,7 @@ export class ProcessService {
       });
   }
 
-  closeCurrentModal(reloadPage?: boolean) {
+  closeCurrentModal(reloadPage?: boolean): void {
     this._modalService.closeCurrentModal(reloadPage);
   }
 }

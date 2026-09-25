@@ -6,108 +6,106 @@
   (updateOutput)="onSubmit()"
   [buttonDisabled]="formGroup()?.invalid"
 >
-  <div class="d-flex flex-column">
-    <form class="d-flex justify-content-between" [formGroup]="formGroup()!">
-      <div class="modal-split-container p-1">
-        <div class="d-flex flex-column mt-4">
-          @let username = 'username';
-          <label [for]="username">
-            {{ 'USER_COMPONENT.form.labels.username' | translateFallback: 'Nazwa użytkownika' }}
-          </label>
-          <app-form-field>
-            <input
-              type="text"
-              class="mt-1 input"
-              [placeholder]="'USER_COMPONENT.form.placeholders.username' | translateFallback: 'Wpisz nazwę użytkownika...'"
-              [id]="username"
-              [formControlName]="username"
-            />
-          </app-form-field>
-        </div>
-        @if(type() !== 'info') {
-        <div class="d-flex flex-column mt-4">
-          @let password = 'password';
-          <label [for]="password">{{ 'USER_COMPONENT.form.labels.password' | translateFallback: 'Hasło' }}</label>
-          <app-form-field>
-            <input
-              type="text"
-              class="mt-1 input"
-              [placeholder]="'USER_COMPONENT.form.placeholders.password' | translateFallback: 'Wpisz hasło...'"
-              [id]="password"
-              [formControlName]="password"
-            />
-          </app-form-field>
-        </div>
-        }
-        <div class="d-flex flex-column mt-4">
-          @let name = 'name';
-          <label [for]="name">{{ 'USER_COMPONENT.form.labels.name' | translateFallback: 'Imię' }}</label>
-          <app-form-field>
-            <input
-              type="text"
-              class="mt-1 input"
-              [placeholder]="'USER_COMPONENT.form.placeholders.name' | translateFallback: 'Wpisz imię...'"
-              [id]="name"
-              [formControlName]="name"
-            />
-          </app-form-field>
-        </div>
-        <div class="d-flex flex-column mt-4">
-          @let surname = 'surname';
-          <label [id]="surname" [for]="surname">
-            {{ 'USER_COMPONENT.form.labels.surname' | translateFallback: 'Nazwisko' }}
-          </label>
-          <app-form-field>
-            <input
-              type="text"
-              class="mt-1 input"
-              [placeholder]="'USER_COMPONENT.form.placeholders.surname' | translateFallback: 'Wpisz nazwisko...'"
-              [id]="surname"
-              [formControlName]="surname"
-            />
-          </app-form-field>
-        </div>
+  <form class="d-flex justify-content-between" [formGroup]="formGroup()!">
+    <div class="modal-split-container p-1">
+      <div class="d-flex flex-column">
+        @let username = 'username';
+        <label [for]="username">
+          {{ 'USER_COMPONENT.form.labels.username' | translateFallback: 'Nazwa użytkownika' }}
+        </label>
+        <app-form-field>
+          <input
+            type="text"
+            class="mt-1 input"
+            [placeholder]="'USER_COMPONENT.form.placeholders.username' | translateFallback: 'Wpisz nazwę użytkownika...'"
+            [id]="username"
+            [formControlName]="username"
+          />
+        </app-form-field>
       </div>
-      <div class="modal-split-container p-1">
-        <div class="d-flex flex-column mt-4">
-          @let email = 'email';
-          <label [id]="email" [for]="email">
-            {{ 'USER_COMPONENT.form.labels.email' | translateFallback: 'Adres email' }}
-          </label>
-          <app-form-field>
-            <input
-              type="text"
-              class="mt-1 input"
-              [placeholder]="'USER_COMPONENT.form.placeholders.email' | translateFallback: 'Wpisz adres email...'"
-              [id]="email"
-              [formControlName]="email"
-            />
-          </app-form-field>
-        </div>
-        <div class="d-flex flex-column mt-4">
-          @let role = 'role';
-          <label [id]="role" [for]="role">{{ 'USER_COMPONENT.form.labels.role' | translateFallback: 'Rola' }}</label>
-          <app-form-field>
-            <select class="mt-1 input" [id]="role" [formControlName]="role">
-              <option [ngValue]="''" hidden disabled selected>
-                {{'USER_COMPONENT.form.placeholders.role' | translateFallback: 'Wybierz role...'}}
-              </option>
-              @for(item of roles; track $index) {
-              <option [value]="item.role">{{item.label | translateFallback: item.labelFallback}}</option>
-              }
-            </select>
-          </app-form-field>
-        </div>
-        <div class="d-flex align-items-center mt-4">
-          @let disable = 'disable';
-          <label class="me-3" [for]="disable">
-            {{ 'USER_COMPONENT.form.labels.disable' | translateFallback: 'Nieaktywny' }}
-          </label>
-          <app-form-field>
-            <input type="checkbox" class="mt-1 input" [id]="disable" [formControlName]="disable" />
-          </app-form-field>
-        </div>
+      @if(type() !== 'info') {
+      <div class="d-flex flex-column mt-4">
+        @let password = 'password';
+        <label [for]="password">{{ 'USER_COMPONENT.form.labels.password' | translateFallback: 'Hasło' }}</label>
+        <app-form-field>
+          <input
+            type="text"
+            class="mt-1 input"
+            [placeholder]="'USER_COMPONENT.form.placeholders.password' | translateFallback: 'Wpisz hasło...'"
+            [id]="password"
+            [formControlName]="password"
+          />
+        </app-form-field>
       </div>
-    </form>
-  </div>
+      }
+      <div class="d-flex flex-column mt-4">
+        @let name = 'name';
+        <label [for]="name">{{ 'USER_COMPONENT.form.labels.name' | translateFallback: 'Imię' }}</label>
+        <app-form-field>
+          <input
+            type="text"
+            class="mt-1 input"
+            [placeholder]="'USER_COMPONENT.form.placeholders.name' | translateFallback: 'Wpisz imię...'"
+            [id]="name"
+            [formControlName]="name"
+          />
+        </app-form-field>
+      </div>
+      <div class="d-flex flex-column mt-4">
+        @let surname = 'surname';
+        <label [id]="surname" [for]="surname">
+          {{ 'USER_COMPONENT.form.labels.surname' | translateFallback: 'Nazwisko' }}
+        </label>
+        <app-form-field>
+          <input
+            type="text"
+            class="mt-1 input"
+            [placeholder]="'USER_COMPONENT.form.placeholders.surname' | translateFallback: 'Wpisz nazwisko...'"
+            [id]="surname"
+            [formControlName]="surname"
+          />
+        </app-form-field>
+      </div>
+    </div>
+    <div class="modal-split-container p-1">
+      <div class="d-flex flex-column">
+        @let email = 'email';
+        <label [id]="email" [for]="email">
+          {{ 'USER_COMPONENT.form.labels.email' | translateFallback: 'Adres email' }}
+        </label>
+        <app-form-field>
+          <input
+            type="text"
+            class="mt-1 input"
+            [placeholder]="'USER_COMPONENT.form.placeholders.email' | translateFallback: 'Wpisz adres email...'"
+            [id]="email"
+            [formControlName]="email"
+          />
+        </app-form-field>
+      </div>
+      <div class="d-flex flex-column mt-4">
+        @let role = 'role';
+        <label [id]="role" [for]="role">{{ 'USER_COMPONENT.form.labels.role' | translateFallback: 'Rola' }}</label>
+        <app-form-field>
+          <select class="mt-1 input" [id]="role" [formControlName]="role">
+            <option [ngValue]="''" hidden disabled selected>
+              {{'USER_COMPONENT.form.placeholders.role' | translateFallback: 'Wybierz role...'}}
+            </option>
+            @for(item of roles; track $index) {
+            <option [value]="item.role">{{item.label | translateFallback: item.labelFallback}}</option>
+            }
+          </select>
+        </app-form-field>
+      </div>
+      <div class="d-flex align-items-center mt-4">
+        @let disable = 'disable';
+        <label class="me-3" [for]="disable">
+          {{ 'USER_COMPONENT.form.labels.disable' | translateFallback: 'Nieaktywny' }}
+        </label>
+        <app-form-field>
+          <input type="checkbox" class="mt-1 input" [id]="disable" [formControlName]="disable" />
+        </app-form-field>
+      </div>
+    </div>
+  </form>
 </app-modal-base>

@@ -9,7 +9,7 @@
   <div class="d-flex flex-column">
     <form class="d-flex justify-content-between" [formGroup]="formGroup()!">
       <div class="modal-split-container p-1">
-        <div class="d-flex flex-column mt-4">
+        <div class="d-flex flex-column">
           @let name = 'name';
           <label [for]="name">{{ 'SUPPLIER_COMPONENT.form.labels.name' | translateFallback: 'Nazwa' }}</label>
           <app-form-field>
@@ -65,33 +65,9 @@
             />
           </app-form-field>
         </div>
-        <div class="d-flex flex-column mt-4">
-          @let country = 'country';
-          <label [id]="country" [for]="country">
-            {{ 'SUPPLIER_COMPONENT.form.labels.country' | translateFallback: 'Kraj' }}
-          </label>
-          <app-form-field>
-            <input
-              type="text"
-              class="mt-1 input"
-              [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.country' | translateFallback: 'Wpisz kraj...'"
-              [id]="country"
-              [formControlName]="country"
-            />
-          </app-form-field>
-        </div>
-        <div class="d-flex align-items-center mt-4">
-          @let disable = 'disable';
-          <label class="me-3" [for]="disable">
-            {{ 'SUPPLIER_COMPONENT.form.labels.disable' | translateFallback: 'Nieaktywny' }}
-          </label>
-          <app-form-field>
-            <input type="checkbox" class="mt-1 input" [id]="disable" [formControlName]="disable" />
-          </app-form-field>
-        </div>
       </div>
       <div class="modal-split-container p-1">
-        <div class="d-flex flex-column mt-4">
+        <div class="d-flex flex-column">
           @let phoneNumber = 'phoneNumber';
           <label [id]="phoneNumber" [for]="phoneNumber">
             {{ 'SUPPLIER_COMPONENT.form.labels.phoneNumber' | translateFallback: 'Numer telefonu' }}
@@ -122,6 +98,32 @@
           </app-form-field>
         </div>
         <div class="d-flex flex-column mt-4">
+          @let country = 'country';
+          <label [id]="country" [for]="country">
+            {{ 'SUPPLIER_COMPONENT.form.labels.country' | translateFallback: 'Kraj' }}
+          </label>
+          <app-form-field>
+            <input
+              type="text"
+              class="mt-1 input"
+              [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.country' | translateFallback: 'Wpisz kraj...'"
+              [id]="country"
+              [formControlName]="country"
+            />
+          </app-form-field>
+        </div>
+        <div class="d-flex align-items-center mt-4">
+          @let disable = 'disable';
+          <label class="me-3" [for]="disable">
+            {{ 'SUPPLIER_COMPONENT.form.labels.disable' | translateFallback: 'Nieaktywny' }}
+          </label>
+          <app-form-field>
+            <input type="checkbox" class="mt-1 input" [id]="disable" [formControlName]="disable" />
+          </app-form-field>
+        </div>
+      </div>
+      <div class="modal-split-container p-1">
+        <div class="d-flex flex-column">
           @let processesIds = 'processesIds';
           <label [id]="processesIds" [for]="processesIds">
             {{ 'SUPPLIER_COMPONENT.form.labels.role' | translateFallback: 'Procesy' }}
@@ -142,7 +144,7 @@
         <div class="modal-list-container">
           <!-- prettier-ignore -->
           <p>{{ 'SUPPLIER_COMPONENT.form.labels.selectedProcess' | translateFallback: 'Wybrane procesy'}}:
-          </p>
+            </p>
           @for (item of _supplierComponentService.selectedProcessList(); track $index) {
           <div class="d-flex p-1">
             <p>{{item.name}}</p>
@@ -160,8 +162,8 @@
         } @else {
         <!-- prettier-ignore -->
         <p>
-          {{ 'SUPPLIER_COMPONENT.form.labels.emptyProcessList' | translateFallback: 'Brak dodanych procesów...'}}
-        </p>
+            {{ 'SUPPLIER_COMPONENT.form.labels.emptyProcessList' | translateFallback: 'Brak dodanych procesów...'}}
+          </p>
         }
       </div>
     </form>

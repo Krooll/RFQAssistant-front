@@ -3,29 +3,41 @@ import { ProjectDto, UpdateProjectRequest } from '@core/dtos';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { Button } from '@shared/shared-ui/button/button';
-import { ProjectFormService } from '@features/project/project-form-service';
+import { ProjectFormService } from '@features/project/services/project-form-service';
 import { ItemList } from '@shared/shared-ui/item-list/item-list';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { DocumentCard } from '@shared/shared-ui/document-card/document-card';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { SectionButtonsTypes } from '@features/project/section-buttons/section-buttons';
+import { SectionButtonsTypes } from '@features/project/types/section-buttons/section-buttons';
 import { DateService } from '@core/services/date-service/date-service';
 import { DownloadService } from '@core/services/download-service/download-service';
+import { ProjectMetricService } from '@features/project/services/project-metric-service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-project-form',
-  imports: [TranslateFallbackPipe, FormsModule, ReactiveFormsModule, Button, ItemList, FormField, DocumentCard],
-  providers: [ProjectFormService],
+  imports: [
+    TranslateFallbackPipe,
+    FormsModule,
+    ReactiveFormsModule,
+    Button,
+    ItemList,
+    FormField,
+    DocumentCard,
+    DatePipe,
+  ],
+  providers: [ProjectFormService, ProjectMetricService],
   templateUrl: './project-form.html',
   styleUrl: './project-form.scss',
 })
 export class ProjectForm implements OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
   readonly _projectFormService = inject(ProjectFormService);
+  private readonly _dateService = inject(DateService);
+  readonly _metricService = inject(ProjectMetricService);
+  private readonly _downloadService = inject(DownloadService);
   private readonly _injector = inject(Injector);
   private readonly _destroyRef = inject(DestroyRef);
-  private readonly _dateService = inject(DateService);
-  private readonly _downloadService = inject(DownloadService);
 
   protected projectData = model<ProjectDto>();
 
@@ -46,7 +58,7 @@ export class ProjectForm implements OnDestroy {
         name: ['', Validators.required],
         projectNumber: ['', Validators.required],
         projectSOP: ['', Validators.required],
-        //metrics: ['', Validators.required],
+        metrics: [''],
         description: ['', Validators.maxLength(500)],
         status: [''],
       }),
@@ -70,12 +82,13 @@ export class ProjectForm implements OnDestroy {
       validTo: this._dateService.changeDateToISOString(formData.validTo),
       validFrom: this._dateService.changeDateToISOString(formData.validFrom),
       projectSOP: this._dateService.changeDateToISOString(formData.projectSOP),
+      metrics: this._metricService.generatedMetricList(),
     };
 
     this.updateProject(updateProjectRequest);
   }
 
-  private updateProject(payload: UpdateProjectRequest) {
+  private updateProject(payload: UpdateProjectRequest): void {
     this._projectFormService
       .updateProject(payload)
       .pipe(takeUntilDestroyed(this._destroyRef))
@@ -99,10 +112,13 @@ export class ProjectForm implements OnDestroy {
       status: this.projectData()?.status,
     });
 
+    this._metricService.generatedMetricList.set(this.projectData()?.metrics ?? []);
+    this._metricService.percent.set(this.projectData()?.metrics?.[0]?.percent ?? 0);
+
     this.formGroup()?.disable();
   }
 
-  private getProjectById(id: number | undefined) {
+  private getProjectById(id: number | undefined): void {
     if (!id) return;
     this._projectFormService
       .getProjectById(id)
@@ -129,11 +145,11 @@ export class ProjectForm implements OnDestroy {
       });
   }
 
-  protected onInfoComponentButtonClick(id: number | undefined) {
+  protected onInfoComponentButtonClick(id: number | undefined): void {
     this._projectFormService.getCurrentComponentById(id, this._injector);
   }
 
-  protected onDeleteComponentButtonClick(id: number | undefined) {
+  protected onDeleteComponentButtonClick(id: number | undefined): void {
     if (!id) return;
 
     this._projectFormService
@@ -148,7 +164,7 @@ export class ProjectForm implements OnDestroy {
       });
   }
 
-  protected onAddDocumentComponentButtonClick(id: number | undefined) {
+  protected onAddDocumentComponentButtonClick(id: number | undefined): void {
     if (!id) return;
 
     this._projectFormService
@@ -163,7 +179,7 @@ export class ProjectForm implements OnDestroy {
       });
   }
 
-  protected onDeleteDocumentButtonClick(id: number | undefined) {
+  protected onDeleteDocumentButtonClick(id: number | undefined): void {
     if (!id) return;
 
     this._projectFormService
@@ -178,11 +194,34 @@ export class ProjectForm implements OnDestroy {
       });
   }
 
-  protected onDownloadDocumentButtonClick(id: number | undefined) {
+  protected onProjectMetricButtonClick(): void {
+    this._projectFormService
+      .showMetricModal(this._injector)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (metricFormData: { metricsYears: number; metricsPercent: number }) => {
+          const sop = this.projectData()?.projectSOP;
+          if (metricFormData && sop) {
+            this._metricService.generateMetricList(metricFormData, sop);
+          }
+        },
+      });
+  }
+
+  protected onPaste(event: ClipboardEvent, index: number): void {
+    event.preventDefault();
+    const clipboardText = event.clipboardData?.getData('text');
+
+    if (clipboardText) {
+      this._metricService.pasteMetrics(index, clipboardText);
+    }
+  }
+
+  protected onDownloadDocumentButtonClick(id: number | undefined): void {
     this._downloadService.downloadCurrentFile(id);
   }
 
-  protected onPreviewDocumentButtonClick(id: number | undefined) {
+  protected onPreviewDocumentButtonClick(id: number | undefined): void {
     this._downloadService.previewCurrentFile(id);
   }
 

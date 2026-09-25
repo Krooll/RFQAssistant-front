@@ -4,7 +4,7 @@ import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/mod
 import { CreateProjectRequest, SimpleProjectDto, UserDto } from '@core/dtos';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationService } from '@core/services/notification-service/notification-service';
-import { ProjectService } from '@features/project/project-service';
+import { ProjectService } from '@features/project/services/project-service';
 import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';

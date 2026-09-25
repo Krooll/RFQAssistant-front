@@ -21,15 +21,15 @@ export class Process implements OnInit {
     this._processComponentService.getAllProcess();
   }
 
-  protected onAddButtonClicked() {
+  protected onAddButtonClicked(): void {
     this._processComponentService.showCreateProcessModal(this._injector);
   }
 
-  protected onInfoButtonClicked(id: number | undefined) {
+  protected onInfoButtonClicked(id: number | undefined): void {
     this._processComponentService.getCurrentProcessById(id, this._injector);
   }
 
-  protected onDeleteButtonCLicked(id: number | undefined) {
+  protected onDeleteButtonCLicked(id: number | undefined): void {
     this._processComponentService.showDeleteModal(id, this._injector);
   }
 

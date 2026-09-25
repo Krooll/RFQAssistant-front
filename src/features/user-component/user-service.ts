@@ -11,6 +11,7 @@ import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
 import { SpringPageable } from '@core/core-dtos/pageable/pageable';
+import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 
 @Injectable()
 export class UserService {
@@ -38,7 +39,7 @@ export class UserService {
     return this._baseHttpService.patchData<UserDto, UpdateUserRequest>(Endpoints.user, updateUserRequest);
   }
 
-  public getAllUsers() {
+  public getAllUsers(): void {
     this.getUsers(this.pageParams(), new HttpParams())
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
@@ -51,12 +52,12 @@ export class UserService {
       });
   }
 
-  public updatePageParams(params: PageRequestParams) {
+  public updatePageParams(params: PageRequestParams): void {
     this.pageParams.set(params);
     this.getAllUsers();
   }
 
-  public getCurrentUserById(id: number | undefined, injector: Injector) {
+  public getCurrentUserById(id: number | undefined, injector: Injector): void {
     if (!id) {
       return;
     }
@@ -72,9 +73,9 @@ export class UserService {
       });
   }
 
-  public showCreateUserModal(injector: Injector) {
+  public showCreateUserModal(injector: Injector): void {
     const createModalConfiguration: ModalDataConfiguration<UserDto> = {
-      type: 'create',
+      type: ModalTypes.create,
       title: 'MODALS.user.create',
       titleFallback: 'Dodaj nowego użytkownika',
     };
@@ -94,9 +95,9 @@ export class UserService {
       });
   }
 
-  public showInfoUserModal(response: UserDto, injector: Injector) {
+  public showInfoUserModal(response: UserDto, injector: Injector): void {
     const createModalConfiguration: ModalDataConfiguration<UserDto> = {
-      type: 'info',
+      type: ModalTypes.info,
       title: 'MODALS.user.info',
       titleFallback: 'Więcej informacji',
       data: response,
@@ -115,13 +116,13 @@ export class UserService {
       });
   }
 
-  public showDeleteModal(id: number | undefined, injector: Injector) {
+  public showDeleteModal(id: number | undefined, injector: Injector): void {
     if (!id) {
       return;
     }
 
     const createModalConfiguration: ModalDataConfiguration<{ id: number; endpoint: Endpoint }> = {
-      type: 'delete',
+      type: ModalTypes.delete,
       title: 'MODALS.user.delete',
       titleFallback: 'Usuń użytkownika',
       data: { id: id, endpoint: Endpoints.user },
@@ -142,7 +143,7 @@ export class UserService {
       });
   }
 
-  public closeCurrentModal(reloadPage?: boolean) {
+  public closeCurrentModal(reloadPage?: boolean): void {
     this._modalService.closeCurrentModal(reloadPage);
   }
 }

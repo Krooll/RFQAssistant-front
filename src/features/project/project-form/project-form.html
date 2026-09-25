@@ -1,21 +1,25 @@
 <div class="component-container d-flex flex-column">
-  <div class="d-flex justify-content-start">
-    @for(button of _projectFormService.sectionButtonsList; track $index) {
-    <app-button (emitButtonClick)="_projectFormService.toggleFormSection(button.type)">
-      {{ button.label | translateFallback: button.labelTranslateFallback }}
+  <div style="padding: 0.6rem 0 0.6rem 0" class="d-flex justify-content-between">
+    <div class="d-flex justify-content-start">
+      @for(button of _projectFormService.sectionButtonsList; track $index) {
+      <app-button (emitButtonClick)="_projectFormService.toggleFormSection(button.type)">
+        {{ button.label | translateFallback: button.labelTranslateFallback }}
+      </app-button>
+      }
+    </div>
+    @if(formGroup()?.disabled && this._projectFormService.activeProjectFormSection() === SectionButtonsTypes.general) {
+    <app-button [buttonDisabled]="formGroup()?.invalid" (emitButtonClick)="onEdit()">
+      {{ 'BUTTONS.update' | translateFallback: 'Edytuj' }}
+    </app-button>
+    } @if(this._projectFormService.activeProjectFormSection() === SectionButtonsTypes.component) {
+    <app-button (emitButtonClick)="onAddComponentButtonClick()">
+      {{ 'PROJECT_COMPONENT.form.addComponentButton' | translateFallback: 'Dodaj komponent' }}
     </app-button>
     }
   </div>
   @switch(_projectFormService.activeProjectFormSection()) { @case (SectionButtonsTypes.general) {
-  <div class="d-flex justify-content-between">
+  <div class="list-container">
     <h3>{{ 'PROJECT_COMPONENT.projectFormSectionTitle' | translateFallback: 'Projekt' }}</h3>
-    @if(formGroup()?.disabled) {
-    <app-button [buttonDisabled]="formGroup()?.invalid" (emitButtonClick)="onEdit()">
-      {{ 'BUTTONS.update' | translateFallback: 'Edytuj' }}
-    </app-button>
-    }
-  </div>
-  <div class="list-container p-1">
     <form [formGroup]="formGroup()!">
       <div class="d-flex justify-content-between">
         <div class="p-1 w-100">
@@ -123,25 +127,73 @@
               />
             </app-form-field>
           </div>
-          <div class="d-flex justify-content-end mt-4">
-            @if(!formGroup()?.disabled) {
-            <app-button (emitButtonClick)="onAbort()">{{ 'BUTTONS.abort' | translateFallback: 'Anuluj' }}</app-button>
-            <app-button [buttonDisabled]="formGroup()?.invalid" (emitButtonClick)="onSubmit()">
-              {{ 'BUTTONS.save' | translateFallback: 'Zapisz' }}
-            </app-button>
-            }
-          </div>
         </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <app-button (emitButtonClick)="onProjectMetricButtonClick()">Skonfiguruj metrykę</app-button>
+      </div>
+      <h3>{{ 'PROJECT_COMPONENT.metricFormSectionTitle' | translateFallback: 'Metryka' }}</h3>
+      <div class="d-flex flex-wrap">
+        @if (_metricService.generatedMetricList().length > 0) {
+        <div style="overflow-x: auto" class="d-flex">
+          <table class="metrics-table">
+            <thead>
+              <tr>
+                <th class="row-header">Rok</th>
+                @for (metric of _metricService.generatedMetricList(); track $index) {
+                <th>{{ metric.date | date:'yyyy' }}</th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Rząd 1: Basic (Wpisywanie / Wklejanie z Excela) -->
+              <tr>
+                <td class="row-header">Basic</td>
+                @for (metric of _metricService.generatedMetricList(); track $index) {
+                <td>
+                  <input
+                    type="number"
+                    [value]="metric.basic ?? ''"
+                    (input)="_metricService.updateMetric($index, $any($event.target).valueAsNumber)"
+                    (paste)="onPaste($event, $index)"
+                    placeholder="0"
+                  />
+                </td>
+                }
+              </tr>
+
+              <!-- Rząd 2: Basic + % (Podgląd - Readonly) -->
+              <tr>
+                <td class="row-header">Basic + {{ _metricService.percent() }}%</td>
+                @for (metric of _metricService.generatedMetricList(); track $index) {
+                <td>
+                  <input
+                    type="number"
+                    [value]="metric.basicWithPercent ?? ''"
+                    readonly
+                    tabindex="-1"
+                    class="readonly-cell"
+                  />
+                </td>
+                }
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        }
+      </div>
+      <div class="d-flex justify-content-end mt-1">
+        @if(!formGroup()?.disabled) {
+        <app-button (emitButtonClick)="onAbort()">{{ 'BUTTONS.abort' | translateFallback: 'Anuluj' }}</app-button>
+        <app-button [buttonDisabled]="formGroup()?.invalid" (emitButtonClick)="onSubmit()">
+          {{ 'BUTTONS.save' | translateFallback: 'Zapisz' }}
+        </app-button>
+        }
       </div>
     </form>
   </div>
   } @case (SectionButtonsTypes.component) {
-  <div class="d-flex justify-content-between">
-    <h3>{{ 'PROJECT_COMPONENT.componentFormSectionTitle' | translateFallback: 'Komponenty' }}</h3>
-    <app-button (emitButtonClick)="onAddComponentButtonClick()">
-      {{ 'PROJECT_COMPONENT.form.addComponentButton' | translateFallback: 'Dodaj komponent' }}
-    </app-button>
-  </div>
+  <h3>{{ 'PROJECT_COMPONENT.componentFormSectionTitle' | translateFallback: 'Komponenty' }}</h3>
   <div class="list-container p-1">
     <div class="project-component-container d-flex flex-column p-1">
       <div class="project-component-list">

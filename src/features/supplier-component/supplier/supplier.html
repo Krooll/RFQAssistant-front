@@ -52,21 +52,6 @@
           </span>
           {{ item.emailAddress }}
         </p>
-        <div class="d-flex flex-column">
-          <p>
-            <span class="font-weight-bold">
-              {{ 'SUPPLIER_COMPONENT.form.labels.process' | translateFallback: 'Procesy'}}:
-            </span>
-          </p>
-          @for(process of item.processes; track $index) {
-          <p>
-            <span class="font-weight-bold">
-              {{ 'SUPPLIER_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:
-            </span>
-            {{ process.name }}
-          </p>
-          }
-        </div>
       </div>
     </app-item-list>
     }

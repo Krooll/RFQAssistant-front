@@ -63,6 +63,12 @@
     "delete": {
       "title": "Uwaga!",
       "text": "Czy na pewno chcesz usunąc tę pozycję?"
+    },
+    "metric": {
+      "create": "Skonfiguruj metrykę",
+      "edit": "Edytuj metrykę",
+      "delete": "Usuń metrykę",
+      "info": "Więcej informacji"
     }
   },
   "BUTTONS": {
@@ -170,6 +176,7 @@
     "componentFormTitle": "Nowy projekt",
     "componentFormEditTitle": "Edytuj projekt",
     "projectFormSectionTitle": "Projekt",
+    "metricFormSectionTitle": "Metryka",
     "componentFormSectionTitle": "Komponenty",
     "documentFormSectionTitle": "Dokumenty",
     "sectionButtons": {
@@ -191,7 +198,9 @@
         "status": "Status projektu",
         "selectedComponentProcesses": "Wybrane procesy",
         "emptyDocumentList": "Brak dodanych dokumentów...",
-        "emptyProcessList": "Brak wybranych procesów..."
+        "emptyProcessList": "Brak wybranych procesów...",
+        "metricsYears": "Lata",
+        "metricsPercent": "Procenty"
       },
       "placeholders": {
         "validFrom": "Wybierz datę od...",
@@ -200,7 +209,9 @@
         "description": "Wpisz opis...",
         "projectNumber": "Wpisz numer projektu...",
         "projectSOP": "Wpisz SOP projektu...",
-        "status": "Wybierz status projektu"
+        "status": "Wybierz status projektu",
+        "metricsYears": "Wpisz liczbę lat...",
+        "metricsPercent": "Wpisz procent..."
       }
     }
   },

@@ -70,16 +70,7 @@ export class ProcessModal implements OnDestroy {
   protected onSubmit(): void {
     const currentModalType = this.type();
 
-    if (!currentModalType) {
-      return;
-    }
-
-    if (currentModalType === ModalTypes.info) {
-      this.onUpdate();
-      return;
-    }
-
-    if (!this.isFormValid()) {
+    if (!currentModalType || !this.isFormValid()) {
       return;
     }
 
@@ -101,6 +92,11 @@ export class ProcessModal implements OnDestroy {
           id: this.data()?.id,
         };
         this.updateProcess(updateProcessPayload);
+        break;
+      }
+
+      case ModalTypes.info: {
+        this.onUpdate();
         break;
       }
     }

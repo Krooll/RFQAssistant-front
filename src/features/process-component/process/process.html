@@ -26,11 +26,9 @@
     </app-item-list>
     }
   </div>
-  <div class="w-100">
-    <app-paginator
-      (pageChange)="_processComponentService.updatePageParams($event)"
-      [totalElements]="_processComponentService.totalElements()"
-      [pageParams]="_processComponentService.pageParams()"
-    ></app-paginator>
-  </div>
+  <app-paginator
+    (pageChange)="_processComponentService.updatePageParams($event)"
+    [totalElements]="_processComponentService.totalElements()"
+    [pageParams]="_processComponentService.pageParams()"
+  ></app-paginator>
 </div>

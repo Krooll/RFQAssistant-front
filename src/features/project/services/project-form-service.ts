@@ -1,6 +1,4 @@
 import { DestroyRef, inject, Injectable, Injector, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { RouteEndpoints } from '@env/route-endpoints';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
 import { ComponentDto, DocumentDto, ProjectDto, UpdateProjectRequest } from '@core/dtos';
 import { Observable } from 'rxjs';
@@ -11,13 +9,14 @@ import { TechnicalSpecificationComponentModal } from '@features/technical-specif
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
 import { DocumentModal } from '@features/document-component/document-modal/document-modal';
-import { SectionButtons, SectionButtonsTypes } from '@features/project/section-buttons/section-buttons';
-import { ProjectStatuses } from '@features/project/project-status/project-status';
+import { SectionButtons, SectionButtonsTypes } from '@features/project/types/section-buttons/section-buttons';
+import { ProjectStatuses } from '@features/project/types/project-status/project-status';
+import { ProjectMetricsModal } from '@features/project/project-metrics-modal/project-metrics-modal';
+import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 
 @Injectable()
 export class ProjectFormService {
   private readonly _baseHttpService = inject(BaseHttpService);
-  private readonly _router = inject(Router);
   private readonly _modalService = inject(ModalService);
   private readonly _destroyRef = inject(DestroyRef);
 
@@ -76,7 +75,7 @@ export class ProjectFormService {
 
   public showCreateComponentModal(injector: Injector): Observable<boolean> {
     const createModalConfiguration: ModalDataConfiguration<ComponentDto> = {
-      type: 'create',
+      type: ModalTypes.create,
       title: 'MODALS.component.create',
       titleFallback: 'Dodaj nowy komponent',
     };
@@ -90,7 +89,7 @@ export class ProjectFormService {
 
   public showInfoComponentModal(response: ComponentDto, injector: Injector) {
     const createModalConfiguration: ModalDataConfiguration<ComponentDto> = {
-      type: 'info',
+      type: ModalTypes.info,
       title: 'MODALS.component.info',
       titleFallback: 'Więcej informacji',
       data: response,
@@ -111,7 +110,7 @@ export class ProjectFormService {
 
   public showDeleteComponentModal(id: number, injector: Injector): Observable<boolean> {
     const createModalConfiguration: ModalDataConfiguration<{ id: number; endpoint: Endpoint }> = {
-      type: 'delete',
+      type: ModalTypes.delete,
       title: 'MODALS.component.delete',
       titleFallback: 'Usuń komponent',
       data: { id: id, endpoint: Endpoints.component },
@@ -126,7 +125,7 @@ export class ProjectFormService {
 
   public showCreateDocumentModal(id: number, injector: Injector): Observable<boolean> {
     const createModalConfiguration: ModalDataConfiguration<{ componentId: number; data: DocumentDto | null }> = {
-      type: 'create',
+      type: ModalTypes.create,
       title: 'MODALS.document.create',
       titleFallback: 'Dodaj dokument',
       data: { componentId: id, data: null },
@@ -137,7 +136,7 @@ export class ProjectFormService {
 
   public showDeleteDocumentModal(id: number, injector: Injector): Observable<boolean> {
     const createModalConfiguration: ModalDataConfiguration<{ id: number; endpoint: Endpoint }> = {
-      type: 'delete',
+      type: ModalTypes.delete,
       title: 'MODALS.document.delete',
       titleFallback: 'Usuń dokument',
       data: { id: id, endpoint: Endpoints.document },
@@ -150,11 +149,25 @@ export class ProjectFormService {
       .afterClosed();
   }
 
-  public toggleFormSection(type: string) {
+  public showMetricModal(injector: Injector): Observable<{ metricsYears: number; metricsPercent: number }> {
+    const createModalConfiguration: ModalDataConfiguration<{ metricsYears: number; metricsPercent: number }> = {
+      type: ModalTypes.create,
+      title: 'MODALS.metric.create',
+      titleFallback: 'Skonfiguruj metrykę',
+    };
+
+    return this._modalService
+      .openModal(ProjectMetricsModal, createModalConfiguration, {
+        injector: injector,
+      })
+      .afterClosed();
+  }
+
+  public toggleFormSection(type: string): void {
     this.activeProjectFormSection.set(type);
   }
 
-  public closeFormAndRouteToProjectList() {
-    this._router.navigateByUrl(RouteEndpoints.project);
+  public closeCurrentModal(formData: { metricsYear: number; metricsPercent: number }): void {
+    this._modalService.closeCurrentModal(formData);
   }
 }

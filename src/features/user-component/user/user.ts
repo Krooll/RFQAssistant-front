@@ -21,15 +21,15 @@ export class User implements OnInit {
     this._userComponentService.getAllUsers();
   }
 
-  protected onAddButtonClicked() {
+  protected onAddButtonClicked(): void {
     this._userComponentService.showCreateUserModal(this._injector);
   }
 
-  protected onInfoButtonClicked(id: number | undefined) {
+  protected onInfoButtonClicked(id: number | undefined): void {
     this._userComponentService.getCurrentUserById(id, this._injector);
   }
 
-  protected onDeleteButtonCLicked(id: number | undefined) {
+  protected onDeleteButtonCLicked(id: number | undefined): void {
     this._userComponentService.showDeleteModal(id, this._injector);
   }
 
