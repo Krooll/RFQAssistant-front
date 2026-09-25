@@ -14,7 +14,7 @@ export class DocumentService {
     return this._baseHttpService.postData(Endpoints.documentUpload, this.toFormData(createDocumentRequest));
   }
 
-  public closeCurrentModal(reloadPage?: boolean) {
+  public closeCurrentModal(reloadPage?: boolean): void {
     this._modalService.closeCurrentModal(reloadPage);
   }
 

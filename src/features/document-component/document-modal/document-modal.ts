@@ -57,7 +57,7 @@ export class DocumentModal implements OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.resetCurrentForm();
   }
 
@@ -104,15 +104,6 @@ export class DocumentModal implements OnDestroy {
         this.createDocument(createDocumentRequest);
         break;
       }
-
-      // case ModalTypes.update: {
-      //   const updateProjectRequest:  = {
-      //     ...formValue,
-      //     id: this.data()?.data?.id,
-      //   };
-      //   this.updateProject(updateProjectRequest);
-      //   break;
-      // }
     }
   }
 
@@ -171,4 +162,6 @@ export class DocumentModal implements OnDestroy {
 
     return true;
   }
+
+  protected readonly ModalTypes = ModalTypes;
 }

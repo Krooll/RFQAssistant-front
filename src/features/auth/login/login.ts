@@ -5,7 +5,12 @@ import { Router } from '@angular/router';
 import { AuthorizationService } from '@core/services/auth-service/authorization';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { Button } from '@shared/shared-ui/button/button';
-import { ButtonConfiguration, ButtonTypes } from '@shared/model-ui/button-configuration/button-configuration';
+import {
+  ButtonConfiguration,
+  ButtonSizes,
+  ButtonTypes,
+  ButtonVariants,
+} from '@shared/model-ui/button-configuration/button-configuration';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouteEndpoints } from '@env/route-endpoints';
@@ -25,8 +30,8 @@ export class Login {
   protected formGroup = signal<FormGroup | undefined>(undefined);
 
   loginButtonConfig: ButtonConfiguration = {
-    variant: 'primary',
-    size: 'medium',
+    variant: ButtonVariants.primary,
+    size: ButtonSizes.medium,
     margin: 'mt-4',
   };
 
@@ -42,23 +47,30 @@ export class Login {
   protected onSubmit() {
     const formData = this.formGroup()?.value;
 
-    if (this.formGroup()?.valid) {
-      const payload: CreateAuthRequest = {
-        login: formData.login,
-        password: formData.password,
-      };
+    if (!this.isFormValid()) return;
 
-      this._authorizationService
-        .login(payload)
-        .pipe(takeUntilDestroyed(this._destroyRef))
-        .subscribe({
-          next: () => {
-            this._router.navigateByUrl(RouteEndpoints.dashboard);
-          },
-        });
-    } else {
+    const payload: CreateAuthRequest = {
+      login: formData.login,
+      password: formData.password,
+    };
+
+    this._authorizationService
+      .login(payload)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: () => {
+          this._router.navigateByUrl(RouteEndpoints.dashboard);
+        },
+      });
+  }
+
+  private isFormValid(): boolean {
+    if (this.formGroup()?.invalid) {
       this.formGroup()?.markAllAsTouched();
+      return false;
     }
+
+    return true;
   }
 
   protected readonly ButtonTypes = ButtonTypes;

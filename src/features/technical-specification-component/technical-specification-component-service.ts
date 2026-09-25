@@ -35,7 +35,7 @@ export class TechnicalSpecificationComponentService {
     return this._baseHttpService.getPageData(Endpoints.process, pageParamsService, extraPageParams);
   }
 
-  public getAllProcesses() {
+  public getAllProcesses(): void {
     this.getProcesses(this.processPageParams(), new HttpParams())
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
@@ -68,7 +68,7 @@ export class TechnicalSpecificationComponentService {
     this.selectedProcessList.update((currentList) => (currentList ?? []).filter((process) => process.id !== id));
   }
 
-  public closeCurrentModal(reloadPage?: boolean) {
+  public closeCurrentModal(reloadPage?: boolean): void {
     this._modalService.closeCurrentModal(reloadPage);
   }
 }

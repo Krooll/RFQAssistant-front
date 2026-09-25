@@ -6,39 +6,37 @@
   (updateOutput)="onSubmit()"
   [buttonDisabled]="formGroup()?.invalid"
 >
-  <div class="d-flex flex-column">
-    @if(type() === 'create'){
-    <input type="file" accept=".pdf" (change)="onFileSelected($event)" />
+  <form [formGroup]="formGroup()!">
+    <div class="d-flex flex-column mt-4">
+      @let name = 'name';
+      <label [for]="name">{{ 'DOCUMENT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa' }}</label>
+      <app-form-field>
+        <input
+          type="text"
+          class="mt-1 input"
+          [placeholder]="'DOCUMENT_COMPONENT.form.placeholders.name' | translateFallback: 'Wpisz nazwę...'"
+          [id]="name"
+          [formControlName]="name"
+        />
+      </app-form-field>
+    </div>
+    @if(type() === ModalTypes.create){
+    <input class="mt-4" type="file" accept=".pdf" (change)="onFileSelected($event)" />
     }
-    <form [formGroup]="formGroup()!">
-      <div class="d-flex flex-column mt-4">
-        @let name = 'name';
-        <label [for]="name">{{ 'DOCUMENT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa' }}</label>
-        <app-form-field>
-          <input
-            type="text"
-            class="mt-1 input"
-            [placeholder]="'DOCUMENT_COMPONENT.form.placeholders.name' | translateFallback: 'Wpisz nazwę...'"
-            [id]="name"
-            [formControlName]="name"
-          />
-        </app-form-field>
-      </div>
-      <div class="d-flex flex-column mt-4">
-        @let description = 'description';
-        <label [id]="description" [for]="description">
-          {{ 'DOCUMENT_COMPONENT.form.labels.description' | translateFallback: 'Opis' }}
-        </label>
-        <app-form-field>
-          <textarea
-            type="text"
-            class="mt-1 input"
-            [placeholder]="'DOCUMENT_COMPONENT.form.placeholders.description' | translateFallback: 'Wpisz opis...'"
-            [id]="description"
-            [formControlName]="description"
-          ></textarea>
-        </app-form-field>
-      </div>
-    </form>
-  </div>
+    <div class="d-flex flex-column mt-4">
+      @let description = 'description';
+      <label [id]="description" [for]="description">
+        {{ 'DOCUMENT_COMPONENT.form.labels.description' | translateFallback: 'Opis' }}
+      </label>
+      <app-form-field>
+        <textarea
+          type="text"
+          class="mt-1 input"
+          [placeholder]="'DOCUMENT_COMPONENT.form.placeholders.description' | translateFallback: 'Wpisz opis...'"
+          [id]="description"
+          [formControlName]="description"
+        ></textarea>
+      </app-form-field>
+    </div>
+  </form>
 </app-modal-base>

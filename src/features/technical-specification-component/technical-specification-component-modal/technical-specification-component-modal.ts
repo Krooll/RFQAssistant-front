@@ -94,16 +94,7 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
   protected onSubmit(): void {
     const currentModalType = this.type();
 
-    if (!currentModalType) {
-      return;
-    }
-
-    if (currentModalType === ModalTypes.info) {
-      this.onUpdate();
-      return;
-    }
-
-    if (!this.isFormValid()) {
+    if (!currentModalType || !this.isFormValid()) {
       return;
     }
 
@@ -128,6 +119,11 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
           processesIds: this.extractProcessesIds(),
         };
         this.updateComponent(updateComponentRequest);
+        break;
+      }
+
+      case ModalTypes.info: {
+        this.onUpdate();
         break;
       }
     }
