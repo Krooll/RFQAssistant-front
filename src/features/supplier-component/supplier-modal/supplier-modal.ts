@@ -91,16 +91,7 @@ export class SupplierModal implements OnInit, OnDestroy {
   protected onSubmit(): void {
     const currentModalType = this.type();
 
-    if (!currentModalType) {
-      return;
-    }
-
-    if (currentModalType === ModalTypes.info) {
-      this.onUpdate();
-      return;
-    }
-
-    if (!this.isFormValid()) {
+    if (!currentModalType || !this.isFormValid()) {
       return;
     }
 
@@ -125,6 +116,11 @@ export class SupplierModal implements OnInit, OnDestroy {
           processesIds: this.extractProcessesIds(),
         };
         this.updateSupplier(updateUserPayload);
+        break;
+      }
+
+      case ModalTypes.info: {
+        this.onUpdate();
         break;
       }
     }

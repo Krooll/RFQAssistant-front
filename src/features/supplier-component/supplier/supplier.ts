@@ -21,15 +21,15 @@ export class Supplier implements OnInit {
     this._supplierComponentService.getAllSuppliers();
   }
 
-  protected onAddButtonClicked() {
+  protected onAddButtonClicked(): void {
     this._supplierComponentService.showCreateSupplierModal(this._injector);
   }
 
-  protected onInfoButtonClicked(id: number | undefined) {
+  protected onInfoButtonClicked(id: number | undefined): void {
     this._supplierComponentService.getCurrentSupplierById(id, this._injector);
   }
 
-  protected onDeleteButtonCLicked(id: number | undefined) {
+  protected onDeleteButtonCLicked(id: number | undefined): void {
     this._supplierComponentService.showDeleteModal(id, this._injector);
   }
 

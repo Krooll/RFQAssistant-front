@@ -6,166 +6,164 @@
   (updateOutput)="onSubmit()"
   [buttonDisabled]="formGroup()?.invalid"
 >
-  <div class="d-flex flex-column">
-    <form class="d-flex justify-content-between" [formGroup]="formGroup()!">
-      <div class="modal-split-container p-1">
-        <div class="d-flex flex-column">
-          @let name = 'name';
-          <label [for]="name">{{ 'SUPPLIER_COMPONENT.form.labels.name' | translateFallback: 'Nazwa' }}</label>
-          <app-form-field>
-            <input
-              type="text"
-              class="mt-1 input"
-              [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.name' | translateFallback: 'Wpisz nazwę...'"
-              [id]="name"
-              [formControlName]="name"
-            />
-          </app-form-field>
-        </div>
-        <div class="d-flex flex-column mt-4">
-          @let street = 'street';
-          <label [for]="street">{{ 'SUPPLIER_COMPONENT.form.labels.street' | translateFallback: 'Ulica' }}</label>
-          <app-form-field>
-            <input
-              type="text"
-              class="mt-1 input"
-              [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.street' | translateFallback: 'Wpisz ulicę...'"
-              [id]="street"
-              [formControlName]="street"
-            />
-          </app-form-field>
-        </div>
-        <div class="d-flex flex-column mt-4">
-          @let city = 'city';
-          <label [id]="city" [for]="city">
-            {{ 'SUPPLIER_COMPONENT.form.labels.city' | translateFallback: 'Miasto' }}
-          </label>
-          <app-form-field>
-            <input
-              type="text"
-              class="mt-1 input"
-              [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.city' | translateFallback: 'Wpisz miasto...'"
-              [id]="city"
-              [formControlName]="city"
-            />
-          </app-form-field>
-        </div>
-        <div class="d-flex flex-column mt-4">
-          @let province = 'province';
-          <label [id]="province" [for]="province">
-            {{ 'SUPPLIER_COMPONENT.form.labels.province' | translateFallback: 'Województwo' }}
-          </label>
-          <app-form-field>
-            <input
-              type="text"
-              class="mt-1 input"
-              [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.province' | translateFallback: 'Wpisz województwo...'"
-              [id]="province"
-              [formControlName]="province"
-            />
-          </app-form-field>
-        </div>
+  <form class="d-flex justify-content-between" [formGroup]="formGroup()!">
+    <div class="modal-split-container p-1">
+      <div class="d-flex flex-column">
+        @let name = 'name';
+        <label [for]="name">{{ 'SUPPLIER_COMPONENT.form.labels.name' | translateFallback: 'Nazwa' }}</label>
+        <app-form-field>
+          <input
+            type="text"
+            class="mt-1 input"
+            [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.name' | translateFallback: 'Wpisz nazwę...'"
+            [id]="name"
+            [formControlName]="name"
+          />
+        </app-form-field>
       </div>
-      <div class="modal-split-container p-1">
-        <div class="d-flex flex-column">
-          @let phoneNumber = 'phoneNumber';
-          <label [id]="phoneNumber" [for]="phoneNumber">
-            {{ 'SUPPLIER_COMPONENT.form.labels.phoneNumber' | translateFallback: 'Numer telefonu' }}
-          </label>
-          <app-form-field>
-            <input
-              type="text"
-              class="mt-1 input"
-              [id]="phoneNumber"
-              [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.phoneNumber' | translateFallback: 'Wpisz numer tel. ...'"
-              [formControlName]="phoneNumber"
-            />
-          </app-form-field>
-        </div>
-        <div class="d-flex flex-column mt-4">
-          @let emailAddress = 'emailAddress';
-          <label [id]="emailAddress" [for]="emailAddress">
-            {{ 'SUPPLIER_COMPONENT.form.labels.email' | translateFallback: 'Adres email' }}
-          </label>
-          <app-form-field>
-            <input
-              type="text"
-              class="mt-1 input"
-              [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.emailAddress' | translateFallback: 'Wpisz adres email...'"
-              [id]="emailAddress"
-              [formControlName]="emailAddress"
-            />
-          </app-form-field>
-        </div>
-        <div class="d-flex flex-column mt-4">
-          @let country = 'country';
-          <label [id]="country" [for]="country">
-            {{ 'SUPPLIER_COMPONENT.form.labels.country' | translateFallback: 'Kraj' }}
-          </label>
-          <app-form-field>
-            <input
-              type="text"
-              class="mt-1 input"
-              [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.country' | translateFallback: 'Wpisz kraj...'"
-              [id]="country"
-              [formControlName]="country"
-            />
-          </app-form-field>
-        </div>
-        <div class="d-flex align-items-center mt-4">
-          @let disable = 'disable';
-          <label class="me-3" [for]="disable">
-            {{ 'SUPPLIER_COMPONENT.form.labels.disable' | translateFallback: 'Nieaktywny' }}
-          </label>
-          <app-form-field>
-            <input type="checkbox" class="mt-1 input" [id]="disable" [formControlName]="disable" />
-          </app-form-field>
-        </div>
+      <div class="d-flex flex-column mt-4">
+        @let street = 'street';
+        <label [for]="street">{{ 'SUPPLIER_COMPONENT.form.labels.street' | translateFallback: 'Ulica' }}</label>
+        <app-form-field>
+          <input
+            type="text"
+            class="mt-1 input"
+            [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.street' | translateFallback: 'Wpisz ulicę...'"
+            [id]="street"
+            [formControlName]="street"
+          />
+        </app-form-field>
       </div>
-      <div class="modal-split-container p-1">
-        <div class="d-flex flex-column">
-          @let processesIds = 'processesIds';
-          <label [id]="processesIds" [for]="processesIds">
-            {{ 'SUPPLIER_COMPONENT.form.labels.role' | translateFallback: 'Procesy' }}
-          </label>
-          <app-form-field>
-            <select class="mt-1 input" [id]="processesIds" [formControlName]="processesIds">
-              <!-- prettier-ignore -->
-              <option [ngValue]="''" hidden disabled selected>
+      <div class="d-flex flex-column mt-4">
+        @let city = 'city';
+        <label [id]="city" [for]="city">
+          {{ 'SUPPLIER_COMPONENT.form.labels.city' | translateFallback: 'Miasto' }}
+        </label>
+        <app-form-field>
+          <input
+            type="text"
+            class="mt-1 input"
+            [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.city' | translateFallback: 'Wpisz miasto...'"
+            [id]="city"
+            [formControlName]="city"
+          />
+        </app-form-field>
+      </div>
+      <div class="d-flex flex-column mt-4">
+        @let province = 'province';
+        <label [id]="province" [for]="province">
+          {{ 'SUPPLIER_COMPONENT.form.labels.province' | translateFallback: 'Województwo' }}
+        </label>
+        <app-form-field>
+          <input
+            type="text"
+            class="mt-1 input"
+            [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.province' | translateFallback: 'Wpisz województwo...'"
+            [id]="province"
+            [formControlName]="province"
+          />
+        </app-form-field>
+      </div>
+    </div>
+    <div class="modal-split-container p-1">
+      <div class="d-flex flex-column">
+        @let phoneNumber = 'phoneNumber';
+        <label [id]="phoneNumber" [for]="phoneNumber">
+          {{ 'SUPPLIER_COMPONENT.form.labels.phoneNumber' | translateFallback: 'Numer telefonu' }}
+        </label>
+        <app-form-field>
+          <input
+            type="text"
+            class="mt-1 input"
+            [id]="phoneNumber"
+            [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.phoneNumber' | translateFallback: 'Wpisz numer tel. ...'"
+            [formControlName]="phoneNumber"
+          />
+        </app-form-field>
+      </div>
+      <div class="d-flex flex-column mt-4">
+        @let emailAddress = 'emailAddress';
+        <label [id]="emailAddress" [for]="emailAddress">
+          {{ 'SUPPLIER_COMPONENT.form.labels.email' | translateFallback: 'Adres email' }}
+        </label>
+        <app-form-field>
+          <input
+            type="text"
+            class="mt-1 input"
+            [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.emailAddress' | translateFallback: 'Wpisz adres email...'"
+            [id]="emailAddress"
+            [formControlName]="emailAddress"
+          />
+        </app-form-field>
+      </div>
+      <div class="d-flex flex-column mt-4">
+        @let country = 'country';
+        <label [id]="country" [for]="country">
+          {{ 'SUPPLIER_COMPONENT.form.labels.country' | translateFallback: 'Kraj' }}
+        </label>
+        <app-form-field>
+          <input
+            type="text"
+            class="mt-1 input"
+            [placeholder]="'SUPPLIER_COMPONENT.form.placeholders.country' | translateFallback: 'Wpisz kraj...'"
+            [id]="country"
+            [formControlName]="country"
+          />
+        </app-form-field>
+      </div>
+      <div class="d-flex align-items-center mt-4">
+        @let disable = 'disable';
+        <label class="me-3" [for]="disable">
+          {{ 'SUPPLIER_COMPONENT.form.labels.disable' | translateFallback: 'Nieaktywny' }}
+        </label>
+        <app-form-field>
+          <input type="checkbox" class="mt-1 input" [id]="disable" [formControlName]="disable" />
+        </app-form-field>
+      </div>
+    </div>
+    <div class="modal-split-container p-1">
+      <div class="d-flex flex-column">
+        @let processesIds = 'processesIds';
+        <label [id]="processesIds" [for]="processesIds">
+          {{ 'SUPPLIER_COMPONENT.form.labels.role' | translateFallback: 'Procesy' }}
+        </label>
+        <app-form-field>
+          <select class="mt-1 input" [id]="processesIds" [formControlName]="processesIds">
+            <!-- prettier-ignore -->
+            <option [ngValue]="''" hidden disabled selected>
                 {{'SUPPLIER_COMPONENT.form.placeholders.process' | translateFallback: 'Wybierz proces...'}}
               </option>
-              @for(item of _supplierComponentService.processList(); track $index) {
-              <option [ngValue]="item">{{item.name}}</option>
-              }
-            </select>
-          </app-form-field>
-        </div>
-        @if(_supplierComponentService.selectedProcessList()?.length){
-        <div class="modal-list-container">
-          <!-- prettier-ignore -->
-          <p>{{ 'SUPPLIER_COMPONENT.form.labels.selectedProcess' | translateFallback: 'Wybrane procesy'}}:
-            </p>
-          @for (item of _supplierComponentService.selectedProcessList(); track $index) {
-          <div class="d-flex p-1">
-            <p>{{item.name}}</p>
-            <app-button
-              class="ms-2"
-              [buttonConfiguration]="buttonConfiguration"
-              [buttonDisabled]="formGroup()?.disabled"
-              (emitButtonClick)="_supplierComponentService.removeSelectedProcessFromList(item.id)"
-            >
-              x
-            </app-button>
-          </div>
-          }
-        </div>
-        } @else {
+            @for(item of _supplierComponentService.processList(); track $index) {
+            <option [ngValue]="item">{{item.name}}</option>
+            }
+          </select>
+        </app-form-field>
+      </div>
+      @if(_supplierComponentService.selectedProcessList()?.length){
+      <div class="modal-list-container mt-2">
         <!-- prettier-ignore -->
-        <p>
-            {{ 'SUPPLIER_COMPONENT.form.labels.emptyProcessList' | translateFallback: 'Brak dodanych procesów...'}}
-          </p>
+        <p>{{ 'SUPPLIER_COMPONENT.form.labels.selectedProcess' | translateFallback: 'Wybrane procesy'}}:
+            </p>
+        @for (item of _supplierComponentService.selectedProcessList(); track $index) {
+        <div class="d-flex text-align-center p-1">
+          <p>{{item.name}}</p>
+          <app-button
+            class="ms-2"
+            [buttonConfiguration]="buttonConfiguration"
+            [buttonDisabled]="formGroup()?.disabled"
+            (emitButtonClick)="_supplierComponentService.removeSelectedProcessFromList(item.id)"
+          >
+            x
+          </app-button>
+        </div>
         }
       </div>
-    </form>
-  </div>
+      } @else {
+      <!-- prettier-ignore -->
+      <p>
+            {{ 'SUPPLIER_COMPONENT.form.labels.emptyProcessList' | translateFallback: 'Brak dodanych procesów...'}}
+          </p>
+      }
+    </div>
+  </form>
 </app-modal-base>

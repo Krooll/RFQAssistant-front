@@ -11,6 +11,7 @@ import { SupplierModal } from '@features/supplier-component/supplier-modal/suppl
 import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
 import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
 import { SpringPageable } from '@core/core-dtos/pageable/pageable';
+import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 
 @Injectable()
 export class SupplierService {
@@ -52,7 +53,7 @@ export class SupplierService {
     return this._baseHttpService.patchData(Endpoints.supplier, updateSupplierRequest);
   }
 
-  public getAllProcesses() {
+  public getAllProcesses(): void {
     this.getProcesses(this.processPageParams(), new HttpParams())
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
@@ -64,7 +65,7 @@ export class SupplierService {
       });
   }
 
-  public getAllSuppliers() {
+  public getAllSuppliers(): void {
     this.getSuppliers(this.pageParams(), new HttpParams())
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
@@ -77,12 +78,12 @@ export class SupplierService {
       });
   }
 
-  public updatePageParams(params: PageRequestParams) {
+  public updatePageParams(params: PageRequestParams): void {
     this.pageParams.set(params);
     this.getAllSuppliers();
   }
 
-  public getCurrentSupplierById(id: number | undefined, injector: Injector) {
+  public getCurrentSupplierById(id: number | undefined, injector: Injector): void {
     if (!id) {
       return;
     }
@@ -98,9 +99,9 @@ export class SupplierService {
       });
   }
 
-  public showCreateSupplierModal(injector: Injector) {
+  public showCreateSupplierModal(injector: Injector): void {
     const createModalConfiguration: ModalDataConfiguration<SupplierDto> = {
-      type: 'create',
+      type: ModalTypes.create,
       title: 'MODALS.supplier.create',
       titleFallback: 'Dodaj nowego dostawcę',
     };
@@ -120,9 +121,9 @@ export class SupplierService {
       });
   }
 
-  public showInfoSupplierModal(response: SupplierDto, injector: Injector) {
+  public showInfoSupplierModal(response: SupplierDto, injector: Injector): void {
     const createModalConfiguration: ModalDataConfiguration<UserDto> = {
-      type: 'info',
+      type: ModalTypes.info,
       title: 'MODALS.supplier.info',
       titleFallback: 'Więcej informacji',
       data: response,
@@ -141,13 +142,13 @@ export class SupplierService {
       });
   }
 
-  public showDeleteModal(id: number | undefined, injector: Injector) {
+  public showDeleteModal(id: number | undefined, injector: Injector): void {
     if (!id) {
       return;
     }
 
     const createModalConfiguration: ModalDataConfiguration<{ id: number; endpoint: Endpoint }> = {
-      type: 'delete',
+      type: ModalTypes.delete,
       title: 'MODALS.supplier.delete',
       titleFallback: 'Usuń dostawcę',
       data: { id: id, endpoint: Endpoints.supplier },
@@ -189,7 +190,7 @@ export class SupplierService {
     this.selectedProcessList.update((currentList) => (currentList ?? []).filter((process) => process.id !== id));
   }
 
-  public closeCurrentModal(reloadPage?: boolean) {
+  public closeCurrentModal(reloadPage?: boolean): void {
     this._modalService.closeCurrentModal(reloadPage);
   }
 }
