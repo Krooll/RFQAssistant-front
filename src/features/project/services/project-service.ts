@@ -1,7 +1,7 @@
 import { DestroyRef, inject, Injectable, Injector, signal } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
 import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
-import { CreateProjectRequest, ProjectDto, SimpleProjectDto, UpdateProjectRequest } from '@core/dtos';
+import { CreateProjectRequest, ProjectDto, SimpleProjectDto } from '@core/dtos';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SpringPageable } from '@core/core-dtos/pageable/pageable';
@@ -36,11 +36,7 @@ export class ProjectService {
     return this._baseHttpService.postData(Endpoints.project, createProjectRequest);
   }
 
-  public updateProject(updateProjectRequest: UpdateProjectRequest): Observable<ProjectDto> {
-    return this._baseHttpService.patchData(Endpoints.project, updateProjectRequest);
-  }
-
-  public getAllProjects() {
+  public getAllProjects(): void {
     this.getProjects(this.pageParams(), new HttpParams())
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
@@ -51,12 +47,12 @@ export class ProjectService {
       });
   }
 
-  updatePageParams(params: PageRequestParams) {
+  updatePageParams(params: PageRequestParams): void {
     this.pageParams.set(params);
     this.getAllProjects();
   }
 
-  public showCreateProjectModal(injector: Injector) {
+  public showCreateProjectModal(injector: Injector): void {
     const createModalConfiguration: ModalDataConfiguration<ProjectDto> = {
       type: 'create',
       title: 'MODALS.project.create',
@@ -68,7 +64,7 @@ export class ProjectService {
     });
   }
 
-  public showDeleteModal(id: number | undefined, injector: Injector) {
+  public showDeleteModal(id: number | undefined, injector: Injector): void {
     if (!id) {
       return;
     }
@@ -95,12 +91,12 @@ export class ProjectService {
       });
   }
 
-  public routeToCurrentProject(id: number | undefined) {
+  public routeToCurrentProject(id: number | undefined): void {
     if (!id) return;
     this._router.navigateByUrl(RouteEndpoints.projectForm + '/' + id);
   }
 
-  public closeCurrentModal(reloadPage?: boolean) {
+  public closeCurrentModal(reloadPage?: boolean): void {
     this._modalService.closeCurrentModal(reloadPage);
   }
 }

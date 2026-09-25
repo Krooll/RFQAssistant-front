@@ -6,62 +6,60 @@
   (updateOutput)="onSubmit()"
   [buttonDisabled]="formGroup()?.invalid"
 >
-  <div class="d-flex flex-column">
-    <form [formGroup]="formGroup()!">
-      <div class="d-flex flex-column">
-        @let name = 'name';
-        <label [for]="name">{{ 'PROJECT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa projektu' }}</label>
-        <app-form-field>
-          <input
-            type="text"
-            class="mt-1 input"
-            [placeholder]="'PROJECT_COMPONENT.form.placeholders.name' | translateFallback: 'Wpisz nazwę projektu...'"
-            [id]="name"
-            [formControlName]="name"
-          />
-        </app-form-field>
-      </div>
-      <div class="d-flex flex-column mt-4">
-        @let projectNumber = 'projectNumber';
-        <label [for]="projectNumber">
-          {{ 'PROJECT_COMPONENT.form.labels.projectNumber' | translateFallback: 'Numer projektu' }}
-        </label>
-        <app-form-field>
-          <input
-            type="text"
-            class="mt-1 input"
-            [placeholder]="'PROJECT_COMPONENT.form.placeholders.projectNumber' | translateFallback: 'Wpisz numer projektu...'"
-            [id]="projectNumber"
-            [formControlName]="projectNumber"
-          />
-        </app-form-field>
-      </div>
-      <div class="d-flex flex-column mt-4">
-        @let validFrom = 'validFrom';
-        <label [for]="validFrom">{{ 'PROJECT_COMPONENT.form.labels.validFrom' | translateFallback: 'Data od' }}</label>
-        <app-form-field>
-          <input
-            type="date"
-            class="mt-1 input"
-            [placeholder]="'PROJECT_COMPONENT.form.placeholders.validFrom' | translateFallback: 'Dodaj date od...'"
-            [id]="validFrom"
-            [formControlName]="validFrom"
-          />
-        </app-form-field>
-      </div>
-      <div class="d-flex flex-column mt-4">
-        @let validTo = 'validTo';
-        <label [for]="validTo">{{ 'PROJECT_COMPONENT.form.labels.validTo' | translateFallback: 'Data do' }}</label>
-        <app-form-field>
-          <input
-            type="date"
-            class="mt-1 input"
-            [placeholder]="'PROJECT_COMPONENT.form.placeholders.validTo' | translateFallback: 'Dodaj date do...'"
-            [id]="validTo"
-            [formControlName]="validTo"
-          />
-        </app-form-field>
-      </div>
-    </form>
-  </div>
+  <form [formGroup]="formGroup()!">
+    <div class="d-flex flex-column">
+      @let name = 'name';
+      <label [for]="name">{{ 'PROJECT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa projektu' }}</label>
+      <app-form-field>
+        <input
+          type="text"
+          class="mt-1 input"
+          [placeholder]="'PROJECT_COMPONENT.form.placeholders.name' | translateFallback: 'Wpisz nazwę projektu...'"
+          [id]="name"
+          [formControlName]="name"
+        />
+      </app-form-field>
+    </div>
+    <div class="d-flex flex-column mt-4">
+      @let projectNumber = 'projectNumber';
+      <label [for]="projectNumber">
+        {{ 'PROJECT_COMPONENT.form.labels.projectNumber' | translateFallback: 'Numer projektu' }}
+      </label>
+      <app-form-field>
+        <input
+          type="text"
+          class="mt-1 input"
+          [placeholder]="'PROJECT_COMPONENT.form.placeholders.projectNumber' | translateFallback: 'Wpisz numer projektu...'"
+          [id]="projectNumber"
+          [formControlName]="projectNumber"
+        />
+      </app-form-field>
+    </div>
+    <div class="d-flex flex-column mt-4">
+      @let validFrom = 'validFrom';
+      <label [for]="validFrom">{{ 'PROJECT_COMPONENT.form.labels.validFrom' | translateFallback: 'Data od' }}</label>
+      <app-form-field>
+        <input
+          type="date"
+          class="mt-1 input"
+          [placeholder]="'PROJECT_COMPONENT.form.placeholders.validFrom' | translateFallback: 'Dodaj date od...'"
+          [id]="validFrom"
+          [formControlName]="validFrom"
+        />
+      </app-form-field>
+    </div>
+    <div class="d-flex flex-column mt-4">
+      @let validTo = 'validTo';
+      <label [for]="validTo">{{ 'PROJECT_COMPONENT.form.labels.validTo' | translateFallback: 'Data do' }}</label>
+      <app-form-field>
+        <input
+          type="date"
+          class="mt-1 input"
+          [placeholder]="'PROJECT_COMPONENT.form.placeholders.validTo' | translateFallback: 'Dodaj date do...'"
+          [id]="validTo"
+          [formControlName]="validTo"
+        />
+      </app-form-field>
+    </div>
+  </form>
 </app-modal-base>

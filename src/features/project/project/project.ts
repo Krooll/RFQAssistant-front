@@ -21,15 +21,15 @@ export class Project implements OnInit {
     this._projectComponentService.getAllProjects();
   }
 
-  protected onAddButtonClicked() {
+  protected onAddButtonClicked(): void {
     this._projectComponentService.showCreateProjectModal(this._injector);
   }
 
-  protected onInfoButtonClicked(id: number | undefined) {
+  protected onInfoButtonClicked(id: number | undefined): void {
     this._projectComponentService.routeToCurrentProject(id);
   }
 
-  protected onDeleteButtonCLicked(id: number | undefined) {
+  protected onDeleteButtonCLicked(id: number | undefined): void {
     this._projectComponentService.showDeleteModal(id, this._injector);
   }
 

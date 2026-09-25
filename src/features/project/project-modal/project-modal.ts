@@ -52,7 +52,7 @@ export class ProjectModal implements OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.resetCurrentForm();
   }
 
@@ -68,11 +68,7 @@ export class ProjectModal implements OnDestroy {
   protected onSubmit(): void {
     const currentModalType = this.type();
 
-    if (!currentModalType) {
-      return;
-    }
-
-    if (!this.isFormValid()) {
+    if (!currentModalType || !this.isFormValid()) {
       return;
     }
 

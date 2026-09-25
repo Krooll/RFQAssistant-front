@@ -38,11 +38,9 @@
     </app-item-list>
     }
   </div>
-  <div class="w-100">
-    <app-paginator
-      (pageChange)="_projectComponentService.updatePageParams($event)"
-      [totalElements]="_projectComponentService.totalElements()"
-      [pageParams]="_projectComponentService.pageParams()"
-    ></app-paginator>
-  </div>
+  <app-paginator
+    (pageChange)="_projectComponentService.updatePageParams($event)"
+    [totalElements]="_projectComponentService.totalElements()"
+    [pageParams]="_projectComponentService.pageParams()"
+  ></app-paginator>
 </div>
