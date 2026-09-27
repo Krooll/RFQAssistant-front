@@ -1,9 +1,8 @@
-import { Component, inject, OnDestroy, signal } from '@angular/core';
+import { Component, effect, inject, OnDestroy, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
-import { UserDto } from '@core/dtos';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
+import { ModalType } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { ProjectFormService } from '@features/project/services/project-form-service';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
@@ -18,11 +17,11 @@ import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe
 export class ProjectMetricsModal implements OnDestroy {
   private readonly _projectFormComponentService = inject(ProjectFormService);
   private readonly _formBuilder = inject(FormBuilder);
-  private readonly _modalData = inject<ModalDataConfiguration<UserDto>>(MAT_DIALOG_DATA);
+  private readonly _modalData = inject<ModalDataConfiguration<{ length: number; percent: number }>>(MAT_DIALOG_DATA);
 
   protected formGroup = signal<FormGroup | undefined>(undefined);
 
-  protected data = signal<UserDto | undefined>(undefined);
+  protected data = signal<{ length: number; percent: number } | undefined>(undefined);
   protected type = signal<ModalType | undefined>(undefined);
   protected title = signal<{ title: string; titleFallback: string }>({
     title: '',
@@ -39,13 +38,13 @@ export class ProjectMetricsModal implements OnDestroy {
       }),
     );
 
-    // effect(() => {
-    //   const userData: UserDto | undefined = this.data();
-    //
-    //   if (userData?.id) {
-    //     this.updateStateAndPatchForm();
-    //   }
-    // });
+    effect(() => {
+      const metricData: { length: number; percent: number } | undefined = this.data();
+
+      if (metricData?.length) {
+        this.updateStateAndPatchForm();
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -64,65 +63,28 @@ export class ProjectMetricsModal implements OnDestroy {
   protected onSubmit(): void {
     const currentModalType = this.type();
 
-    if (!currentModalType) {
-      return;
-    }
-
-    if (currentModalType === ModalTypes.info) {
-      this.onUpdate();
-      return;
-    }
-
-    if (!this.isFormValid()) {
+    if (!currentModalType || !this.isFormValid()) {
       return;
     }
 
     const formValue = this.formGroup()?.getRawValue();
 
     this.closeCurrentModal(formValue);
-
-    // switch (currentModalType) {
-    //   case ModalTypes.create: {
-    //     const createUserPayload: CreateUserRequest = {
-    //       ...formValue,
-    //       disable: !!formValue.disable,
-    //     };
-    //     this.createUser(createUserPayload);
-    //     break;
-    //   }
-
-    // case ModalTypes.update: {
-    //   const updateUserPayload: UpdateUserRequest = {
-    //     ...formValue,
-    //     id: this.data()?.id,
-    //   };
-    //   this.updateUser(updateUserPayload);
-    //   break;
-    // }
-    // }
   }
 
-  private onUpdate(): void {
-    this.type.set(ModalTypes.update);
-    this.formGroup()?.enable();
-  }
+  private updateStateAndPatchForm(): void {
+    const metricData: { length: number; percent: number } | undefined = this.data();
 
-  // private updateStateAndPatchForm(): void {
-  //   const userData: UserDto | undefined = this.data();
-  //
-  //   if (userData?.id) {
-  //     this.formGroup()?.patchValue({
-  //       username: userData?.username,
-  //       name: userData?.name,
-  //     });
-  //
-  //     this.formGroup()?.disable();
-  //   }
-  // }
+    if (metricData?.length) {
+      this.formGroup()?.patchValue({
+        metricsYears: metricData?.length,
+        metricsPercent: metricData?.percent,
+      });
+    }
+  }
 
   protected closeCurrentModal(metricData?: { metricsYear: number; metricsPercent: number }): void {
-    if (!metricData) return;
-    this._projectFormComponentService.closeCurrentModal(metricData);
+    this._projectFormComponentService.closeCurrentModal(metricData ?? { metricsYear: 0, metricsPercent: 0 });
   }
 
   private resetCurrentForm(): void {

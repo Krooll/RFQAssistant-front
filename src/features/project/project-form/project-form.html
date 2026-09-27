@@ -1,23 +1,25 @@
 <div class="component-container d-flex flex-column">
-  <div style="padding: 0.6rem 0 0.6rem 0" class="d-flex justify-content-between">
+  <div class="buttons-container d-flex justify-content-between">
     <div class="d-flex justify-content-start">
       @for(button of _projectFormService.sectionButtonsList; track $index) {
-      <app-button (emitButtonClick)="_projectFormService.toggleFormSection(button.type)">
+      <app-button (emitButtonClick)="toggleFormSection(button.type)">
         {{ button.label | translateFallback: button.labelTranslateFallback }}
       </app-button>
       }
     </div>
-    @if(formGroup()?.disabled && this._projectFormService.activeProjectFormSection() === SectionButtonsTypes.general) {
-    <app-button [buttonDisabled]="formGroup()?.invalid" (emitButtonClick)="onEdit()">
-      {{ 'BUTTONS.update' | translateFallback: 'Edytuj' }}
-    </app-button>
-    } @if(this._projectFormService.activeProjectFormSection() === SectionButtonsTypes.component) {
-    <app-button (emitButtonClick)="onAddComponentButtonClick()">
-      {{ 'PROJECT_COMPONENT.form.addComponentButton' | translateFallback: 'Dodaj komponent' }}
-    </app-button>
-    }
+    <div class="d-flex justify-content-end">
+      @if(isEditButtonVisible()) {
+      <app-button [buttonDisabled]="formGroup()?.invalid" (emitButtonClick)="onEdit()">
+        {{ 'BUTTONS.update' | translateFallback: 'Edytuj' }}
+      </app-button>
+      } @if(isAddComponentButtonVisible()) {
+      <app-button (emitButtonClick)="onAddComponentButtonClick()">
+        {{ 'PROJECT_COMPONENT.form.addComponentButton' | translateFallback: 'Dodaj komponent' }}
+      </app-button>
+      }
+    </div>
   </div>
-  @switch(_projectFormService.activeProjectFormSection()) { @case (SectionButtonsTypes.general) {
+  @switch(activeProjectFormSection()) { @case (SectionButtonsTypes.general) {
   <h3>{{ 'PROJECT_COMPONENT.projectFormSectionTitle' | translateFallback: 'Projekt' }}</h3>
   <div class="list-container">
     <form [formGroup]="formGroup()!">

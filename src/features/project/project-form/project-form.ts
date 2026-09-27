@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, Injector, model, OnDestroy, signal } from '@angular/core';
+import { Component, computed, DestroyRef, effect, inject, Injector, model, OnDestroy, signal } from '@angular/core';
 import { ProjectDto, UpdateProjectRequest } from '@core/dtos';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
@@ -41,7 +41,17 @@ export class ProjectForm implements OnDestroy {
 
   protected projectData = model<ProjectDto>();
 
+  protected activeProjectFormSection = signal<string>(SectionButtonsTypes.general);
+
   protected formGroup = signal<FormGroup | undefined>(undefined);
+
+  protected isEditButtonVisible = computed(() => {
+    return this.formGroup()?.disabled && this.activeProjectFormSection() === SectionButtonsTypes.general;
+  });
+
+  protected isAddComponentButtonVisible = computed(() => {
+    return this.activeProjectFormSection() === SectionButtonsTypes.component;
+  });
 
   constructor() {
     effect(() => {
@@ -146,7 +156,18 @@ export class ProjectForm implements OnDestroy {
   }
 
   protected onInfoComponentButtonClick(id: number | undefined): void {
-    this._projectFormService.getCurrentComponentById(id, this._injector);
+    if (!id) return;
+
+    this._projectFormService
+      .showInfoComponentModal(id, this._injector)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (reloadPage: boolean) => {
+          if (reloadPage) {
+            this.getProjectById(this.projectData()?.id);
+          }
+        },
+      });
   }
 
   protected onDeleteComponentButtonClick(id: number | undefined): void {
@@ -195,13 +216,16 @@ export class ProjectForm implements OnDestroy {
   }
 
   protected onProjectMetricButtonClick(): void {
+    const sop = this.projectData()?.projectSOP;
+    const currentMetricList = this.projectData()?.metrics;
+    const currentMetricListLength = currentMetricList!.length;
+    const currentPercent = this._metricService.percent();
+
     this._projectFormService
-      .showMetricModal(this._injector)
+      .showMetricModal(currentMetricListLength, currentPercent, this._injector)
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
         next: (metricFormData: { metricsYears: number; metricsPercent: number }) => {
-          const sop = this.projectData()?.projectSOP;
-          const currentMetricList = this.projectData()?.metrics;
           if (metricFormData && sop) {
             this._metricService.generateMetricList(metricFormData, sop, currentMetricList);
           }
@@ -236,6 +260,11 @@ export class ProjectForm implements OnDestroy {
 
   private clearForm(): void {
     this.formGroup()?.reset();
+  }
+
+  protected toggleFormSection(type: string): void {
+    this.activeProjectFormSection.set(type);
+    this.onAbort();
   }
 
   private isFormValid(): boolean {
