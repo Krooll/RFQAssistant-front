@@ -5,7 +5,7 @@
   <div class="upper-section d-flex flex-column p-1">
     @for (item of applicationList(); track item.id) {
     <app-button
-      [buttonType]="'button'"
+      [buttonType]="ButtonTypes.button"
       [buttonConfiguration]="menuNavBarButtonConfig"
       [dataToEmit]="item.route"
       (emitButtonClick)="onNavBarItemClick($event)"
@@ -17,7 +17,7 @@
   <div class="d-flex align-items-end lower-section p-1">
     <app-button
       class="w-100"
-      [buttonType]="'button'"
+      [buttonType]="ButtonTypes.button"
       [buttonConfiguration]="menuNavBarButtonConfig"
       (click)="logOut()"
     >

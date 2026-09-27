@@ -2,7 +2,8 @@ import { Component, input, output } from '@angular/core';
 import { MatDialogActions, MatDialogContent } from '@angular/material/dialog';
 import { Button } from '@shared/shared-ui/button/button';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
-import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
+import { ModalType } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
+import { ButtonConfiguration, ButtonVariants } from '@shared/model-ui/button-configuration/button-configuration';
 
 @Component({
   selector: 'app-modal-base',
@@ -11,14 +12,18 @@ import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/mod
   styleUrl: './modal-base.scss',
 })
 export class ModalBase {
-  public modalType = input.required<ModalTypes | undefined>();
+  public modalType = input.required<ModalType | undefined>();
   public modalTitle = input.required<{ title: string; titleFallback: string }>();
   public buttonDisabled = input<boolean | undefined>();
 
-  submitOutput = output<void>();
-  closeOutput = output<void>();
-  deleteOutput = output<void>();
-  updateOutput = output<void>();
+  protected closeButtonConfiguration: ButtonConfiguration = {
+    variant: ButtonVariants.transparent,
+  };
+
+  protected submitOutput = output<void>();
+  protected closeOutput = output<void>();
+  protected deleteOutput = output<void>();
+  protected updateOutput = output<void>();
 
   protected submitButtonClicked() {
     this.submitOutput.emit();

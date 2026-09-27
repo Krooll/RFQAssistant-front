@@ -1,15 +1,7 @@
 import { DestroyRef, inject, Injectable, Injector, signal } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
 import { ModalService } from '@core/services/modal-service/modal-service';
-import {
-  CreateSupplierRequest,
-  PageRequestParams,
-  ProcessDto,
-  SpringPageable,
-  SupplierDto,
-  UpdateSupplierRequest,
-  UserDto,
-} from '@core/dtos';
+import { CreateSupplierRequest, ProcessDto, SupplierDto, UpdateSupplierRequest, UserDto } from '@core/dtos';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Endpoint, Endpoints } from '@env/endpoints';
@@ -17,6 +9,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { SupplierModal } from '@features/supplier-component/supplier-modal/supplier-modal';
 import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
+import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
+import { SpringPageable } from '@core/core-dtos/pageable/pageable';
+import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 
 @Injectable()
 export class SupplierService {
@@ -43,11 +38,7 @@ export class SupplierService {
     pageParamsService: PageRequestParams,
     extraPageParams: HttpParams,
   ): Observable<SpringPageable<SupplierDto>> {
-    return this._baseHttpService.getPageData(
-      Endpoints.supplier,
-      pageParamsService,
-      extraPageParams,
-    );
+    return this._baseHttpService.getPageData(Endpoints.supplier, pageParamsService, extraPageParams);
   }
 
   private getSupplierById(id: number): Observable<SupplierDto> {
@@ -62,7 +53,7 @@ export class SupplierService {
     return this._baseHttpService.patchData(Endpoints.supplier, updateSupplierRequest);
   }
 
-  public getAllProcesses() {
+  public getAllProcesses(): void {
     this.getProcesses(this.processPageParams(), new HttpParams())
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
@@ -74,7 +65,7 @@ export class SupplierService {
       });
   }
 
-  public getAllSuppliers() {
+  public getAllSuppliers(): void {
     this.getSuppliers(this.pageParams(), new HttpParams())
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
@@ -87,12 +78,12 @@ export class SupplierService {
       });
   }
 
-  updatePageParams(params: PageRequestParams) {
+  public updatePageParams(params: PageRequestParams): void {
     this.pageParams.set(params);
     this.getAllSuppliers();
   }
 
-  public getCurrentSupplierById(id: number | undefined, injector: Injector) {
+  public getCurrentSupplierById(id: number | undefined, injector: Injector): void {
     if (!id) {
       return;
     }
@@ -108,9 +99,9 @@ export class SupplierService {
       });
   }
 
-  showCreateSupplierModal(injector: Injector) {
+  public showCreateSupplierModal(injector: Injector): void {
     const createModalConfiguration: ModalDataConfiguration<SupplierDto> = {
-      type: 'create',
+      type: ModalTypes.create,
       title: 'MODALS.supplier.create',
       titleFallback: 'Dodaj nowego dostawcę',
     };
@@ -130,9 +121,9 @@ export class SupplierService {
       });
   }
 
-  showInfoSupplierModal(response: SupplierDto, injector: Injector) {
+  public showInfoSupplierModal(response: SupplierDto, injector: Injector): void {
     const createModalConfiguration: ModalDataConfiguration<UserDto> = {
-      type: 'info',
+      type: ModalTypes.info,
       title: 'MODALS.supplier.info',
       titleFallback: 'Więcej informacji',
       data: response,
@@ -151,13 +142,13 @@ export class SupplierService {
       });
   }
 
-  showDeleteModal(id: number | undefined, injector: Injector) {
+  public showDeleteModal(id: number | undefined, injector: Injector): void {
     if (!id) {
       return;
     }
 
     const createModalConfiguration: ModalDataConfiguration<{ id: number; endpoint: Endpoint }> = {
-      type: 'delete',
+      type: ModalTypes.delete,
       title: 'MODALS.supplier.delete',
       titleFallback: 'Usuń dostawcę',
       data: { id: id, endpoint: Endpoints.supplier },
@@ -178,7 +169,7 @@ export class SupplierService {
       });
   }
 
-  addSelectedProcessToList(item: ProcessDto): void {
+  public addSelectedProcessToList(item: ProcessDto): void {
     if (!item?.id) {
       return;
     }
@@ -194,14 +185,12 @@ export class SupplierService {
     });
   }
 
-  removeSelectedProcessFromList(id: number | undefined): void {
+  public removeSelectedProcessFromList(id: number | undefined): void {
     if (!id) return;
-    this.selectedProcessList.update((currentList) =>
-      (currentList ?? []).filter((process) => process.id !== id),
-    );
+    this.selectedProcessList.update((currentList) => (currentList ?? []).filter((process) => process.id !== id));
   }
 
-  closeCurrentModal(reloadPage?: boolean) {
+  public closeCurrentModal(reloadPage?: boolean): void {
     this._modalService.closeCurrentModal(reloadPage);
   }
 }

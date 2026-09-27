@@ -1,1 +1,46 @@
-<p>project works!</p>
+<div class="d-flex flex-column component-container">
+  <div class="d-flex align-items-center justify-content-between">
+    <h2>{{ 'PROJECT_COMPONENT.componentTitle' | translateFallback: 'Projekty' }}</h2>
+    <app-button [buttonType]="ButtonTypes.button" (emitButtonClick)="onAddButtonClicked()">
+      {{ 'BUTTONS.add' | translateFallback: 'Dodaj' }}
+    </app-button>
+  </div>
+  <div class="list-container">
+    @for(item of _projectComponentService.projectList(); track item.id) {
+    <app-item-list
+      (infoButtonClickedOutput)="onInfoButtonClicked(item.id)"
+      (deleteButtonClickedOutput)="onDeleteButtonCLicked(item.id)"
+    >
+      <div class="d-flex flex-column">
+        <p>
+          <span class="font-weight-bold">
+            {{ 'PROJECT_COMPONENT.form.labels.projectNumber' | translateFallback: 'Numer projektu'}}:
+          </span>
+          {{ item.projectNumber }}
+        </p>
+        <p>
+          <span class="font-weight-bold">{{ 'PROJECT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:</span>
+          {{ item.name }}
+        </p>
+        <p>
+          <span class="font-weight-bold">
+            {{ 'PROJECT_COMPONENT.form.labels.validFrom' | translateFallback: 'Data od'}}:
+          </span>
+          {{ item.validFrom }}
+        </p>
+        <p>
+          <span class="font-weight-bold">
+            {{ 'PROJECT_COMPONENT.form.labels.validTo' | translateFallback: 'Data do'}}:
+          </span>
+          {{ item.validTo }}
+        </p>
+      </div>
+    </app-item-list>
+    }
+  </div>
+  <app-paginator
+    (pageChange)="_projectComponentService.updatePageParams($event)"
+    [totalElements]="_projectComponentService.totalElements()"
+    [pageParams]="_projectComponentService.pageParams()"
+  ></app-paginator>
+</div>

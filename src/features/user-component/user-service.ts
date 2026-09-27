@@ -1,12 +1,6 @@
 import { DestroyRef, inject, Injectable, Injector, signal } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
-import {
-  CreateUserRequest,
-  PageRequestParams,
-  SpringPageable,
-  UpdateUserRequest,
-  UserDto,
-} from '@core/dtos';
+import { CreateUserRequest, UpdateUserRequest, UserDto } from '@core/dtos';
 import { Observable } from 'rxjs';
 import { Endpoint, Endpoints } from '@env/endpoints';
 import { HttpParams } from '@angular/common/http';
@@ -15,6 +9,9 @@ import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/mod
 import { UserModal } from '@features/user-component/user-modal/user-modal';
 import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
+import { SpringPageable } from '@core/core-dtos/pageable/pageable';
+import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 
 @Injectable()
 export class UserService {
@@ -26,10 +23,7 @@ export class UserService {
   public totalElements = signal<number>(0);
   public userList = signal<UserDto[] | undefined>(undefined);
 
-  private getUsers(
-    pageParams: PageRequestParams,
-    extraPageParams: HttpParams,
-  ): Observable<SpringPageable<UserDto>> {
+  private getUsers(pageParams: PageRequestParams, extraPageParams: HttpParams): Observable<SpringPageable<UserDto>> {
     return this._baseHttpService.getPageData(Endpoints.user, pageParams, extraPageParams);
   }
 
@@ -38,20 +32,14 @@ export class UserService {
   }
 
   public createUser(createUserRequest: CreateUserRequest): Observable<UserDto> {
-    return this._baseHttpService.postData<UserDto, CreateUserRequest>(
-      Endpoints.user,
-      createUserRequest,
-    );
+    return this._baseHttpService.postData<UserDto, CreateUserRequest>(Endpoints.user, createUserRequest);
   }
 
   public updateUser(updateUserRequest: UpdateUserRequest): Observable<UserDto> {
-    return this._baseHttpService.patchData<UserDto, UpdateUserRequest>(
-      Endpoints.user,
-      updateUserRequest,
-    );
+    return this._baseHttpService.patchData<UserDto, UpdateUserRequest>(Endpoints.user, updateUserRequest);
   }
 
-  public getAllUsers() {
+  public getAllUsers(): void {
     this.getUsers(this.pageParams(), new HttpParams())
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
@@ -64,12 +52,12 @@ export class UserService {
       });
   }
 
-  updatePageParams(params: PageRequestParams) {
+  public updatePageParams(params: PageRequestParams): void {
     this.pageParams.set(params);
     this.getAllUsers();
   }
 
-  public getCurrentUserById(id: number | undefined, injector: Injector) {
+  public getCurrentUserById(id: number | undefined, injector: Injector): void {
     if (!id) {
       return;
     }
@@ -85,9 +73,9 @@ export class UserService {
       });
   }
 
-  showCreateUserModal(injector: Injector) {
+  public showCreateUserModal(injector: Injector): void {
     const createModalConfiguration: ModalDataConfiguration<UserDto> = {
-      type: 'create',
+      type: ModalTypes.create,
       title: 'MODALS.user.create',
       titleFallback: 'Dodaj nowego użytkownika',
     };
@@ -107,9 +95,9 @@ export class UserService {
       });
   }
 
-  showInfoUserModal(response: UserDto, injector: Injector) {
+  public showInfoUserModal(response: UserDto, injector: Injector): void {
     const createModalConfiguration: ModalDataConfiguration<UserDto> = {
-      type: 'info',
+      type: ModalTypes.info,
       title: 'MODALS.user.info',
       titleFallback: 'Więcej informacji',
       data: response,
@@ -128,13 +116,13 @@ export class UserService {
       });
   }
 
-  showDeleteModal(id: number | undefined, injector: Injector) {
+  public showDeleteModal(id: number | undefined, injector: Injector): void {
     if (!id) {
       return;
     }
 
     const createModalConfiguration: ModalDataConfiguration<{ id: number; endpoint: Endpoint }> = {
-      type: 'delete',
+      type: ModalTypes.delete,
       title: 'MODALS.user.delete',
       titleFallback: 'Usuń użytkownika',
       data: { id: id, endpoint: Endpoints.user },
@@ -155,7 +143,7 @@ export class UserService {
       });
   }
 
-  closeCurrentModal(reloadPage?: boolean) {
+  public closeCurrentModal(reloadPage?: boolean): void {
     this._modalService.closeCurrentModal(reloadPage);
   }
 }

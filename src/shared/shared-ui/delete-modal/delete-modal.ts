@@ -3,12 +3,12 @@ import { ModalService } from '@core/services/modal-service/modal-service';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationService } from '@core/services/notification-service/notification-service';
-import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
 import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { Endpoint } from '@env/endpoints';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ModalType } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 
 @Component({
   selector: 'app-delete-modal',
@@ -18,14 +18,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class DeleteModal {
   private readonly _baseHttpService = inject(BaseHttpService);
-  private readonly _modalData =
-    inject<ModalDataConfiguration<{ id: number; endpoint: Endpoint }>>(MAT_DIALOG_DATA);
+  private readonly _modalData = inject<ModalDataConfiguration<{ id: number; endpoint: Endpoint }>>(MAT_DIALOG_DATA);
   private readonly _notificationService = inject(NotificationService);
   private readonly _modalService = inject(ModalService);
   private readonly _destroyRef = inject(DestroyRef);
 
   protected data = signal<{ id: number; endpoint: Endpoint } | undefined>(undefined);
-  protected type = signal<ModalTypes | undefined>(undefined);
+  protected type = signal<ModalType | undefined>(undefined);
   protected title = signal<{ title: string; titleFallback: string }>({
     title: '',
     titleFallback: '',
@@ -44,7 +43,7 @@ export class DeleteModal {
     this.data.set(this._modalData.data);
   }
 
-  onDelete() {
+  protected onDelete() {
     const endpoint = this.data()?.endpoint;
     const id = this.data()?.id;
 
@@ -63,7 +62,7 @@ export class DeleteModal {
       });
   }
 
-  closeCurrentModal(reloadPage?: boolean) {
+  protected closeCurrentModal(reloadPage?: boolean) {
     this._modalService.closeCurrentModal(reloadPage);
   }
 }

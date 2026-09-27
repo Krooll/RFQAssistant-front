@@ -42,9 +42,33 @@
       "delete": "Usuń dostawcę",
       "info": "Więcej informacji"
     },
+    "project": {
+      "create": "Dodaj nowy projekt",
+      "edit": "Edytuj projekt",
+      "delete": "Usuń projekt",
+      "info": "Więcej informacji"
+    },
+    "component": {
+      "create": "Dodaj nowy komponent",
+      "edit": "Edytuj komponent",
+      "delete": "Usuń komponent",
+      "info": "Więcej informacji"
+    },
+    "document": {
+      "create": "Dodaj nowy dokument",
+      "edit": "Edytuj dokument",
+      "delete": "Usuń dokument",
+      "info": "Więcej informacji"
+    },
     "delete": {
       "title": "Uwaga!",
       "text": "Czy na pewno chcesz usunąc tę pozycję?"
+    },
+    "metric": {
+      "create": "Skonfiguruj metrykę",
+      "edit": "Edytuj metrykę",
+      "delete": "Usuń metrykę",
+      "info": "Więcej informacji"
     }
   },
   "BUTTONS": {
@@ -56,7 +80,11 @@
     "edit": "Edytuj",
     "delete": "Usuń",
     "add": "Dodaj",
-    "info": "Więcej informacji"
+    "info": "Więcej informacji",
+    "back": "Wróć",
+    "document": "Dodaj dokument",
+    "download": "Pobierz",
+    "preview": "Podgląd"
   },
   "FORM_VALIDATION_TEXTS": {
     "required": "To pole jest wymagane...",
@@ -76,10 +104,6 @@
       "placeholders": {
         "login": "Wpisz swój login...",
         "password": "Wpisz hasło..."
-      },
-      "errors": {
-        "login": "Login jest wymagany...",
-        "password": "Hasło jest wymagane..."
       }
     }
   },
@@ -94,6 +118,14 @@
         "email": "Adres email",
         "disable": "Nieaktywny",
         "role": "Rola"
+      },
+      "placeholders": {
+        "username": "Wpisz nazwę użytkownika...",
+        "password": "Wpisz hasło...",
+        "name": "Wpisz imię...",
+        "surname": "Wpisz nazwisko...",
+        "email": "Wpisz adres email...",
+        "role": "Wybierz role..."
       }
     }
   },
@@ -104,6 +136,10 @@
         "name": "Nazwa",
         "description": "Opis",
         "disable": "Nieaktywny"
+      },
+      "placeholders": {
+        "name": "Wpisz nazwę...",
+        "description": "Wpisz opis..."
       }
     }
   },
@@ -119,8 +155,102 @@
         "phoneNumber": "Numer telefonu",
         "email": "Adres email",
         "process": "Procesy",
+        "selectedProcess": "Wybrane procesy",
+        "emptyProcessList": "Brak dodanych procesów...",
         "disable": "Nieaktywny"
+      },
+      "placeholders": {
+        "name": "Wpisz nazwę...",
+        "street": "Wpisz ulice...",
+        "city": "Wpisz miasto...",
+        "province": "Wpisz województwo...",
+        "country": "Wpisz kraj...",
+        "phoneNumber": "Wpisz numer tel. ...",
+        "email": "Wpisz adres email...",
+        "process": "Wybierz proces..."
       }
+    }
+  },
+  "PROJECT_COMPONENT": {
+    "componentTitle": "Projekty",
+    "componentFormTitle": "Nowy projekt",
+    "componentFormEditTitle": "Edytuj projekt",
+    "projectFormSectionTitle": "Projekt",
+    "metricFormSectionTitle": "Metryka",
+    "componentFormSectionTitle": "Komponenty",
+    "documentFormSectionTitle": "Dokumenty",
+    "sectionButtons": {
+      "general": "Ogólne",
+      "components": "Komponenty"
+    },
+    "form": {
+      "addComponentButton": "Dodaj komponent",
+      "labels": {
+        "validFrom": "Data od",
+        "validTo": "Data do",
+        "name": "Nazwa",
+        "description": "Opis",
+        "projectNumber": "Numer projektu",
+        "projectSOP": "SOP projektu",
+        "metrics": "Metryka",
+        "component": "Komponenty",
+        "document": "Dokumenty",
+        "status": "Status projektu",
+        "selectedComponentProcesses": "Wybrane procesy",
+        "emptyDocumentList": "Brak dodanych dokumentów...",
+        "emptyProcessList": "Brak wybranych procesów...",
+        "metricsYears": "Lata",
+        "metricsPercent": "Procenty"
+      },
+      "placeholders": {
+        "validFrom": "Wybierz datę od...",
+        "validTo": "Wybierz datę do...",
+        "name": "Wpisz nazwę...",
+        "description": "Wpisz opis...",
+        "projectNumber": "Wpisz numer projektu...",
+        "projectSOP": "Wpisz SOP projektu...",
+        "status": "Wybierz status projektu",
+        "metricsYears": "Wpisz liczbę lat...",
+        "metricsPercent": "Wpisz procent..."
+      }
+    }
+  },
+  "COMPONENT_COMPONENT": {
+    "form": {
+      "labels": {
+        "number": "Numer komponentu",
+        "revision": "Rewizja komponentu",
+        "name": "Nazwa komponentu",
+        "material": "Materiał",
+        "description": "Opis"
+      },
+      "placeholders": {
+        "number": "Wpisz numer komponentu...",
+        "revision": "Wpisz rewizję komponentu...",
+        "name": "Wpisz nazwę komponentu...",
+        "material": "Wpisz materiał...",
+        "description": "Wpisz opis..."
+      }
+    }
+  },
+  "DOCUMENT_COMPONENT": {
+    "form": {
+      "labels": {
+        "name": "Nazwa dokumentu",
+        "description": "Opis"
+      },
+      "placeholders": {
+        "name": "Wpisz nazwę dokumentu...",
+        "description": "Wpisz opis..."
+      }
+    }
+  },
+  "METRIC_COMPONENT": {
+    "configButtonTitle": "Konfiguracja",
+    "yearTitle": "Rok",
+    "basicTitle": "Podstawa",
+    "form": {
+      "title": "Metryka"
     }
   }
 }

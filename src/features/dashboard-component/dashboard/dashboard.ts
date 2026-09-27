@@ -1,9 +1,10 @@
 import { Component, computed, inject, Signal } from '@angular/core';
-import { Application } from '@core/dtos/application/application';
 import { UserDataService } from '@core/services/user-data-service/user-data';
 import { Router, RouterOutlet } from '@angular/router';
 import { RouteEndpoints } from '@env/route-endpoints';
 import { NavbarMenu } from '@shared/shared-ui/navbar-menu/navbar-menu';
+import { Application } from '@core/core-dtos/application/application';
+import { Roles } from '@core/core-dtos/roles/roles';
 
 @Component({
   selector: 'app-dashboard-component',
@@ -21,35 +22,28 @@ export class Dashboard {
       name: 'NAVBAR.applicationList.name.projects',
       nameFallback: 'Projekty',
       route: RouteEndpoints.project,
-      expectedRole: 'ROLE_ADMIN',
-    },
-    {
-      id: 'technical-specification-component',
-      name: 'NAVBAR.applicationList.name.components',
-      nameFallback: 'Komponenty',
-      route: RouteEndpoints.component,
-      expectedRole: 'ROLE_ADMIN',
+      expectedRoles: [Roles.admin, Roles.manager],
     },
     {
       id: 'supplier',
       name: 'NAVBAR.applicationList.name.supplier',
       nameFallback: 'Dostawcy',
       route: RouteEndpoints.supplier,
-      expectedRole: 'ROLE_ADMIN',
+      expectedRoles: [Roles.admin],
     },
     {
       id: 'process',
       name: 'NAVBAR.applicationList.name.process',
       nameFallback: 'Procesy',
       route: RouteEndpoints.process,
-      expectedRole: 'ROLE_ADMIN',
+      expectedRoles: [Roles.admin],
     },
     {
       id: 'user',
       name: 'NAVBAR.applicationList.name.user',
       nameFallback: 'Użytkownicy',
       route: RouteEndpoints.user,
-      expectedRole: 'ROLE_ADMIN',
+      expectedRoles: [Roles.admin],
     },
   ];
 
@@ -61,7 +55,7 @@ export class Dashboard {
       return [];
     }
 
-    return this.applicationList.filter((item) => item.expectedRole === currentUserRole);
+    return this.applicationList.filter((item) => item.expectedRoles.includes(currentUserRole));
   });
 
   protected navigateToSelectedApp(url: string | undefined) {

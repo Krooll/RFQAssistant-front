@@ -1,22 +1,16 @@
-import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, OnDestroy, signal } from '@angular/core';
 import { UserService } from '@features/user-component/user-service';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
+import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { CreateUserRequest, UpdateUserRequest, UserDto } from '@core/dtos';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NotificationService } from '@core/services/notification-service/notification-service';
 import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
-import { RolesInterface } from '@core/dtos/roles/roles';
+import { Roles, RolesInterface } from '@core/core-dtos/roles/roles';
 
 @Component({
   selector: 'app-user-modal',
@@ -24,18 +18,17 @@ import { RolesInterface } from '@core/dtos/roles/roles';
   templateUrl: './user-modal.html',
   styleUrl: './user-modal.scss',
 })
-export class UserModal {
+export class UserModal implements OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _userComponentService = inject(UserService);
   private readonly _modalData = inject<ModalDataConfiguration<UserDto>>(MAT_DIALOG_DATA);
   private readonly _notificationService = inject(NotificationService);
-
   private readonly _destroyRef = inject(DestroyRef);
 
   protected formGroup = signal<FormGroup | undefined>(undefined);
 
   protected data = signal<UserDto | undefined>(undefined);
-  protected type = signal<ModalTypes | undefined>(undefined);
+  protected type = signal<ModalType | undefined>(undefined);
   protected title = signal<{ title: string; titleFallback: string }>({
     title: '',
     titleFallback: '',
@@ -45,17 +38,17 @@ export class UserModal {
     {
       label: 'ROLES.admin',
       labelFallback: 'Administrator',
-      role: 'ROLE_ADMIN',
+      role: Roles.admin,
     },
     {
       label: 'ROLES.MANAGER',
       labelFallback: 'Manager',
-      role: 'ROLE_MANAGER',
+      role: Roles.manager,
     },
     {
       label: 'ROLES.USER',
       labelFallback: 'Użytkownik',
-      role: 'ROLE_USER',
+      role: Roles.user,
     },
   ];
 
@@ -65,7 +58,7 @@ export class UserModal {
     this.formGroup.set(
       this._formBuilder.group({
         username: ['', [Validators.required]],
-        password: ['', [Validators.required]],
+        password: [''],
         name: [''],
         surname: [''],
         email: ['', [Validators.required, Validators.email]],
@@ -83,6 +76,10 @@ export class UserModal {
     });
   }
 
+  ngOnDestroy() {
+    this.resetCurrentForm();
+  }
+
   private loadData(): void {
     this.type.set(this._modalData.type);
     this.title.set({
@@ -95,23 +92,14 @@ export class UserModal {
   protected onSubmit(): void {
     const currentModalType = this.type();
 
-    if (!currentModalType) {
-      return;
-    }
-
-    if (currentModalType === 'info') {
-      this.onUpdate();
-      return;
-    }
-
-    if (!this.isFormValid()) {
+    if (!currentModalType || !this.isFormValid()) {
       return;
     }
 
     const formValue = this.formGroup()?.getRawValue();
 
     switch (currentModalType) {
-      case 'create': {
+      case ModalTypes.create: {
         const createUserPayload: CreateUserRequest = {
           ...formValue,
           disable: !!formValue.disable,
@@ -120,7 +108,7 @@ export class UserModal {
         break;
       }
 
-      case 'update': {
+      case ModalTypes.update: {
         const updateUserPayload: UpdateUserRequest = {
           ...formValue,
           id: this.data()?.id,
@@ -128,11 +116,16 @@ export class UserModal {
         this.updateUser(updateUserPayload);
         break;
       }
+
+      case ModalTypes.info: {
+        this.onUpdate();
+        break;
+      }
     }
   }
 
   private onUpdate(): void {
-    this.type.set('update');
+    this.type.set(ModalTypes.update);
     this.formGroup()?.enable();
   }
 
@@ -183,7 +176,6 @@ export class UserModal {
 
   protected closeCurrentModal(reloadPage?: boolean): void {
     this._userComponentService.closeCurrentModal(reloadPage ? reloadPage : false);
-    this.resetCurrentForm();
   }
 
   private resetCurrentForm(): void {

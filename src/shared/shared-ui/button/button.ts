@@ -2,7 +2,9 @@ import { Component, computed, input, output } from '@angular/core';
 import { NgClass } from '@angular/common';
 import {
   ButtonConfiguration,
+  ButtonSizes,
   ButtonType,
+  ButtonVariants,
 } from '@shared/model-ui/button-configuration/button-configuration';
 
 @Component({
@@ -14,14 +16,14 @@ import {
 export class Button<T> {
   emitButtonClick = output<T | void>();
 
-  dataToEmit = input<T>();
-  buttonType = input<ButtonType>();
-  buttonConfiguration = input<ButtonConfiguration>({});
-  buttonDisabled = input<boolean>();
+  public dataToEmit = input<T>();
+  public buttonType = input<ButtonType>();
+  public buttonConfiguration = input<ButtonConfiguration>({});
+  public buttonDisabled = input<boolean>();
 
-  defaultButtonConfig: ButtonConfiguration = {
-    variant: 'primary',
-    size: 'medium',
+  protected defaultButtonConfig: ButtonConfiguration = {
+    variant: ButtonVariants.primary,
+    size: ButtonSizes.medium,
     margin: '',
     padding: '',
   };

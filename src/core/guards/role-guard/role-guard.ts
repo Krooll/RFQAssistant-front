@@ -11,16 +11,27 @@ export const roleGuard: CanActivateFn = (route, state) => {
   const isTokenExpired = userDataService.isUserTokenExpired();
 
   if (!currentUserData || !currentUserData.user || isTokenExpired) {
-    return router.createUrlTree(['/auth/login'], {
+    return router.createUrlTree([RouteEndpoints.authLogin], {
       queryParams: { returnUrl: state.url },
     });
   }
 
   const currentUserRole = currentUserData.user.role;
-  const expectedRole = route.data['role'];
 
-  if (expectedRole && currentUserRole !== expectedRole) {
+  if (!currentUserRole) {
     return router.createUrlTree([RouteEndpoints.unauthorized]);
+  }
+
+  const requiredRoles: string | string[] = route.data['roles'];
+
+  if (requiredRoles) {
+    const hasRole = Array.isArray(requiredRoles)
+      ? requiredRoles.includes(currentUserRole)
+      : currentUserRole === requiredRoles;
+
+    if (!hasRole) {
+      return router.createUrlTree([RouteEndpoints.unauthorized]);
+    }
   }
 
   return true;

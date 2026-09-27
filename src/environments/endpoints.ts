@@ -4,6 +4,10 @@ export const Endpoints = {
   process: '/process',
   project: '/project',
   component: '/component',
+  document: '/document',
+  documentUpload: '/document/upload',
+  documentDownload: '/document/:id/download',
+  documentPreview: '/document/preview',
   authLogin: '/auth/login',
   authRefresh: '/auth/refresh',
 } as const;

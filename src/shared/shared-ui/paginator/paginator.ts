@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { PageRequestParams } from '@core/dtos';
 import { Button } from '@shared/shared-ui/button/button';
+import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
 
 @Component({
   selector: 'app-paginator',

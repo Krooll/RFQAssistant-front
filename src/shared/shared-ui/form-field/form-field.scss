@@ -8,9 +8,26 @@
 
 .form-error {
   ::ng-deep input.input,
-  ::ng-deep select,
   ::ng-deep textarea {
     border: 2px solid #d9534f !important;
+    &::placeholder {
+      color: #d9534f !important;
+      opacity: 1;
+    }
+  }
+
+  ::ng-deep select {
+    border: 2px solid #d9534f !important;
+    color: #d9534f !important;
+
+    option {
+      color: #333333;
+    }
+
+    option[value=''],
+    option:disabled {
+      color: #d9534f !important;
+    }
   }
 }
 

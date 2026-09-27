@@ -1,0 +1,43 @@
+<app-modal-base
+  [modalTitle]="title()"
+  [modalType]="type()"
+  (submitOutput)="onSubmit()"
+  (closeOutput)="closeCurrentModal()"
+  (updateOutput)="onSubmit()"
+  [buttonDisabled]="formGroup()?.invalid"
+>
+  <div class="d-flex flex-column">
+    <form [formGroup]="formGroup()!">
+      <div class="d-flex flex-column">
+        @let metricsYears = 'metricsYears';
+        <label [for]="metricsYears">
+          {{ 'PROJECT_COMPONENT.form.labels.metricsYears' | translateFallback: 'Lata' }}
+        </label>
+        <app-form-field>
+          <input
+            type="number"
+            class="mt-1 input"
+            [placeholder]="'PROJECT_COMPONENT.form.placeholders.metricsYears' | translateFallback: 'Wpisz liczbę lat...'"
+            [id]="metricsYears"
+            [formControlName]="metricsYears"
+          />
+        </app-form-field>
+      </div>
+      <div class="d-flex flex-column mt-4">
+        @let metricsPercent = 'metricsPercent';
+        <label [for]="metricsPercent">
+          {{ 'PROJECT_COMPONENT.form.labels.metricsPercent' | translateFallback: 'Procenty' }}
+        </label>
+        <app-form-field>
+          <input
+            type="number"
+            class="mt-1 input"
+            [placeholder]="'PROJECT_COMPONENT.form.placeholders.metricsPercent' | translateFallback: 'Wpisz procent...'"
+            [id]="metricsPercent"
+            [formControlName]="metricsPercent"
+          />
+        </app-form-field>
+      </div>
+    </form>
+  </div>
+</app-modal-base>

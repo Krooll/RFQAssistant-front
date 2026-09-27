@@ -3,10 +3,12 @@ import { ProcessService } from '@features/process-component/process-service';
 import { Button } from '@shared/shared-ui/button/button';
 import { Paginator } from '@shared/shared-ui/paginator/paginator';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
+import { ItemList } from '@shared/shared-ui/item-list/item-list';
+import { ButtonTypes } from '@shared/model-ui/button-configuration/button-configuration';
 
 @Component({
   selector: 'app-process-component',
-  imports: [Button, Paginator, TranslateFallbackPipe],
+  imports: [Button, Paginator, TranslateFallbackPipe, ItemList],
   providers: [ProcessService],
   templateUrl: './process.html',
   styleUrl: './process.scss',
@@ -19,15 +21,17 @@ export class Process implements OnInit {
     this._processComponentService.getAllProcess();
   }
 
-  protected onAddButtonClicked() {
+  protected onAddButtonClicked(): void {
     this._processComponentService.showCreateProcessModal(this._injector);
   }
 
-  protected onInfoButtonClicked(id: number | undefined) {
+  protected onInfoButtonClicked(id: number | undefined): void {
     this._processComponentService.getCurrentProcessById(id, this._injector);
   }
 
-  protected onDeleteButtonCLicked(id: number | undefined) {
+  protected onDeleteButtonCLicked(id: number | undefined): void {
     this._processComponentService.showDeleteModal(id, this._injector);
   }
+
+  protected readonly ButtonTypes = ButtonTypes;
 }

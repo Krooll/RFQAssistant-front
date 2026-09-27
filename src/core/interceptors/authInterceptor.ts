@@ -1,8 +1,8 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { UserDataService } from '@core/services/user-data-service/user-data';
 import { AuthorizationService } from '@core/services/auth-service/authorization';
-import { EMPTY } from 'rxjs';
+import { catchError, EMPTY, throwError } from 'rxjs';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
   const userDataService = inject(UserDataService);
@@ -28,5 +28,12 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
     });
   }
 
-  return next(req);
+  return next(req).pipe(
+    catchError((err: HttpErrorResponse) => {
+      if (err.status === 401) {
+        authorizationService.logout();
+      }
+      return throwError(() => err);
+    }),
+  );
 };

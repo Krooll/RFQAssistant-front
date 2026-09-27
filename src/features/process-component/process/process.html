@@ -1,18 +1,19 @@
 <div class="d-flex flex-column component-container">
   <div class="d-flex align-items-center justify-content-between">
     <h2>{{ 'PROCESS_COMPONENT.componentTitle' | translateFallback: 'Procesy' }}</h2>
-    <app-button [buttonType]="'button'" (emitButtonClick)="onAddButtonClicked()">
+    <app-button [buttonType]="ButtonTypes.button" (emitButtonClick)="onAddButtonClicked()">
       {{ 'BUTTONS.add' | translateFallback: 'Dodaj' }}
     </app-button>
   </div>
   <div class="list-container">
     @for(item of _processComponentService.processList(); track item.id) {
-    <div class="d-flex justify-content-between list-item mt-2 mb-2 p-2">
+    <app-item-list
+      (infoButtonClickedOutput)="onInfoButtonClicked(item.id)"
+      (deleteButtonClickedOutput)="onDeleteButtonCLicked(item.id)"
+    >
       <div class="d-flex flex-column">
         <p>
-          <span class="font-weight-bold">
-            {{ 'PROCESS_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:
-          </span>
+          <span class="font-weight-bold">{{ 'PROCESS_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:</span>
           {{ item.name }}
         </p>
         <p>
@@ -22,22 +23,12 @@
           {{ item.description }}
         </p>
       </div>
-      <div class="d-flex">
-        <app-button [buttonType]="'button'" (emitButtonClick)="onInfoButtonClicked(item?.id)">
-          {{ 'BUTTONS.info' | translateFallback: 'Więcej informacji' }}
-        </app-button>
-        <app-button [buttonType]="'button'" (emitButtonClick)="onDeleteButtonCLicked(item?.id)">
-          {{ 'BUTTONS.delete' | translateFallback: 'Usuń' }}
-        </app-button>
-      </div>
-    </div>
+    </app-item-list>
     }
   </div>
-  <div class="w-100">
-    <app-paginator
-      (pageChange)="_processComponentService.updatePageParams($event)"
-      [totalElements]="_processComponentService.totalElements()"
-      [pageParams]="_processComponentService.pageParams()"
-    ></app-paginator>
-  </div>
+  <app-paginator
+    (pageChange)="_processComponentService.updatePageParams($event)"
+    [totalElements]="_processComponentService.totalElements()"
+    [pageParams]="_processComponentService.pageParams()"
+  ></app-paginator>
 </div>
