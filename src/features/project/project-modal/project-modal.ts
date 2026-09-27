@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnDestroy, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
-import { CreateProjectRequest, SimpleProjectDto, UserDto } from '@core/dtos';
+import { CreateProjectRequest, SimpleProjectDto } from '@core/dtos';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationService } from '@core/services/notification-service/notification-service';
 import { ProjectService } from '@features/project/services/project-service';
@@ -46,6 +46,7 @@ export class ProjectModal implements OnDestroy {
       this._formBuilder.group({
         validFrom: ['', Validators.required],
         validTo: ['', Validators.required],
+        projectSOP: ['', Validators.required],
         name: ['', Validators.required],
         projectNumber: ['', Validators.required],
       }),
@@ -78,6 +79,7 @@ export class ProjectModal implements OnDestroy {
       case ModalTypes.create: {
         const createProjectRequest: CreateProjectRequest = {
           ...formValue,
+          projectSOP: this.changeDateToISOString(formValue.projectSOP),
           validFrom: this.changeDateToISOString(formValue.validFrom),
           validTo: this.changeDateToISOString(formValue.validTo),
         };
@@ -92,7 +94,7 @@ export class ProjectModal implements OnDestroy {
       .createProject(payload)
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
-        next: (response: UserDto) => {
+        next: (response: SimpleProjectDto) => {
           if (response) {
             this._notificationService.showSuccess('Sukces!');
             this.closeCurrentModal(true);
