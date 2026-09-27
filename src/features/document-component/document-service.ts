@@ -18,7 +18,7 @@ export class DocumentService {
     this._modalService.closeCurrentModal(reloadPage);
   }
 
-  private toFormData<T extends Record<string, any>>(object: T): FormData {
+  private toFormData<T extends Record<string, unknown>>(object: T): FormData {
     const formData = new FormData();
 
     Object.keys(object).forEach((key) => {
