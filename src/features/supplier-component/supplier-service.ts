@@ -1,7 +1,7 @@
 import { DestroyRef, inject, Injectable, Injector, signal } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
 import { ModalService } from '@core/services/modal-service/modal-service';
-import { CreateSupplierRequest, ProcessDto, SupplierDto, UpdateSupplierRequest, UserDto } from '@core/dtos';
+import { CreateSupplierRequest, ProcessDto, SupplierDto, UpdateSupplierRequest } from '@core/dtos';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Endpoint, Endpoints } from '@env/endpoints';
@@ -122,7 +122,7 @@ export class SupplierService {
   }
 
   public showInfoSupplierModal(response: SupplierDto, injector: Injector): void {
-    const createModalConfiguration: ModalDataConfiguration<UserDto> = {
+    const createModalConfiguration: ModalDataConfiguration<SupplierDto> = {
       type: ModalTypes.info,
       title: 'MODALS.supplier.info',
       titleFallback: 'Więcej informacji',
