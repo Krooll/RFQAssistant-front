@@ -1,6 +1,6 @@
 import { Component, DestroyRef, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ComponentDto, CreateComponentRequest, ProcessDto, UpdateComponentRequest } from '@core/dtos';
+import { ComponentDto, CreateComponentRequest, UpdateComponentRequest } from '@core/dtos';
 import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -17,6 +17,8 @@ import {
   ButtonVariants,
 } from '@shared/model-ui/button-configuration/button-configuration';
 import { ActivatedRoute } from '@angular/router';
+import { FormListService } from '@core/services/form-list-service/form-list-service';
+import { FormService } from '@core/services/form-service/form-service';
 
 @Component({
   selector: 'app-technical-specification-component-modal',
@@ -31,6 +33,8 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
   readonly _technicalSpecificationComponentService = inject(TechnicalSpecificationComponentService);
   private readonly _notificationService = inject(NotificationService);
   private readonly _activatedRoute = inject(ActivatedRoute);
+  private readonly _formListService = inject(FormListService);
+  private readonly _formService = inject(FormService);
 
   private readonly _destroyRef = inject(DestroyRef);
   protected formGroup = signal<FormGroup | undefined>(undefined);
@@ -51,14 +55,17 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
 
   constructor() {
     this.currentProjectId.set(this._activatedRoute.snapshot.params['id']);
+
     this._technicalSpecificationComponentService.getAllProcesses();
+    this._technicalSpecificationComponentService.getAllMaterials();
 
     this.formGroup.set(
       this._formBuilder.group({
         number: ['', Validators.required],
         revision: ['', Validators.required],
         name: ['', Validators.required],
-        material: [''],
+        usage: ['', Validators.required],
+        materialIds: [''],
         description: ['', Validators.maxLength(500)],
         processesIds: [''],
       }),
@@ -75,7 +82,8 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadData();
-    this.subscribeFormChanges();
+    this.subscribeProcessFormField();
+    this.subscribeMaterialFormField();
   }
 
   ngOnDestroy() {
@@ -106,6 +114,7 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
           ...formValue,
           projectId: this.currentProjectId(),
           processesIds: this.extractProcessesIds(),
+          materialIds: this.extractMaterialsIds(),
         };
 
         this.createComponent(createComponentRequest);
@@ -117,6 +126,7 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
           ...formValue,
           id: this.data()?.id,
           processesIds: this.extractProcessesIds(),
+          materialIds: this.extractMaterialsIds(),
         };
         this.updateComponent(updateComponentRequest);
         break;
@@ -164,14 +174,16 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
 
   private updateStateAndPatchForm(): void {
     const componentData: ComponentDto | undefined = this.data();
-    this._technicalSpecificationComponentService.selectedProcessList.set(componentData?.processes);
+
+    this._technicalSpecificationComponentService.selectedProcessList.set(componentData?.processes ?? []);
+    this._technicalSpecificationComponentService.selectedMaterialList.set(componentData?.materials ?? []);
 
     if (componentData?.id) {
       this.formGroup()?.patchValue({
         number: componentData.number,
         revision: componentData.revision,
+        usage: componentData.usage,
         name: componentData.name,
-        material: componentData.material,
         description: componentData.description,
       });
 
@@ -180,20 +192,31 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
   }
 
   private extractProcessesIds(): number[] | undefined {
-    return this._technicalSpecificationComponentService
-      .selectedProcessList()
-      ?.map((process) => process.id)
-      .filter((id) => id !== undefined);
+    return this._formListService.extractItemsIdFromCurrentList(
+      this._technicalSpecificationComponentService.selectedProcessList,
+    );
   }
 
-  private subscribeFormChanges(): void {
-    this.formGroup()
-      ?.get('processesIds')
-      ?.valueChanges.pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe((selectedItem: ProcessDto) => {
-        this._technicalSpecificationComponentService.addSelectedProcessToList(selectedItem);
-        this.formGroup()?.get('processesIds')?.setValue('', { emitEvent: false });
-      });
+  private extractMaterialsIds(): number[] | undefined {
+    return this._formListService.extractItemsIdFromCurrentList(
+      this._technicalSpecificationComponentService.selectedMaterialList,
+    );
+  }
+
+  private subscribeProcessFormField(): void {
+    this._formService.subscribeFormChangesAndAddSelectedItemToCurrentList(
+      this.formGroup,
+      this._technicalSpecificationComponentService.selectedProcessList,
+      'processesIds',
+    );
+  }
+
+  private subscribeMaterialFormField(): void {
+    this._formService.subscribeFormChangesAndAddSelectedItemToCurrentList(
+      this.formGroup,
+      this._technicalSpecificationComponentService.selectedMaterialList,
+      'materialIds',
+    );
   }
 
   protected closeCurrentModal(reloadPage?: boolean): void {

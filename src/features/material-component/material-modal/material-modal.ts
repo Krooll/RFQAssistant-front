@@ -1,81 +1,54 @@
 import { Component, DestroyRef, effect, inject, OnDestroy, signal } from '@angular/core';
-import { UserService } from '@features/user-component/user-service';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
+import { CreateMaterialRequest, MaterialDto, UpdateMaterialRequest } from '@core/dtos';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
-import { CreateUserRequest, UpdateUserRequest, UserDto } from '@core/dtos';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NotificationService } from '@core/services/notification-service/notification-service';
-import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
+import { MaterialService } from '@features/material-component/material-service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
+import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
-import { Roles, RolesInterface } from '@core/core-dtos/roles/roles';
 
 @Component({
-  selector: 'app-user-modal',
-  imports: [ModalBase, FormField, FormsModule, TranslateFallbackPipe, ReactiveFormsModule],
-  templateUrl: './user-modal.html',
-  styleUrl: './user-modal.scss',
+  selector: 'app-material-modal',
+  imports: [FormField, ModalBase, ReactiveFormsModule, TranslateFallbackPipe],
+  templateUrl: './material-modal.html',
+  styleUrl: './material-modal.scss',
 })
-export class UserModal implements OnDestroy {
+export class MaterialModal implements OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
-  private readonly _userComponentService = inject(UserService);
-  private readonly _modalData = inject<ModalDataConfiguration<UserDto>>(MAT_DIALOG_DATA);
+  private readonly _materialComponentService = inject(MaterialService);
+  private readonly _modalData = inject<ModalDataConfiguration<MaterialDto>>(MAT_DIALOG_DATA);
   private readonly _notificationService = inject(NotificationService);
+
   private readonly _destroyRef = inject(DestroyRef);
 
   protected formGroup = signal<FormGroup | undefined>(undefined);
 
-  protected data = signal<UserDto | undefined>(undefined);
+  protected data = signal<MaterialDto | undefined>(undefined);
   protected type = signal<ModalType | undefined>(undefined);
   protected title = signal<{ title: string; titleFallback: string }>({
     title: '',
     titleFallback: '',
   });
 
-  protected roles: RolesInterface[] = [
-    {
-      label: 'ROLES.admin',
-      labelFallback: 'Administrator',
-      role: Roles.admin,
-    },
-    {
-      label: 'ROLES.MANAGER',
-      labelFallback: 'Manager',
-      role: Roles.manager,
-    },
-    {
-      label: 'ROLES.EMPLOYEE',
-      labelFallback: 'Pracownik',
-      role: Roles.employee,
-    },
-    {
-      label: 'ROLES.SUPPLIER',
-      labelFallback: 'Dostawca',
-      role: Roles.supplier,
-    },
-  ];
-
   constructor() {
     this.loadData();
 
     this.formGroup.set(
       this._formBuilder.group({
-        username: ['', [Validators.required]],
-        password: [''],
-        name: [''],
-        surname: [''],
-        email: ['', [Validators.required, Validators.email]],
+        name: ['', [Validators.required]],
+        description: ['', Validators.maxLength(500)],
         disable: [''],
-        role: ['', [Validators.required]],
       }),
     );
 
     effect(() => {
-      const userData: UserDto | undefined = this.data();
+      const materialDto: MaterialDto | undefined = this.data();
 
-      if (userData?.id) {
+      if (materialDto?.id) {
         this.updateStateAndPatchForm();
       }
     });
@@ -105,20 +78,20 @@ export class UserModal implements OnDestroy {
 
     switch (currentModalType) {
       case ModalTypes.create: {
-        const createUserPayload: CreateUserRequest = {
+        const createMaterialPayload: CreateMaterialRequest = {
           ...formValue,
           disable: !!formValue.disable,
         };
-        this.createUser(createUserPayload);
+        this.createMaterial(createMaterialPayload);
         break;
       }
 
       case ModalTypes.update: {
-        const updateUserPayload: UpdateUserRequest = {
+        const updateMaterialPayload: UpdateMaterialRequest = {
           ...formValue,
           id: this.data()?.id,
         };
-        this.updateUser(updateUserPayload);
+        this.updateMaterial(updateMaterialPayload);
         break;
       }
 
@@ -134,28 +107,28 @@ export class UserModal implements OnDestroy {
     this.formGroup()?.enable();
   }
 
-  private createUser(payload: CreateUserRequest): void {
-    this._userComponentService
-      .createUser(payload)
+  private createMaterial(payload: CreateMaterialRequest): void {
+    this._materialComponentService
+      .createMaterial(payload)
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
-        next: (response: UserDto) => {
+        next: (response) => {
           if (response) {
-            this._notificationService.showSuccess('Sukces!');
+            this._notificationService.showSuccess('Sukces');
             this.closeCurrentModal(true);
           }
         },
       });
   }
 
-  private updateUser(payload: UpdateUserRequest): void {
-    this._userComponentService
-      .updateUser(payload)
+  private updateMaterial(payload: UpdateMaterialRequest): void {
+    this._materialComponentService
+      .updateMaterial(payload)
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
-        next: (response: UserDto) => {
+        next: (response) => {
           if (response) {
-            this._notificationService.showSuccess('Sukces!');
+            this._notificationService.showSuccess('Sukces');
             this.closeCurrentModal(true);
           }
         },
@@ -163,16 +136,13 @@ export class UserModal implements OnDestroy {
   }
 
   private updateStateAndPatchForm(): void {
-    const userData: UserDto | undefined = this.data();
+    const materialData: MaterialDto | undefined = this.data();
 
-    if (userData?.id) {
+    if (materialData?.id) {
       this.formGroup()?.patchValue({
-        username: userData?.username,
-        name: userData?.name,
-        surname: userData?.surname,
-        email: userData?.email,
-        disable: userData?.disable,
-        role: userData?.role,
+        name: materialData?.name,
+        description: materialData?.description,
+        disable: materialData?.disable,
       });
 
       this.formGroup()?.disable();
@@ -180,7 +150,7 @@ export class UserModal implements OnDestroy {
   }
 
   protected closeCurrentModal(reloadPage?: boolean): void {
-    this._userComponentService.closeCurrentModal(reloadPage ? reloadPage : false);
+    this._materialComponentService.closeCurrentModal(reloadPage ? reloadPage : false);
   }
 
   private resetCurrentForm(): void {

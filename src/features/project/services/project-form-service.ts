@@ -1,4 +1,4 @@
-import { DestroyRef, inject, Injectable, Injector } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
 import { ComponentDto, DocumentDto, ProjectDto, UpdateProjectRequest } from '@core/dtos';
 import { defaultIfEmpty, map, Observable, of, switchMap } from 'rxjs';
@@ -17,7 +17,6 @@ import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/mod
 export class ProjectFormService {
   private readonly _baseHttpService = inject(BaseHttpService);
   private readonly _modalService = inject(ModalService);
-  private readonly _destroyRef = inject(DestroyRef);
 
   public sectionButtonsList: SectionButtons[] = [
     {

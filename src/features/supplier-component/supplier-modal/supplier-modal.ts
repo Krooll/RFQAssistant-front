@@ -64,6 +64,7 @@ export class SupplierModal implements OnInit, OnDestroy {
 
     effect(() => {
       const supplierData: SupplierDto | undefined = this.data();
+      this._supplierComponentService.selectedProcessList.set(supplierData?.processes);
 
       if (supplierData?.id) {
         this.updateStateAndPatchForm();
@@ -99,23 +100,23 @@ export class SupplierModal implements OnInit, OnDestroy {
 
     switch (currentModalType) {
       case ModalTypes.create: {
-        const createUserPayload: CreateSupplierRequest = {
+        const createSupplierPayload: CreateSupplierRequest = {
           ...formValue,
           disable: !!formValue.disable,
           processesIds: this.extractProcessesIds(),
         };
-        this.createSupplier(createUserPayload);
+        this.createSupplier(createSupplierPayload);
         break;
       }
 
       case ModalTypes.update: {
-        const updateUserPayload: UpdateSupplierRequest = {
+        const updateSupplierPayload: UpdateSupplierRequest = {
           ...formValue,
           id: this.data()?.id,
           disable: !!formValue.disable,
           processesIds: this.extractProcessesIds(),
         };
-        this.updateSupplier(updateUserPayload);
+        this.updateSupplier(updateSupplierPayload);
         break;
       }
 
@@ -161,7 +162,6 @@ export class SupplierModal implements OnInit, OnDestroy {
 
   private updateStateAndPatchForm(): void {
     const supplierData: SupplierDto | undefined = this.data();
-    this._supplierComponentService.selectedProcessList.set(supplierData?.processes);
 
     if (supplierData?.id) {
       this.formGroup()?.patchValue({

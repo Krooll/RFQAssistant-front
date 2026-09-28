@@ -1,0 +1,48 @@
+<app-modal-base
+  [modalTitle]="title()"
+  [modalType]="type()"
+  (submitOutput)="onSubmit()"
+  (closeOutput)="closeCurrentModal()"
+  (updateOutput)="onSubmit()"
+  [buttonDisabled]="formGroup()?.invalid"
+>
+  <form [formGroup]="formGroup()!">
+    <div class="d-flex flex-column">
+      @let name = 'name';
+      <label [for]="name">{{ 'MATERIAL_COMPONENT.form.labels.name' | translateFallback: 'Nazwa' }}</label>
+      <app-form-field>
+        <input
+          type="text"
+          class="mt-1 input"
+          [placeholder]="'MATERIAL_COMPONENT.form.placeholders.name' | translateFallback: 'Wpisz nazwę...'"
+          [id]="name"
+          [formControlName]="name"
+        />
+      </app-form-field>
+    </div>
+    <div class="d-flex flex-column mt-4">
+      @let description = 'description';
+      <label [id]="description" [for]="description">
+        {{ 'MATERIAL_COMPONENT.form.labels.description' | translateFallback: 'Opis' }}
+      </label>
+      <app-form-field>
+        <textarea
+          type="text"
+          class="mt-1 input"
+          [placeholder]="'MATERIAL_COMPONENT.form.placeholders.description' | translateFallback: 'Wpisz opis...'"
+          [id]="description"
+          [formControlName]="description"
+        ></textarea>
+      </app-form-field>
+    </div>
+    <div class="d-flex align-items-center mt-4">
+      @let disable = 'disable';
+      <label class="me-3" [for]="disable">
+        {{ 'MATERIAL_COMPONENT.form.labels.disable' | translateFallback: 'Nieaktywny' }}
+      </label>
+      <app-form-field>
+        <input type="checkbox" class="mt-1 input" [id]="disable" [formControlName]="disable" />
+      </app-form-field>
+    </div>
+  </form>
+</app-modal-base>

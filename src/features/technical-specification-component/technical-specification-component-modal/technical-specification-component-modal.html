@@ -52,15 +52,15 @@
         </app-form-field>
       </div>
       <div class="d-flex flex-column mt-4">
-        @let material = 'material';
-        <label [for]="material">{{ 'COMPONENT_COMPONENT.form.labels.material' | translateFallback: 'Materiał' }}</label>
+        @let usage = 'usage';
+        <label [for]="usage">{{ 'COMPONENT_COMPONENT.form.labels.usage' | translateFallback: 'Zużycie' }}</label>
         <app-form-field>
           <input
-            type="text"
+            type="number"
             class="mt-1 input"
-            [placeholder]="'COMPONENT_COMPONENT.form.placeholders.material' | translateFallback: 'Wpisz materiał...'"
-            [id]="material"
-            [formControlName]="material"
+            [placeholder]="'COMPONENT_COMPONENT.form.placeholders.usage' | translateFallback: 'Wpisz zużycie...'"
+            [id]="usage"
+            [formControlName]="usage"
           />
         </app-form-field>
       </div>
@@ -70,13 +70,13 @@
           {{ 'COMPONENT_COMPONENT.form.labels.description' | translateFallback: 'Opis' }}
         </label>
         <app-form-field>
-          <input
+          <textarea
             type="text"
             class="mt-1 input"
             [placeholder]="'COMPONENT_COMPONENT.form.placeholders.description' | translateFallback: 'Wpisz opis komponentu...'"
             [id]="description"
             [formControlName]="description"
-          />
+          ></textarea>
         </app-form-field>
       </div>
     </div>
@@ -98,7 +98,7 @@
           </select>
         </app-form-field>
       </div>
-      @if(_technicalSpecificationComponentService.selectedProcessList()?.length){
+      @if(_technicalSpecificationComponentService.selectedProcessList().length){
       <div class="modal-list-container">
         <!-- prettier-ignore -->
         <p>{{ 'SUPPLIER_COMPONENT.form.labels.selectedProcess' | translateFallback: 'Wybrane procesy'}}:
@@ -122,6 +122,50 @@
       <p>
             {{ 'SUPPLIER_COMPONENT.form.labels.emptyProcessList' | translateFallback: 'Brak dodanych procesów...'}}
           </p>
+      }
+    </div>
+    <div class="modal-split-container p-1">
+      <div class="d-flex flex-column mt-4">
+        @let materialIds = 'materialIds';
+        <label [for]="materialIds">
+          {{ 'COMPONENT_COMPONENT.form.labels.material' | translateFallback: 'Materiały' }}
+        </label>
+        <app-form-field>
+          <select class="mt-1 input" [id]="materialIds" [formControlName]="materialIds">
+            <!-- prettier-ignore -->
+            <option [ngValue]="''" hidden disabled selected>
+              {{'SUPPLIER_COMPONENT.form.placeholders.material' | translateFallback: 'Wybierz materiał...'}}
+            </option>
+            @for(item of _technicalSpecificationComponentService.materialList(); track $index) {
+            <option [ngValue]="item">{{item.name}}</option>
+            }
+          </select>
+        </app-form-field>
+      </div>
+      @if(_technicalSpecificationComponentService.selectedMaterialList().length){
+      <div class="modal-list-container">
+        <!-- prettier-ignore -->
+        <p>{{ 'SUPPLIER_COMPONENT.form.labels.selectedMaterials' | translateFallback: 'Wybrane materiał'}}:
+          </p>
+        @for (item of _technicalSpecificationComponentService.selectedMaterialList(); track $index) {
+        <div class="d-flex align-items-center">
+          <p>{{item.name}}</p>
+          <app-button
+            class="ms-2"
+            [buttonConfiguration]="buttonConfiguration"
+            [buttonDisabled]="formGroup()?.disabled"
+            (emitButtonClick)="_technicalSpecificationComponentService.removeSelectedMaterialFromList(item.id)"
+          >
+            x
+          </app-button>
+        </div>
+        }
+      </div>
+      } @else {
+      <!-- prettier-ignore -->
+      <p>
+          {{ 'SUPPLIER_COMPONENT.form.labels.emptyMaterialList' | translateFallback: 'Brak dodanych materiałów...'}}
+        </p>
       }
     </div>
   </form>

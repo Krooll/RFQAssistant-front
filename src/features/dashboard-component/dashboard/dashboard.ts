@@ -39,6 +39,13 @@ export class Dashboard {
       expectedRoles: [Roles.admin],
     },
     {
+      id: 'material',
+      name: 'NAVBAR.applicationList.name.material',
+      nameFallback: 'Materiały',
+      route: RouteEndpoints.material,
+      expectedRoles: [Roles.admin],
+    },
+    {
       id: 'user',
       name: 'NAVBAR.applicationList.name.user',
       nameFallback: 'Użytkownicy',

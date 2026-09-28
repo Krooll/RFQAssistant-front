@@ -15,13 +15,17 @@
       },
       "components": {
         "name": "Komponenty"
+      },
+      "material": {
+        "name": "Materiały"
       }
     }
   },
   "ROLES": {
     "admin": "Administrator",
     "manager": "Manager",
-    "user": "Użytkownik"
+    "employee": "Pracownik",
+    "supplier": "Dostawca"
   },
   "MODALS": {
     "user": {
@@ -68,6 +72,12 @@
       "create": "Skonfiguruj metrykę",
       "edit": "Edytuj metrykę",
       "delete": "Usuń metrykę",
+      "info": "Więcej informacji"
+    },
+    "material": {
+      "create": "Dodaj nowy materiał",
+      "edit": "Edytuj materiał",
+      "delete": "Usuń materiał",
       "info": "Więcej informacji"
     }
   },
@@ -156,7 +166,9 @@
         "email": "Adres email",
         "process": "Procesy",
         "selectedProcess": "Wybrane procesy",
+        "selectedMaterials": "Wybrane materiały",
         "emptyProcessList": "Brak dodanych procesów...",
+        "emptyMaterialList": "Brak dodanych materiałów...",
         "disable": "Nieaktywny"
       },
       "placeholders": {
@@ -221,14 +233,16 @@
         "number": "Numer komponentu",
         "revision": "Rewizja komponentu",
         "name": "Nazwa komponentu",
-        "material": "Materiał",
+        "material": "Materiały",
+        "usage": "Zużycie",
         "description": "Opis"
       },
       "placeholders": {
         "number": "Wpisz numer komponentu...",
         "revision": "Wpisz rewizję komponentu...",
         "name": "Wpisz nazwę komponentu...",
-        "material": "Wpisz materiał...",
+        "usage": "Wpisz zużycie komponentu...",
+        "material": "Wybierz materiał...",
         "description": "Wpisz opis..."
       }
     }
@@ -251,6 +265,20 @@
     "basicTitle": "Podstawa",
     "form": {
       "title": "Metryka"
+    }
+  },
+  "MATERIAL_COMPONENT": {
+    "componentTitle": "Materiały",
+    "form": {
+      "labels": {
+        "name": "Nazwa dokumentu",
+        "description": "Opis",
+        "disable": "Nieaktywny"
+      },
+      "placeholders": {
+        "name": "Wpisz nazwę...",
+        "description": "Wpisz opis..."
+      }
     }
   }
 }
