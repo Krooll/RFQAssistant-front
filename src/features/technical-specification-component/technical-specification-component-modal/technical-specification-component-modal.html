@@ -98,7 +98,7 @@
           </select>
         </app-form-field>
       </div>
-      @if(_technicalSpecificationComponentService.selectedProcessList()?.length){
+      @if(_technicalSpecificationComponentService.selectedProcessList().length){
       <div class="modal-list-container">
         <!-- prettier-ignore -->
         <p>{{ 'SUPPLIER_COMPONENT.form.labels.selectedProcess' | translateFallback: 'Wybrane procesy'}}:
@@ -142,7 +142,7 @@
           </select>
         </app-form-field>
       </div>
-      @if(_technicalSpecificationComponentService.selectedMaterialList()?.length){
+      @if(_technicalSpecificationComponentService.selectedMaterialList().length){
       <div class="modal-list-container">
         <!-- prettier-ignore -->
         <p>{{ 'SUPPLIER_COMPONENT.form.labels.selectedMaterials' | translateFallback: 'Wybrane materiał'}}:

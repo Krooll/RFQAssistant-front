@@ -8,18 +8,20 @@ import { PageRequestParams } from '@core/core-dtos/page-request-params/page-requ
 import { HttpParams } from '@angular/common/http';
 import { SpringPageable } from '@core/core-dtos/pageable/pageable';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormListService } from '@core/services/form-list-service/form-list-service';
 
 @Injectable()
 export class TechnicalSpecificationComponentService {
   private readonly _baseHttpService = inject(BaseHttpService);
+  private readonly _formListService = inject(FormListService);
   private readonly _modalService = inject(ModalService);
   private readonly _destroyRef = inject(DestroyRef);
 
   public processList = signal<ProcessDto[] | undefined>(undefined);
-  public selectedProcessList = signal<ProcessDto[] | undefined>(undefined);
+  public selectedProcessList = signal<ProcessDto[]>([]);
 
   public materialList = signal<MaterialDto[] | undefined>(undefined);
-  public selectedMaterialList = signal<MaterialDto[] | undefined>(undefined);
+  public selectedMaterialList = signal<MaterialDto[]>([]);
 
   public processPageParams = signal<PageRequestParams>({ page: 0, size: 100 });
   public materialPageParams = signal<PageRequestParams>({ page: 0, size: 100 });
@@ -75,20 +77,13 @@ export class TechnicalSpecificationComponentService {
       return;
     }
 
-    this.selectedProcessList.update((currentList = []) => {
-      const exists = currentList.some((process) => process.id === item.id);
-
-      if (exists) {
-        return currentList;
-      }
-
-      return [...currentList, item];
-    });
+    this._formListService.addSelectedItemToCurrentList(this.selectedProcessList, item);
   }
 
   public removeSelectedProcessFromList(id: number | undefined): void {
     if (!id) return;
-    this.selectedProcessList.update((currentList) => (currentList ?? []).filter((process) => process.id !== id));
+
+    this._formListService.removeSelectedItemFromCurrentList(this.selectedProcessList, id);
   }
 
   public addSelectedMaterialToList(item: MaterialDto): void {
@@ -96,20 +91,13 @@ export class TechnicalSpecificationComponentService {
       return;
     }
 
-    this.selectedMaterialList.update((currentList = []) => {
-      const exists = currentList.some((material) => material.id === item.id);
-
-      if (exists) {
-        return currentList;
-      }
-
-      return [...currentList, item];
-    });
+    this._formListService.addSelectedItemToCurrentList(this.selectedMaterialList, item);
   }
 
   public removeSelectedMaterialFromList(id: number | undefined): void {
     if (!id) return;
-    this.selectedMaterialList.update((currentList) => (currentList ?? []).filter((material) => material.id !== id));
+
+    this._formListService.removeSelectedItemFromCurrentList(this.selectedMaterialList, id);
   }
 
   public closeCurrentModal(reloadPage?: boolean): void {
