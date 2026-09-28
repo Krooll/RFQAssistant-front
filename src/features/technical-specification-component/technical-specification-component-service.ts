@@ -1,7 +1,7 @@
 import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
 import { Observable } from 'rxjs';
-import { ComponentDto, CreateComponentRequest, ProcessDto, UpdateComponentRequest } from '@core/dtos';
+import { ComponentDto, CreateComponentRequest, MaterialDto, ProcessDto, UpdateComponentRequest } from '@core/dtos';
 import { Endpoints } from '@env/endpoints';
 import { ModalService } from '@core/services/modal-service/modal-service';
 import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
@@ -18,7 +18,11 @@ export class TechnicalSpecificationComponentService {
   public processList = signal<ProcessDto[] | undefined>(undefined);
   public selectedProcessList = signal<ProcessDto[] | undefined>(undefined);
 
+  public materialList = signal<MaterialDto[] | undefined>(undefined);
+  public selectedMaterialList = signal<MaterialDto[] | undefined>(undefined);
+
   public processPageParams = signal<PageRequestParams>({ page: 0, size: 100 });
+  public materialPageParams = signal<PageRequestParams>({ page: 0, size: 100 });
 
   public createComponent(createComponentRequest: CreateComponentRequest): Observable<ComponentDto> {
     return this._baseHttpService.postData(Endpoints.component, createComponentRequest);
@@ -47,6 +51,25 @@ export class TechnicalSpecificationComponentService {
       });
   }
 
+  private getMaterials(
+    pageParamsService: PageRequestParams,
+    extraPageParams: HttpParams,
+  ): Observable<SpringPageable<MaterialDto>> {
+    return this._baseHttpService.getPageData(Endpoints.material, pageParamsService, extraPageParams);
+  }
+
+  public getAllMaterials(): void {
+    this.getMaterials(this.materialPageParams(), new HttpParams())
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (response) => {
+          if (response) {
+            this.materialList.set(response.content);
+          }
+        },
+      });
+  }
+
   public addSelectedProcessToList(item: ProcessDto): void {
     if (!item?.id) {
       return;
@@ -66,6 +89,27 @@ export class TechnicalSpecificationComponentService {
   public removeSelectedProcessFromList(id: number | undefined): void {
     if (!id) return;
     this.selectedProcessList.update((currentList) => (currentList ?? []).filter((process) => process.id !== id));
+  }
+
+  public addSelectedMaterialToList(item: MaterialDto): void {
+    if (!item?.id) {
+      return;
+    }
+
+    this.selectedMaterialList.update((currentList = []) => {
+      const exists = currentList.some((material) => material.id === item.id);
+
+      if (exists) {
+        return currentList;
+      }
+
+      return [...currentList, item];
+    });
+  }
+
+  public removeSelectedMaterialFromList(id: number | undefined): void {
+    if (!id) return;
+    this.selectedMaterialList.update((currentList) => (currentList ?? []).filter((material) => material.id !== id));
   }
 
   public closeCurrentModal(reloadPage?: boolean): void {

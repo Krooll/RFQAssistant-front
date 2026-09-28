@@ -3,6 +3,7 @@ export const Endpoints = {
   supplier: '/supplier',
   process: '/process',
   project: '/project',
+  material: '/material',
   component: '/component',
   document: '/document',
   documentUpload: '/document/upload',

@@ -4,6 +4,7 @@ export * from './process/process.dto';
 export * from './project/project.dto';
 export * from './component/component.dto';
 export * from './document/document.dto';
+export * from './material/material.dto';
 export * from './metrics/metrics.dto';
 export * from './refreshtoken/refreshtoken.dto';
 export * from './auth/auth.dto';

@@ -68,6 +68,22 @@ export interface paths {
     patch: operations['updateProcess'];
     trace?: never;
   };
+  '/material': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['getAllMaterials'];
+    put?: never;
+    post: operations['createMaterial'];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['updateMaterial'];
+    trace?: never;
+  };
   '/document/upload': {
     parameters: {
       query?: never;
@@ -196,6 +212,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/material/{id}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['getMaterialById'];
+    put?: never;
+    post?: never;
+    delete: operations['deleteMaterial'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/document': {
     parameters: {
       query?: never;
@@ -287,7 +319,7 @@ export interface components {
       surname?: string;
       email: string;
       /** @enum {string} */
-      role: 'ROLE_USER' | 'ROLE_ADMIN' | 'ROLE_MANAGER';
+      role: 'ROLE_ADMIN' | 'ROLE_MANAGER' | 'ROLE_EMPLOYEE' | 'ROLE_SUPPLIER';
       disable?: boolean;
     };
     UserDto: {
@@ -303,7 +335,7 @@ export interface components {
       email?: string;
       disable?: boolean;
       /** @enum {string} */
-      role?: 'ROLE_USER' | 'ROLE_ADMIN' | 'ROLE_MANAGER';
+      role?: 'ROLE_ADMIN' | 'ROLE_MANAGER' | 'ROLE_EMPLOYEE' | 'ROLE_SUPPLIER';
     };
     CreateSupplierRequest: {
       name: string;
@@ -364,9 +396,11 @@ export interface components {
       number?: string;
       revision?: string;
       name?: string;
-      material?: string;
+      /** Format: int64 */
+      usage?: number;
       description?: string;
       processes?: components['schemas']['ProcessDto'][];
+      materials?: components['schemas']['MaterialDto'][];
       documents?: components['schemas']['DocumentDto'][];
     };
     DocumentDto: {
@@ -379,6 +413,17 @@ export interface components {
       name?: string;
       description?: string;
       sourceUrl?: string;
+    };
+    MaterialDto: {
+      /** Format: int64 */
+      id?: number;
+      /** Format: date-time */
+      creationDate?: string;
+      /** Format: date-time */
+      updateDate?: string;
+      name?: string;
+      description?: string;
+      disable?: boolean;
     };
     MetricsDto: {
       /** Format: date-time */
@@ -413,6 +458,11 @@ export interface components {
       description: string;
       disable: boolean;
     };
+    CreateMaterialRequest: {
+      name: string;
+      description?: string;
+      disable?: boolean;
+    };
     CreateDocumentRequest: {
       /** Format: int64 */
       componentId: number;
@@ -427,9 +477,11 @@ export interface components {
       number: string;
       revision: string;
       name: string;
-      material: string;
+      /** Format: int64 */
+      usage: number;
       description?: string;
       processesIds?: number[];
+      materialIds?: number[];
     };
     CreateRefreshTokenRequest: {
       refreshToken: string;
@@ -454,7 +506,7 @@ export interface components {
       email: string;
       disable: boolean;
       /** @enum {string} */
-      role: 'ROLE_USER' | 'ROLE_ADMIN' | 'ROLE_MANAGER';
+      role: 'ROLE_ADMIN' | 'ROLE_MANAGER' | 'ROLE_EMPLOYEE' | 'ROLE_SUPPLIER';
     };
     UpdateSupplierRequest: {
       /** Format: int64 */
@@ -492,15 +544,24 @@ export interface components {
       description: string;
       disable: boolean;
     };
+    UpdateMaterialRequest: {
+      /** Format: int64 */
+      id: number;
+      name: string;
+      description?: string;
+      disable?: boolean;
+    };
     UpdateComponentRequest: {
       /** Format: int64 */
       id: number;
       number: string;
       revision: string;
       name: string;
-      material: string;
+      /** Format: int64 */
+      usage: number;
       description?: string;
       processesIds?: number[];
+      materialIds?: number[];
     };
     Pageable: {
       /** Format: int32 */
@@ -510,10 +571,10 @@ export interface components {
       sort?: string[];
     };
     PageUserDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['UserDto'][];
@@ -533,9 +594,9 @@ export interface components {
       sort?: components['schemas']['SortObject'];
       paged?: boolean;
       /** Format: int32 */
-      pageSize?: number;
-      /** Format: int32 */
       pageNumber?: number;
+      /** Format: int32 */
+      pageSize?: number;
       unpaged?: boolean;
     };
     SortObject: {
@@ -544,10 +605,10 @@ export interface components {
       unsorted?: boolean;
     };
     PageSupplierDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['SupplierDto'][];
@@ -562,10 +623,10 @@ export interface components {
       empty?: boolean;
     };
     PageSimpleProjectDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['SimpleProjectDto'][];
@@ -599,10 +660,10 @@ export interface components {
       status?: 'ACTIVE' | 'INACTIVE' | 'SUSPENDED';
     };
     PageProcessDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['ProcessDto'][];
@@ -616,11 +677,29 @@ export interface components {
       pageable?: components['schemas']['PageableObject'];
       empty?: boolean;
     };
-    PageDocumentDto: {
+    PageMaterialDto: {
+      /** Format: int32 */
+      totalPages?: number;
       /** Format: int64 */
       totalElements?: number;
       /** Format: int32 */
+      size?: number;
+      content?: components['schemas']['MaterialDto'][];
+      /** Format: int32 */
+      number?: number;
+      first?: boolean;
+      last?: boolean;
+      /** Format: int32 */
+      numberOfElements?: number;
+      sort?: components['schemas']['SortObject'];
+      pageable?: components['schemas']['PageableObject'];
+      empty?: boolean;
+    };
+    PageDocumentDto: {
+      /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['DocumentDto'][];
@@ -635,10 +714,10 @@ export interface components {
       empty?: boolean;
     };
     PageComponentDto: {
-      /** Format: int64 */
-      totalElements?: number;
       /** Format: int32 */
       totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
       /** Format: int32 */
       size?: number;
       content?: components['schemas']['ComponentDto'][];
@@ -917,6 +996,70 @@ export interface operations {
       };
     };
   };
+  getAllMaterials: {
+    parameters: {
+      query: {
+        pageable: components['schemas']['Pageable'];
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: Record<string, unknown>;
+        content: {
+          '*/*': components['schemas']['PageMaterialDto'];
+        };
+      };
+    };
+  };
+  createMaterial: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['CreateMaterialRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: Record<string, unknown>;
+        content: {
+          '*/*': components['schemas']['MaterialDto'];
+        };
+      };
+    };
+  };
+  updateMaterial: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['UpdateMaterialRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: Record<string, unknown>;
+        content: {
+          '*/*': components['schemas']['MaterialDto'];
+        };
+      };
+    };
+  };
   uploadFile: {
     parameters: {
       query?: never;
@@ -1182,6 +1325,44 @@ export interface operations {
     };
   };
   deleteProcess: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: Record<string, unknown>;
+        content?: never;
+      };
+    };
+  };
+  getMaterialById: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        id: number;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: Record<string, unknown>;
+        content: {
+          '*/*': components['schemas']['MaterialDto'];
+        };
+      };
+    };
+  };
+  deleteMaterial: {
     parameters: {
       query?: never;
       header?: never;

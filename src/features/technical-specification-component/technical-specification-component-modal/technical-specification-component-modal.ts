@@ -1,6 +1,6 @@
 import { Component, DestroyRef, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ComponentDto, CreateComponentRequest, ProcessDto, UpdateComponentRequest } from '@core/dtos';
+import { ComponentDto, CreateComponentRequest, MaterialDto, ProcessDto, UpdateComponentRequest } from '@core/dtos';
 import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -51,14 +51,17 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
 
   constructor() {
     this.currentProjectId.set(this._activatedRoute.snapshot.params['id']);
+
     this._technicalSpecificationComponentService.getAllProcesses();
+    this._technicalSpecificationComponentService.getAllMaterials();
 
     this.formGroup.set(
       this._formBuilder.group({
         number: ['', Validators.required],
         revision: ['', Validators.required],
         name: ['', Validators.required],
-        material: [''],
+        usage: ['', Validators.required],
+        materialIds: [''],
         description: ['', Validators.maxLength(500)],
         processesIds: [''],
       }),
@@ -68,6 +71,8 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
       const componentData: ComponentDto | undefined = this.data();
 
       if (componentData?.id) {
+        this._technicalSpecificationComponentService.selectedProcessList.set(componentData?.processes);
+        this._technicalSpecificationComponentService.selectedMaterialList.set(componentData?.materials);
         this.updateStateAndPatchForm();
       }
     });
@@ -76,6 +81,7 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadData();
     this.subscribeFormChanges();
+    this.subscribeMaterialFormChanges();
   }
 
   ngOnDestroy() {
@@ -106,6 +112,7 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
           ...formValue,
           projectId: this.currentProjectId(),
           processesIds: this.extractProcessesIds(),
+          materialIds: this.extractMaterialsIds(),
         };
 
         this.createComponent(createComponentRequest);
@@ -117,6 +124,7 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
           ...formValue,
           id: this.data()?.id,
           processesIds: this.extractProcessesIds(),
+          materialIds: this.extractMaterialsIds(),
         };
         this.updateComponent(updateComponentRequest);
         break;
@@ -164,14 +172,12 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
 
   private updateStateAndPatchForm(): void {
     const componentData: ComponentDto | undefined = this.data();
-    this._technicalSpecificationComponentService.selectedProcessList.set(componentData?.processes);
 
     if (componentData?.id) {
       this.formGroup()?.patchValue({
         number: componentData.number,
         revision: componentData.revision,
         name: componentData.name,
-        material: componentData.material,
         description: componentData.description,
       });
 
@@ -186,6 +192,13 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
       .filter((id) => id !== undefined);
   }
 
+  private extractMaterialsIds(): number[] | undefined {
+    return this._technicalSpecificationComponentService
+      .selectedMaterialList()
+      ?.map((material) => material.id)
+      .filter((id) => id !== undefined);
+  }
+
   private subscribeFormChanges(): void {
     this.formGroup()
       ?.get('processesIds')
@@ -193,6 +206,16 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
       .subscribe((selectedItem: ProcessDto) => {
         this._technicalSpecificationComponentService.addSelectedProcessToList(selectedItem);
         this.formGroup()?.get('processesIds')?.setValue('', { emitEvent: false });
+      });
+  }
+
+  private subscribeMaterialFormChanges(): void {
+    this.formGroup()
+      ?.get('materialIds')
+      ?.valueChanges.pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe((selectedItem: MaterialDto) => {
+        this._technicalSpecificationComponentService.addSelectedMaterialToList(selectedItem);
+        this.formGroup()?.get('materialIds')?.setValue('', { emitEvent: false });
       });
   }
 
