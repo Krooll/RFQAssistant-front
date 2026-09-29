@@ -14,14 +14,22 @@
     </app-button>
     }
   </div>
-  <div class="d-flex align-items-end lower-section p-1">
-    <app-button
-      class="w-100"
-      [buttonType]="ButtonTypes.button"
-      [buttonConfiguration]="menuNavBarButtonConfig"
-      (click)="logOut()"
-    >
-      {{ 'BUTTONS.logout' | translateFallback: 'Wyloguj się' }}
-    </app-button>
+  <div class="d-flex align-items-end p-1">
+    <div class="d-flex flex-column w-100">
+      <app-button
+        [buttonType]="ButtonTypes.button"
+        (emitButtonClick)="onLangChangeButtonClick()"
+        [buttonConfiguration]="menuNavBarButtonConfig"
+      >
+        {{ 'BUTTONS.lang' | translateFallback: 'Język' }}
+      </app-button>
+      <app-button
+        [buttonType]="ButtonTypes.button"
+        [buttonConfiguration]="menuNavBarButtonConfig"
+        (emitButtonClick)="logOut()"
+      >
+        {{ 'BUTTONS.logout' | translateFallback: 'Wyloguj się' }}
+      </app-button>
+    </div>
   </div>
 </div>

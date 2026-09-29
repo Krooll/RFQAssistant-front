@@ -29,7 +29,7 @@ export class ProjectMetricService {
       const existingMetric = currentMetricList?.[i];
 
       if (existingMetric && existingMetric.basic !== undefined) {
-        const calculatedPercent = Math.round(existingMetric.basic * (1 + this.percent() / 100) * 100) / 100;
+        const calculatedPercent = Math.round(existingMetric.basic * (1 + this.percent() / 100));
 
         return {
           ...existingMetric,
@@ -55,7 +55,7 @@ export class ProjectMetricService {
     this.generatedMetricList.update((list) => {
       const updated = [...list];
       const calculatedPercent =
-        numValue !== undefined ? Math.round(numValue * (1 + this.percent() / 100) * 100) / 100 : undefined;
+        numValue !== undefined ? Math.round(Number(numValue) * (1 + Number(this.percent()) / 100)) : undefined;
 
       updated[event.index] = {
         ...updated[event.index],

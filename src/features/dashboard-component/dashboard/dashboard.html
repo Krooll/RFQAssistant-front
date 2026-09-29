@@ -1,5 +1,6 @@
 <div class="d-flex body-container">
   <app-navbar-menu
+    (changeLangButtonCLickEmit)="onLangChangeButtonClick()"
     (selectedApplication)="navigateToSelectedApp($event)"
     [applicationList]="validApplicationList()"
   ></app-navbar-menu>

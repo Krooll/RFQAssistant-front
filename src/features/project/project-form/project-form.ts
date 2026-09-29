@@ -13,6 +13,7 @@ import { DateService } from '@core/services/date-service/date-service';
 import { DownloadService } from '@core/services/download-service/download-service';
 import { ProjectMetricService } from '@features/project/services/project-metric-service';
 import { ProjectMetrics } from '@features/project/project-metrics/project-metrics';
+import { NotificationService } from '@core/services/notification-service/notification-service';
 
 @Component({
   selector: 'app-project-form',
@@ -38,6 +39,7 @@ export class ProjectForm implements OnDestroy {
   private readonly _downloadService = inject(DownloadService);
   private readonly _injector = inject(Injector);
   private readonly _destroyRef = inject(DestroyRef);
+  private readonly _notificationService = inject(NotificationService);
 
   protected projectData = model<ProjectDto>();
 
@@ -105,6 +107,7 @@ export class ProjectForm implements OnDestroy {
       .subscribe({
         next: (response) => {
           if (response) {
+            this._notificationService.showSuccess('Sukces!');
             this.getProjectById(this.projectData()?.id);
           }
         },

@@ -28,6 +28,9 @@
     "supplier": "Dostawca"
   },
   "MODALS": {
+    "lang": {
+      "title": "Zmień język"
+    },
     "user": {
       "create": "Dodaj nowego użytkownika",
       "edit": "Edytuj użytkownika",
@@ -94,7 +97,12 @@
     "back": "Wróć",
     "document": "Dodaj dokument",
     "download": "Pobierz",
-    "preview": "Podgląd"
+    "preview": "Podgląd",
+    "lang": "Język",
+    "pl": "Polski",
+    "en": "Angielski",
+    "sortUp": "Sortowanie od góry",
+    "sortDown": "Sortowanie od dołu"
   },
   "FORM_VALIDATION_TEXTS": {
     "required": "To pole jest wymagane...",
