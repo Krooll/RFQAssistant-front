@@ -2,7 +2,7 @@ import { Component, input, output } from '@angular/core';
 import { MatDialogActions, MatDialogContent } from '@angular/material/dialog';
 import { Button } from '@shared/shared-ui/button/button';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
-import { ModalType } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
+import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { ButtonConfiguration, ButtonVariants } from '@shared/model-ui/button-configuration/button-configuration';
 
 @Component({
@@ -40,4 +40,6 @@ export class ModalBase {
   protected deleteButtonClicked() {
     this.deleteOutput.emit();
   }
+
+  protected readonly ModalTypes = ModalTypes;
 }

@@ -127,6 +127,7 @@
   },
   "USER_COMPONENT": {
     "componentTitle": "Użytkownicy",
+    "activationUserTitle": "Aktywacja konta",
     "form": {
       "labels": {
         "username": "Nazwa użytkownika",

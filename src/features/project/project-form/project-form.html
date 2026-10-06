@@ -10,7 +10,7 @@
     <div class="d-flex justify-content-end">
       @if(isEditButtonVisible()) {
       <app-button [buttonDisabled]="formGroup()?.invalid" (emitButtonClick)="onEdit()">
-        {{ 'BUTTONS.update' | translateFallback: 'Edytuj' }}
+        {{ 'BUTTONS.edit' | translateFallback: 'Edytuj' }}
       </app-button>
       } @if(isAddComponentButtonVisible()) {
       <app-button (emitButtonClick)="onAddComponentButtonClick()">

@@ -58,7 +58,6 @@ export class LanguageModal {
 
   protected setCurrentLanguage(lang: string): void {
     this._translateService.onChangeLang(lang);
-    this.closeCurrentModal();
   }
 
   protected closeCurrentModal(reloadPage?: boolean): void {

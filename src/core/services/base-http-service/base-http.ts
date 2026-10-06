@@ -41,6 +41,10 @@ export class BaseHttpService {
     return this._httpClient.get<T>(this.generateUrlWithEndpoint(endpoint, true, id));
   }
 
+  public getPageDataByToken<T>(endpoint: Endpoint, token: string): Observable<T> {
+    return this._httpClient.get<T>(this.generateUrlWithEndpoint(endpoint, true, token));
+  }
+
   public postData<T, B>(endpoint: Endpoint, requestBody: B): Observable<T> {
     return this._httpClient.post<T>(this.generateUrlWithEndpoint(endpoint, false), requestBody);
   }
@@ -60,7 +64,7 @@ export class BaseHttpService {
     });
   }
 
-  private generateUrlWithEndpoint(endpoint: Endpoint, getByIdException: boolean, id?: number): string {
+  private generateUrlWithEndpoint(endpoint: Endpoint, getByIdException: boolean, id?: number | string): string {
     if (!endpoint || endpoint.trim().length === 0) {
       const errorMessage = '[BaseHttpService]: Endpoint nie może być pusty!';
       console.error(errorMessage);

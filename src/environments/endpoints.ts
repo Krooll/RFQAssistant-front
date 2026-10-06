@@ -11,6 +11,8 @@ export const Endpoints = {
   documentPreview: '/document/preview',
   authLogin: '/auth/login',
   authRefresh: '/auth/refresh',
+  activationUser: '/user/activation-user',
+  activateUser: '/user/activate-user',
 } as const;
 
 export type Endpoint = (typeof Endpoints)[keyof typeof Endpoints];

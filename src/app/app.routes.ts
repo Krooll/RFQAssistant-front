@@ -5,6 +5,9 @@ import { roleGuard } from '@core/guards/role-guard/role-guard';
 import { loggedGuard } from '@core/guards/logged-guard/logged-guard';
 import { projectResolver } from '@features/project/resolver/project-resolver';
 import { Roles } from '@core/core-dtos/roles/roles';
+import { activateUserGuard } from '@core/guards/activate-user-guard/activate-user-guard';
+import { activateUserResolver } from '@features/activate-account-component/resolver/activate-user-resolver';
+import { ActivateUserService } from '@features/activate-account-component/activate-user-service';
 
 export const routes: Routes = [
   {
@@ -30,6 +33,19 @@ export const routes: Routes = [
     path: 'auth/login',
     loadComponent: () => import('@features/auth/login/login').then((m) => m.Login),
     canActivate: [loggedGuard],
+  },
+  {
+    path: 'activate-user',
+    loadComponent: () =>
+      import('@features/activate-account-component/activate-user/activate-user').then((m) => m.ActivateUser),
+    canActivate: [activateUserGuard],
+    providers: [ActivateUserService],
+    resolve: { userData: activateUserResolver },
+  },
+  {
+    path: 'unauthorized',
+    loadComponent: () =>
+      import('@features/unauthorized-component/unauthorized/unauthorized').then((m) => m.Unauthorized),
   },
   {
     path: 'dashboard',
@@ -77,11 +93,6 @@ export const routes: Routes = [
         loadComponent: () => import('@features/supplier-component/supplier/supplier').then((m) => m.Supplier),
         canActivate: [roleGuard],
         data: { roles: [Roles.admin] },
-      },
-      {
-        path: 'unauthorized',
-        loadComponent: () =>
-          import('@features/unauthorized-component/unauthorized/unauthorized').then((m) => m.Unauthorized),
       },
     ],
   },

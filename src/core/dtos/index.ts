@@ -8,6 +8,7 @@ export * from './material/material.dto';
 export * from './metrics/metrics.dto';
 export * from './refreshtoken/refreshtoken.dto';
 export * from './auth/auth.dto';
+export * from './activateuser/activateuser.dto';
 export * from './able/able.dto';
 export * from './ableobject/ableobject.dto';
 export * from './sortobject/sortobject.dto';
