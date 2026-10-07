@@ -60,8 +60,10 @@
         </app-form-field>
       </div>
     </div>
-    <app-button class="mt-4" (emitButtonClick)="onSubmit()" [buttonType]="ButtonTypes.button">
-      {{'BUTTONS.save' | translateFallback: 'Zapisz'}}
-    </app-button>
+    <div class="mt-4">
+      <app-button class="mt-4" (emitButtonClick)="onSubmit()" [buttonType]="ButtonTypes.button">
+        {{'BUTTONS.save' | translateFallback: 'Zapisz'}}
+      </app-button>
+    </div>
   </form>
 </div>

@@ -6,8 +6,8 @@ import { loggedGuard } from '@core/guards/logged-guard/logged-guard';
 import { projectResolver } from '@features/project/resolver/project-resolver';
 import { Roles } from '@core/core-dtos/roles/roles';
 import { activateUserGuard } from '@core/guards/activate-user-guard/activate-user-guard';
-import { activateUserResolver } from '@features/activate-account-component/resolver/activate-user-resolver';
-import { ActivateUserService } from '@features/activate-account-component/activate-user-service';
+import { activateUserResolver } from '@features/activate-user-component/resolver/activate-user-resolver';
+import { ActivateUserService } from '@features/activate-user-component/activate-user-service';
 
 export const routes: Routes = [
   {
@@ -37,7 +37,7 @@ export const routes: Routes = [
   {
     path: 'activate-user',
     loadComponent: () =>
-      import('@features/activate-account-component/activate-user/activate-user').then((m) => m.ActivateUser),
+      import('@features/activate-user-component/activate-user/activate-user').then((m) => m.ActivateUser),
     canActivate: [activateUserGuard],
     providers: [ActivateUserService],
     resolve: { userData: activateUserResolver },

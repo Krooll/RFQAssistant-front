@@ -1,7 +1,7 @@
 import { Component, DestroyRef, effect, inject, model, OnDestroy, signal } from '@angular/core';
 import { ActivateUserDto, ActivateUserRequest } from '@core/dtos';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivateUserService } from '@features/activate-account-component/activate-user-service';
+import { ActivateUserService } from '@features/activate-user-component/activate-user-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouteEndpoints } from '@env/route-endpoints';
@@ -14,7 +14,6 @@ import { ButtonTypes } from '@shared/model-ui/button-configuration/button-config
 @Component({
   selector: 'app-activate-user-component',
   imports: [TranslateFallbackPipe, FormField, ReactiveFormsModule, Button],
-  providers: [ActivateUserService],
   templateUrl: './activate-user.html',
   styleUrl: './activate-user.scss',
 })
@@ -68,6 +67,7 @@ export class ActivateUser implements OnDestroy {
     const payload: ActivateUserRequest = {
       token: token,
       username: formValue.username,
+      password: formValue.password,
       name: formValue.name,
       surname: formValue.surname,
     };

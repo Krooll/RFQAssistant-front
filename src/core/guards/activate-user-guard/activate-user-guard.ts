@@ -7,8 +7,7 @@ export const activateUserGuard: CanActivateFn = (route) => {
   const token = route.queryParamMap.get('token');
 
   if (!token || token.trim() === '') {
-    router.createUrlTree([RouteEndpoints.unauthorized]);
-    return false;
+    return router.createUrlTree([RouteEndpoints.unauthorized]);
   }
 
   return true;

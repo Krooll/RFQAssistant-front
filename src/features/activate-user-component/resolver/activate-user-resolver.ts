@@ -1,7 +1,7 @@
 import { ResolveFn, Router } from '@angular/router';
 import { UserDto } from '@core/dtos';
 import { inject } from '@angular/core';
-import { ActivateUserService } from '@features/activate-account-component/activate-user-service';
+import { ActivateUserService } from '@features/activate-user-component/activate-user-service';
 import { RouteEndpoints } from '@env/route-endpoints';
 import { catchError, EMPTY } from 'rxjs';
 

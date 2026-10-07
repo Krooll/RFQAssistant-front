@@ -636,19 +636,19 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
+      sort?: components['schemas']['SortObject'];
       empty?: boolean;
     };
     PageableObject: {
       /** Format: int64 */
       offset?: number;
-      paged?: boolean;
-      sort?: components['schemas']['SortObject'];
-      /** Format: int32 */
-      pageSize?: number;
       /** Format: int32 */
       pageNumber?: number;
+      /** Format: int32 */
+      pageSize?: number;
+      paged?: boolean;
+      sort?: components['schemas']['SortObject'];
       unpaged?: boolean;
     };
     SortObject: {
@@ -670,8 +670,8 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
+      sort?: components['schemas']['SortObject'];
       empty?: boolean;
     };
     PageSimpleProjectDto: {
@@ -688,8 +688,8 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
+      sort?: components['schemas']['SortObject'];
       empty?: boolean;
     };
     SimpleProjectDto: {
@@ -725,8 +725,8 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
+      sort?: components['schemas']['SortObject'];
       empty?: boolean;
     };
     PageMaterialDto: {
@@ -743,8 +743,8 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
+      sort?: components['schemas']['SortObject'];
       empty?: boolean;
     };
     PageDocumentDto: {
@@ -761,8 +761,8 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
+      sort?: components['schemas']['SortObject'];
       empty?: boolean;
     };
     PageComponentDto: {
@@ -779,8 +779,8 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
+      sort?: components['schemas']['SortObject'];
       empty?: boolean;
     };
   };
