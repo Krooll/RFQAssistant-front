@@ -1,0 +1,292 @@
+{
+  "NAVBAR": {
+    "applicationsList": {
+      "user": {
+        "name": "Users"
+      },
+      "supplier": {
+        "name": "Suppliers"
+      },
+      "process": {
+        "name": "Processes"
+      },
+      "projects": {
+        "name": "Projects"
+      },
+      "components": {
+        "name": "Components"
+      },
+      "material": {
+        "name": "Materials"
+      }
+    }
+  },
+  "ROLES": {
+    "admin": "Administrator",
+    "manager": "Manager",
+    "employee": "Employee",
+    "supplier": "Supplier"
+  },
+  "MODALS": {
+    "lang": {
+      "title": "Change language"
+    },
+    "user": {
+      "create": "Add new user",
+      "edit": "Edit user",
+      "delete": "Delete user",
+      "info": "More information"
+    },
+    "process": {
+      "create": "Add new process",
+      "edit": "Edit process",
+      "delete": "Delete process",
+      "info": "More information"
+    },
+    "supplier": {
+      "create": "Add new supplier",
+      "edit": "Edit supplier",
+      "delete": "Delete supplier",
+      "info": "More information"
+    },
+    "project": {
+      "create": "Add new project",
+      "edit": "Edit project",
+      "delete": "Delete project",
+      "info": "More information"
+    },
+    "component": {
+      "create": "Add new component",
+      "edit": "Edit component",
+      "delete": "Delete component",
+      "info": "More information"
+    },
+    "document": {
+      "create": "Add new document",
+      "edit": "Edit document",
+      "delete": "Delete document",
+      "info": "More information"
+    },
+    "delete": {
+      "title": "Warning!",
+      "text": "Are you sure you want to delete this item?"
+    },
+    "metric": {
+      "create": "Configure metric",
+      "edit": "Edit metric",
+      "delete": "Delete metric",
+      "info": "More information"
+    },
+    "material": {
+      "create": "Add new material",
+      "edit": "Edit material",
+      "delete": "Delete material",
+      "info": "More information"
+    }
+  },
+  "BUTTONS": {
+    "login": "Log in",
+    "logout": "Log out",
+    "save": "Save",
+    "abort": "Cancel",
+    "close": "Close",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "info": "More information",
+    "back": "Back",
+    "document": "Add document",
+    "download": "Download",
+    "preview": "Preview",
+    "lang": "Language",
+    "pl": "Polish",
+    "en": "English",
+    "sortUp": "Sort ascending",
+    "sortDown": "Sort descending"
+  },
+  "FORM_VALIDATION_TEXTS": {
+    "required": "This field is required...",
+    "email": "Invalid email address format...",
+    "minlength": "Minimum length is ${errors['minlength'].requiredLength} characters...",
+    "maxlength": "Maximum length is ${errors['maxlength'].requiredLength} characters...",
+    "pattern": "Entered value format is invalid...",
+    "nullValidator": "Field validation error...",
+    "default": "Field contains errors..."
+  },
+  "LOGIN_COMPONENT": {
+    "form": {
+      "labels": {
+        "login": "Login",
+        "password": "Password"
+      },
+      "placeholders": {
+        "login": "Enter your login...",
+        "password": "Enter password..."
+      }
+    }
+  },
+  "USER_COMPONENT": {
+    "componentTitle": "Users",
+    "form": {
+      "labels": {
+        "username": "Username",
+        "password": "Password",
+        "name": "First name",
+        "surname": "Last name",
+        "email": "Email address",
+        "disable": "Inactive",
+        "role": "Role"
+      },
+      "placeholders": {
+        "username": "Enter username...",
+        "password": "Enter password...",
+        "name": "Enter first name...",
+        "surname": "Enter last name...",
+        "email": "Enter email address...",
+        "role": "Select role..."
+      }
+    }
+  },
+  "PROCESS_COMPONENT": {
+    "componentTitle": "Processes",
+    "form": {
+      "labels": {
+        "name": "Name",
+        "description": "Description",
+        "disable": "Inactive"
+      },
+      "placeholders": {
+        "name": "Enter name...",
+        "description": "Enter description..."
+      }
+    }
+  },
+  "SUPPLIER_COMPONENT": {
+    "componentTitle": "Suppliers",
+    "form": {
+      "labels": {
+        "name": "Name",
+        "street": "Street",
+        "city": "City",
+        "province": "State / Province",
+        "country": "Country",
+        "phoneNumber": "Phone number",
+        "email": "Email address",
+        "process": "Processes",
+        "selectedProcess": "Selected processes",
+        "selectedMaterials": "Selected materials",
+        "emptyProcessList": "No processes added...",
+        "emptyMaterialList": "No materials added...",
+        "disable": "Inactive"
+      },
+      "placeholders": {
+        "name": "Enter name...",
+        "street": "Enter street...",
+        "city": "Enter city...",
+        "province": "Enter state / province...",
+        "country": "Enter country...",
+        "phoneNumber": "Enter phone number...",
+        "email": "Enter email address...",
+        "process": "Select process..."
+      }
+    }
+  },
+  "PROJECT_COMPONENT": {
+    "componentTitle": "Projects",
+    "componentFormTitle": "New project",
+    "componentFormEditTitle": "Edit project",
+    "projectFormSectionTitle": "Project",
+    "metricFormSectionTitle": "Metric",
+    "componentFormSectionTitle": "Components",
+    "documentFormSectionTitle": "Documents",
+    "sectionButtons": {
+      "general": "General",
+      "components": "Components"
+    },
+    "form": {
+      "addComponentButton": "Add component",
+      "labels": {
+        "validFrom": "Valid from",
+        "validTo": "Valid to",
+        "name": "Name",
+        "description": "Description",
+        "projectNumber": "Project number",
+        "projectSOP": "Project SOP",
+        "metrics": "Metric",
+        "component": "Components",
+        "document": "Documents",
+        "status": "Project status",
+        "selectedComponentProcesses": "Selected processes",
+        "emptyDocumentList": "No documents added...",
+        "emptyProcessList": "No processes selected...",
+        "metricsYears": "Years",
+        "metricsPercent": "Percentage"
+      },
+      "placeholders": {
+        "validFrom": "Select date from...",
+        "validTo": "Select date to...",
+        "name": "Enter name...",
+        "description": "Enter description...",
+        "projectNumber": "Enter project number...",
+        "projectSOP": "Enter project SOP...",
+        "status": "Select project status",
+        "metricsYears": "Enter number of years...",
+        "metricsPercent": "Enter percentage..."
+      }
+    }
+  },
+  "COMPONENT_COMPONENT": {
+    "form": {
+      "labels": {
+        "number": "Component number",
+        "revision": "Component revision",
+        "name": "Component name",
+        "material": "Materials",
+        "usage": "Usage",
+        "description": "Description"
+      },
+      "placeholders": {
+        "number": "Enter component number...",
+        "revision": "Enter component revision...",
+        "name": "Enter component name...",
+        "usage": "Enter component usage...",
+        "material": "Select material...",
+        "description": "Enter description..."
+      }
+    }
+  },
+  "DOCUMENT_COMPONENT": {
+    "form": {
+      "labels": {
+        "name": "Document name",
+        "description": "Description"
+      },
+      "placeholders": {
+        "name": "Enter document name...",
+        "description": "Enter description..."
+      }
+    }
+  },
+  "METRIC_COMPONENT": {
+    "configButtonTitle": "Configuration",
+    "yearTitle": "Year",
+    "basicTitle": "Base",
+    "form": {
+      "title": "Metric"
+    }
+  },
+  "MATERIAL_COMPONENT": {
+    "componentTitle": "Materials",
+    "form": {
+      "labels": {
+        "name": "Document name",
+        "description": "Description",
+        "disable": "Inactive"
+      },
+      "placeholders": {
+        "name": "Enter name...",
+        "description": "Enter description..."
+      }
+    }
+  }
+}

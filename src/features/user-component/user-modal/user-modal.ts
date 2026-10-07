@@ -1,11 +1,11 @@
-import { Component, DestroyRef, effect, inject, OnDestroy, signal } from '@angular/core';
+import { Component, computed, DestroyRef, effect, inject, OnDestroy, Signal, signal } from '@angular/core';
 import { UserService } from '@features/user-component/user-service';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { CreateUserRequest, UpdateUserRequest, UserDto } from '@core/dtos';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { NotificationService } from '@core/services/notification-service/notification-service';
 import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
@@ -26,6 +26,12 @@ export class UserModal implements OnDestroy {
   private readonly _destroyRef = inject(DestroyRef);
 
   protected formGroup = signal<FormGroup | undefined>(undefined);
+
+  protected roleValue: Signal<string> | undefined;
+
+  supplierMode = computed(() => {
+    return this.roleValue?.() === Roles.supplier;
+  });
 
   protected data = signal<UserDto | undefined>(undefined);
   protected type = signal<ModalType | undefined>(undefined);
@@ -64,13 +70,18 @@ export class UserModal implements OnDestroy {
       this._formBuilder.group({
         username: ['', [Validators.required]],
         password: [''],
-        name: [''],
-        surname: [''],
+        name: ['', [Validators.required]],
+        surname: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
         disable: [''],
         role: ['', [Validators.required]],
       }),
     );
+
+    const roleControl = this.formGroup()?.get('role');
+    this.roleValue = toSignal(roleControl!.valueChanges, {
+      initialValue: roleControl?.value,
+    });
 
     effect(() => {
       const userData: UserDto | undefined = this.data();

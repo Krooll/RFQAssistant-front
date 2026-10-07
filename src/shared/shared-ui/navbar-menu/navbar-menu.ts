@@ -22,6 +22,7 @@ export class NavbarMenu {
   readonly applicationList = input.required<Application[]>();
 
   protected selectedApplication = output<string | undefined>();
+  protected changeLangButtonCLickEmit = output<void>();
 
   protected menuNavBarButtonConfig: ButtonConfiguration = {
     variant: ButtonVariants.primary,
@@ -34,6 +35,10 @@ export class NavbarMenu {
     if (url && url?.length > 0) {
       this.selectedApplication.emit(url);
     }
+  }
+
+  protected onLangChangeButtonClick() {
+    this.changeLangButtonCLickEmit.emit();
   }
 
   protected logOut() {

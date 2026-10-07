@@ -1,0 +1,9 @@
+<app-modal-base [modalTitle]="title()" [modalType]="type()" (closeOutput)="closeCurrentModal()">
+  <div class="d-flex flex-column">
+    @for(button of langButtonList; track $index){
+    <app-button class="mt-1 mb-1" (emitButtonClick)="setCurrentLanguage(button.id)">
+      {{ button.label | translateFallback: button.labelFallback }}
+    </app-button>
+    }
+  </div>
+</app-modal-base>

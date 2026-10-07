@@ -148,6 +148,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/user/activate-user': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations['activateUser'];
+    trace?: never;
+  };
   '/user/{id}': {
     parameters: {
       query?: never;
@@ -159,6 +175,22 @@ export interface paths {
     put?: never;
     post?: never;
     delete: operations['deleteUser'];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  '/user/activation-user/{token}': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations['getUserByActivationToken'];
+    put?: never;
+    post?: never;
+    delete?: never;
     options?: never;
     head?: never;
     patch?: never;
@@ -315,12 +347,12 @@ export interface components {
     CreateUserRequest: {
       username: string;
       password: string;
-      name?: string;
-      surname?: string;
+      name: string;
+      surname: string;
       email: string;
+      disable: boolean;
       /** @enum {string} */
       role: 'ROLE_ADMIN' | 'ROLE_MANAGER' | 'ROLE_EMPLOYEE' | 'ROLE_SUPPLIER';
-      disable?: boolean;
     };
     UserDto: {
       /** Format: int64 */
@@ -336,6 +368,8 @@ export interface components {
       disable?: boolean;
       /** @enum {string} */
       role?: 'ROLE_ADMIN' | 'ROLE_MANAGER' | 'ROLE_EMPLOYEE' | 'ROLE_SUPPLIER';
+      /** Format: int64 */
+      supplierId?: number;
     };
     CreateSupplierRequest: {
       name: string;
@@ -501,12 +535,30 @@ export interface components {
       id: number;
       username: string;
       password?: string;
-      name?: string;
+      name: string;
       surname?: string;
       email: string;
       disable: boolean;
       /** @enum {string} */
       role: 'ROLE_ADMIN' | 'ROLE_MANAGER' | 'ROLE_EMPLOYEE' | 'ROLE_SUPPLIER';
+    };
+    ActivateUserRequest: {
+      token: string;
+      username: string;
+      password?: string;
+      name: string;
+      surname?: string;
+    };
+    ActivateUserDto: {
+      /** Format: int64 */
+      id?: number;
+      /** Format: date-time */
+      creationDate?: string;
+      /** Format: date-time */
+      updateDate?: string;
+      username?: string;
+      name?: string;
+      surname?: string;
     };
     UpdateSupplierRequest: {
       /** Format: int64 */
@@ -584,19 +636,19 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
+      sort?: components['schemas']['SortObject'];
       empty?: boolean;
     };
     PageableObject: {
       /** Format: int64 */
       offset?: number;
-      sort?: components['schemas']['SortObject'];
-      paged?: boolean;
       /** Format: int32 */
       pageNumber?: number;
       /** Format: int32 */
       pageSize?: number;
+      paged?: boolean;
+      sort?: components['schemas']['SortObject'];
       unpaged?: boolean;
     };
     SortObject: {
@@ -618,8 +670,8 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
+      sort?: components['schemas']['SortObject'];
       empty?: boolean;
     };
     PageSimpleProjectDto: {
@@ -636,8 +688,8 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
+      sort?: components['schemas']['SortObject'];
       empty?: boolean;
     };
     SimpleProjectDto: {
@@ -673,8 +725,8 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
+      sort?: components['schemas']['SortObject'];
       empty?: boolean;
     };
     PageMaterialDto: {
@@ -691,8 +743,8 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
+      sort?: components['schemas']['SortObject'];
       empty?: boolean;
     };
     PageDocumentDto: {
@@ -709,8 +761,8 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
+      sort?: components['schemas']['SortObject'];
       empty?: boolean;
     };
     PageComponentDto: {
@@ -727,8 +779,8 @@ export interface components {
       last?: boolean;
       /** Format: int32 */
       numberOfElements?: number;
-      sort?: components['schemas']['SortObject'];
       pageable?: components['schemas']['PageableObject'];
+      sort?: components['schemas']['SortObject'];
       empty?: boolean;
     };
   };
@@ -1190,6 +1242,28 @@ export interface operations {
       };
     };
   };
+  activateUser: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        'application/json': components['schemas']['ActivateUserRequest'];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: Record<string, unknown>;
+        content: {
+          '*/*': components['schemas']['ActivateUserDto'];
+        };
+      };
+    };
+  };
   getUserById: {
     parameters: {
       query?: never;
@@ -1225,6 +1299,26 @@ export interface operations {
       200: {
         headers: Record<string, unknown>;
         content?: never;
+      };
+    };
+  };
+  getUserByActivationToken: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        token: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: Record<string, unknown>;
+        content: {
+          '*/*': components['schemas']['ActivateUserDto'];
+        };
       };
     };
   };

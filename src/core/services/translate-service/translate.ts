@@ -8,8 +8,6 @@ export class Translate {
   public currentLanguage = signal<string | undefined>(undefined);
   public isLangListOpen = signal<boolean>(false);
 
-  //TODO: Domyślnie jezyk bedzie zapisywany w obiekcie localstorage - user
-
   public onChangeLang(id: string) {
     if (!id) return;
     localStorage.setItem('currentLang', id);

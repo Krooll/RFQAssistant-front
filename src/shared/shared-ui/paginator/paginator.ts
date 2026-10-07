@@ -2,10 +2,11 @@ import { Component, input, output } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Button } from '@shared/shared-ui/button/button';
 import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
+import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 
 @Component({
   selector: 'app-paginator',
-  imports: [MatPaginator, Button],
+  imports: [MatPaginator, Button, TranslateFallbackPipe],
   templateUrl: './paginator.html',
   styleUrl: './paginator.scss',
 })

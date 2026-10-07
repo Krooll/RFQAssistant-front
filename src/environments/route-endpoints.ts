@@ -8,9 +8,10 @@ export const RouteEndpoints = {
   projectForm: '/dashboard/project/form',
   component: '/dashboard/technical-specification',
   document: '/dashboard/document',
-  unauthorized: '/dashboard/unauthorized',
+  unauthorized: '/unauthorized',
   authLogin: '/auth/login',
   authRefresh: '/auth/refresh',
+  activateAccount: '/activate-user',
 } as const;
 
 export type RouteEndpoints = (typeof RouteEndpoints)[keyof typeof RouteEndpoints];
