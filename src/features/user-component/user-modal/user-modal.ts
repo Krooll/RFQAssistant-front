@@ -1,24 +1,25 @@
-import { Component, computed, DestroyRef, effect, inject, OnDestroy, Signal, signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { UserService } from '@features/user-component/user-service';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
 import { CreateUserRequest, UpdateUserRequest, UserDto } from '@core/dtos';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NotificationService } from '@core/services/notification-service/notification-service';
 import { ModalBase } from '@shared/shared-ui/modal-base/modal-base';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
-import { Roles, RolesInterface } from '@core/core-dtos/roles/roles';
+import { Role, Roles, RolesInterface } from '@core/core-dtos/roles/roles';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-user-modal',
-  imports: [ModalBase, FormField, FormsModule, TranslateFallbackPipe, ReactiveFormsModule],
+  imports: [ModalBase, FormField, FormsModule, TranslateFallbackPipe, ReactiveFormsModule, NgClass],
   templateUrl: './user-modal.html',
   styleUrl: './user-modal.scss',
 })
-export class UserModal implements OnDestroy {
+export class UserModal implements OnInit, OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _userComponentService = inject(UserService);
   private readonly _modalData = inject<ModalDataConfiguration<UserDto>>(MAT_DIALOG_DATA);
@@ -26,12 +27,6 @@ export class UserModal implements OnDestroy {
   private readonly _destroyRef = inject(DestroyRef);
 
   protected formGroup = signal<FormGroup | undefined>(undefined);
-
-  protected roleValue: Signal<string> | undefined;
-
-  supplierMode = computed(() => {
-    return this.roleValue?.() === Roles.supplier;
-  });
 
   protected data = signal<UserDto | undefined>(undefined);
   protected type = signal<ModalType | undefined>(undefined);
@@ -78,11 +73,6 @@ export class UserModal implements OnDestroy {
       }),
     );
 
-    const roleControl = this.formGroup()?.get('role');
-    this.roleValue = toSignal(roleControl!.valueChanges, {
-      initialValue: roleControl?.value,
-    });
-
     effect(() => {
       const userData: UserDto | undefined = this.data();
 
@@ -90,6 +80,10 @@ export class UserModal implements OnDestroy {
         this.updateStateAndPatchForm();
       }
     });
+  }
+
+  ngOnInit() {
+    this.subscribeRolesChanges();
   }
 
   ngOnDestroy() {
@@ -190,6 +184,30 @@ export class UserModal implements OnDestroy {
     }
   }
 
+  private subscribeRolesChanges(): void {
+    const roleControl = this.formGroup()?.get('role');
+
+    roleControl?.valueChanges.pipe(takeUntilDestroyed(this._destroyRef)).subscribe((role: Role) => {
+      if (!roleControl.dirty) {
+        return;
+      }
+
+      const isSupplier = role === Roles.supplier;
+      const passwordControl = this.formGroup()?.get('password');
+      const disableControl = this.formGroup()?.get('disable');
+
+      passwordControl?.patchValue(isSupplier ? 'admin' : '');
+      disableControl?.patchValue(isSupplier);
+
+      const opts = { emitEvent: false };
+      const action = isSupplier ? 'disable' : 'enable';
+
+      [passwordControl, disableControl].forEach((control) => {
+        control?.[action](opts);
+      });
+    });
+  }
+
   protected closeCurrentModal(reloadPage?: boolean): void {
     this._userComponentService.closeCurrentModal(reloadPage ? reloadPage : false);
   }
@@ -206,4 +224,6 @@ export class UserModal implements OnDestroy {
 
     return true;
   }
+
+  protected readonly ModalTypes = ModalTypes;
 }
