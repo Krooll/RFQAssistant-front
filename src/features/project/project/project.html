@@ -26,13 +26,13 @@
           <span class="font-weight-bold">
             {{ 'PROJECT_COMPONENT.form.labels.validFrom' | translateFallback: 'Data od'}}:
           </span>
-          {{ item.validFrom }}
+          {{ item.validFrom | date: 'dd.MM.yyyy'}}
         </p>
         <p>
           <span class="font-weight-bold">
             {{ 'PROJECT_COMPONENT.form.labels.validTo' | translateFallback: 'Data do'}}:
           </span>
-          {{ item.validTo }}
+          {{ item.validTo | date: 'dd.MM.yyyy'}}
         </p>
       </div>
     </app-item-list>

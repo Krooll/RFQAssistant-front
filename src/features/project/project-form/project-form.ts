@@ -229,7 +229,7 @@ export class ProjectForm implements OnDestroy {
       .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe({
         next: (metricFormData: { metricsYears: number; metricsPercent: number }) => {
-          if (metricFormData && sop) {
+          if (metricFormData.metricsPercent !== 0 && metricFormData.metricsYears !== 0 && sop) {
             this._metricService.generateMetricList(metricFormData, sop, currentMetricList);
           }
         },

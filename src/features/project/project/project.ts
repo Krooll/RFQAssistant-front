@@ -5,10 +5,11 @@ import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe
 import { ProjectService } from '@features/project/services/project-service';
 import { ItemList } from '@shared/shared-ui/item-list/item-list';
 import { ButtonTypes } from '@shared/model-ui/button-configuration/button-configuration';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-project',
-  imports: [Button, Paginator, TranslateFallbackPipe, ItemList],
+  imports: [Button, Paginator, TranslateFallbackPipe, ItemList, DatePipe],
   providers: [ProjectService],
   templateUrl: './project.html',
   styleUrl: './project.scss',
