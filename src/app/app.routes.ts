@@ -50,7 +50,6 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () => import('@features/dashboard-component/dashboard/dashboard').then((m) => m.Dashboard),
-    canActivate: [roleGuard],
     children: [
       {
         path: '',

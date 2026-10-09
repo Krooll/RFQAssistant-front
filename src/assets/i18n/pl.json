@@ -1,4 +1,7 @@
 {
+  "APP": {
+    "title": "RFQ Assistant"
+  },
   "NAVBAR": {
     "applicationsList": {
       "user": {

@@ -1,6 +1,6 @@
 <div class="d-flex flex-column navbar-menu text-align-center">
   <div class="mt-4">
-    <h3>RFQ ASSISTANT</h3>
+    <h3>{{ 'APP.title' | translateFallback: 'RFQ Assistant' }}</h3>
   </div>
   <div class="upper-section d-flex flex-column p-1">
     @for (item of applicationList(); track item.id) {

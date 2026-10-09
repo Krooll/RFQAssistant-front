@@ -2,7 +2,6 @@ import { Component, inject, signal } from '@angular/core';
 import { ModalDataConfiguration } from '@shared/model-ui/modal-configuration/modal-data-configuration/modal-data-configuration';
 import { UserDto } from '@core/dtos';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { NotificationService } from '@core/services/notification-service/notification-service';
 import { ModalService } from '@core/services/modal-service/modal-service';
 import { Translate } from '@core/services/translate-service/translate';
 import { ButtonLangConfiguration } from '@shared/model-ui/button-lang-configuration/button-lang-configuration';
@@ -19,7 +18,6 @@ import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe
 })
 export class LanguageModal {
   private readonly _modalData = inject<ModalDataConfiguration<UserDto>>(MAT_DIALOG_DATA);
-  private readonly _notificationService = inject(NotificationService);
   private readonly _modalService = inject(ModalService);
   private readonly _translateService = inject(Translate);
 
