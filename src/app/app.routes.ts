@@ -1,32 +1,18 @@
-import { Router, Routes } from '@angular/router';
-import { inject } from '@angular/core';
-import { UserDataService } from '@core/services/user-data-service/user-data';
+import { Routes } from '@angular/router';
 import { roleGuard } from '@core/guards/role-guard/role-guard';
 import { loggedGuard } from '@core/guards/logged-guard/logged-guard';
 import { projectResolver } from '@features/project/resolver/project-resolver';
 import { Roles } from '@core/core-dtos/roles/roles';
-import { activateUserGuard } from '@core/guards/activate-user-guard/activate-user-guard';
 import { activateUserResolver } from '@features/activate-user-component/resolver/activate-user-resolver';
 import { ActivateUserService } from '@features/activate-user-component/activate-user-service';
+import { rootRedirectGuard } from '@core/guards/root-redirect-guard/root-redirect-guard';
+import { activateUserGuard } from '@core/guards/activate-user-guard/activate-user-guard';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    canActivate: [
-      () => {
-        const userDataService = inject(UserDataService);
-        const router = inject(Router);
-
-        const userData = userDataService.getUserDataFromLocalStorage();
-
-        if (userData?.user) {
-          return router.createUrlTree(['/dashboard']);
-        }
-
-        return router.createUrlTree(['/auth/login']);
-      },
-    ],
+    canActivate: [rootRedirectGuard],
     children: [],
   },
   {
@@ -52,15 +38,17 @@ export const routes: Routes = [
     loadComponent: () => import('@features/dashboard-component/dashboard/dashboard').then((m) => m.Dashboard),
     children: [
       {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'project',
-      },
-      {
         path: 'project',
         loadComponent: () => import('@features/project/project/project').then((m) => m.Project),
         canActivate: [roleGuard],
         data: { roles: [Roles.admin, Roles.manager, Roles.employee] },
+      },
+      {
+        path: 'supplier-project',
+        loadComponent: () =>
+          import('@features/supplier-project/supplier-project/supplier-project').then((m) => m.SupplierProject),
+        canActivate: [roleGuard],
+        data: { roles: [Roles.supplier] },
       },
       {
         path: 'project/form/:id',
