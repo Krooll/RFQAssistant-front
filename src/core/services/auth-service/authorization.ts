@@ -1,12 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
-import { Router } from '@angular/router';
 import { AuthDto, CreateAuthRequest } from '@core/dtos';
 import { Observable, tap } from 'rxjs';
 import { Endpoints } from '@env/endpoints';
 import { UserDataService } from '@core/services/user-data-service/user-data';
-import { RouteEndpoints } from '@env/route-endpoints';
 import { ModalService } from '@core/services/modal-service/modal-service';
+import { Router } from '@angular/router';
+import { RouteEndpoints } from '@env/route-endpoints';
 
 @Injectable({
   providedIn: 'root',

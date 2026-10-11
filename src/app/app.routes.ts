@@ -5,15 +5,28 @@ import { projectResolver } from '@features/project/resolver/project-resolver';
 import { Roles } from '@core/core-dtos/roles/roles';
 import { activateUserResolver } from '@features/activate-user-component/resolver/activate-user-resolver';
 import { ActivateUserService } from '@features/activate-user-component/activate-user-service';
-import { rootRedirectGuard } from '@core/guards/root-redirect-guard/root-redirect-guard';
 import { activateUserGuard } from '@core/guards/activate-user-guard/activate-user-guard';
+import { supplierProjectResolver } from '@features/supplier-project/resolver/supplier-project-resolver';
+import { inject } from '@angular/core';
+import { UserDataService } from '@core/services/user-data-service/user-data';
+
+const rootRedirect = () => {
+  const userData = inject(UserDataService).getUserDataFromLocalStorage();
+
+  return userData?.user?.id ? '/dashboard' : '/auth/login';
+};
+
+const dashboardRedirect = () => {
+  const userData = inject(UserDataService).getUserDataFromLocalStorage();
+
+  return userData?.user?.supplierId ? '/dashboard/supplier-project' : '/dashboard/project';
+};
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    canActivate: [rootRedirectGuard],
-    children: [],
+    redirectTo: rootRedirect,
   },
   {
     path: 'auth/login',
@@ -36,7 +49,13 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () => import('@features/dashboard-component/dashboard/dashboard').then((m) => m.Dashboard),
+    canActivate: [roleGuard],
     children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: dashboardRedirect,
+      },
       {
         path: 'project',
         loadComponent: () => import('@features/project/project/project').then((m) => m.Project),
@@ -48,6 +67,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import('@features/supplier-project/supplier-project/supplier-project').then((m) => m.SupplierProject),
         canActivate: [roleGuard],
+        resolve: { supplierData: supplierProjectResolver },
         data: { roles: [Roles.supplier] },
       },
       {

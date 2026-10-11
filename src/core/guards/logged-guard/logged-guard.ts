@@ -6,10 +6,12 @@ import { RouteEndpoints } from '@env/route-endpoints';
 export const loggedGuard = () => {
   const userDataService = inject(UserDataService);
   const router = inject(Router);
+  const userData = userDataService.getUserDataFromLocalStorage();
 
-  if (userDataService.getUserDataFromLocalStorage()?.user) {
-    return router.createUrlTree([RouteEndpoints.dashboard]);
+  if (!userData?.user || userDataService.isUserTokenExpired()) {
+    userDataService.clearCurrentUserData();
+    return true;
   }
 
-  return true;
+  return router.createUrlTree([RouteEndpoints.dashboard]);
 };

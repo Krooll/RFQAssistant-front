@@ -2,6 +2,7 @@ export const RouteEndpoints = {
   dashboard: '/dashboard',
   user: '/dashboard/user',
   supplier: '/dashboard/supplier',
+  supplierProject: '/dashboard/supplier-project',
   process: '/dashboard/process',
   project: '/dashboard/project',
   material: '/dashboard/material',

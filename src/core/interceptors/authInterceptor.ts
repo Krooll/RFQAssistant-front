@@ -1,22 +1,23 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { UserDataService } from '@core/services/user-data-service/user-data';
-import { AuthorizationService } from '@core/services/auth-service/authorization';
 import { catchError, EMPTY, throwError } from 'rxjs';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
   const userDataService = inject(UserDataService);
-  const authorizationService = inject(AuthorizationService);
-
   const currentUserData = userDataService.getUserDataFromLocalStorage();
   const accessToken = userDataService.getUserAccessToken();
 
-  if (req.url.includes('/auth/') || !currentUserData || !accessToken) {
+  if (req.url.includes('/auth/')) {
+    return next(req);
+  }
+
+  if (!currentUserData || !accessToken) {
     return next(req);
   }
 
   if (userDataService.isUserTokenExpired()) {
-    authorizationService.logout();
+    userDataService.clearCurrentUserData();
     return EMPTY;
   }
 
@@ -31,7 +32,7 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 401) {
-        authorizationService.logout();
+        userDataService.clearCurrentUserData();
       }
       return throwError(() => err);
     }),
