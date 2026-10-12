@@ -16,6 +16,9 @@ import {
   ButtonSizes,
   ButtonVariants,
 } from '@shared/model-ui/button-configuration/button-configuration';
+import { UserDataService } from '@core/services/user-data-service/user-data';
+import { Roles } from '@core/core-dtos/roles/roles';
+import { FormService } from '@core/services/form-service/form-service';
 
 @Component({
   selector: 'app-supplier-modal',
@@ -29,8 +32,12 @@ export class SupplierModal implements OnInit, OnDestroy {
   private readonly _modalData = inject<ModalDataConfiguration<SupplierDto>>(MAT_DIALOG_DATA);
   private readonly _notificationService = inject(NotificationService);
   private readonly _destroyRef = inject(DestroyRef);
+  private readonly _userDataService = inject(UserDataService);
+  private readonly _globalFormService = inject(FormService);
 
   protected formGroup = signal<FormGroup | undefined>(undefined);
+
+  protected isAdminRole = signal<boolean>(false);
 
   protected data = signal<SupplierDto | undefined>(undefined);
   protected type = signal<ModalType | undefined>(undefined);
@@ -45,6 +52,8 @@ export class SupplierModal implements OnInit, OnDestroy {
   };
 
   constructor() {
+    this.isAdminRole.set(this.checkUserRole());
+
     this._supplierComponentService.getAllProcesses();
     this.loadData();
 
@@ -74,6 +83,10 @@ export class SupplierModal implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscribeFormChanges();
+
+    if (!this.isAdminRole()) {
+      this.watchProcessListChanges();
+    }
   }
 
   ngOnDestroy() {
@@ -130,6 +143,10 @@ export class SupplierModal implements OnInit, OnDestroy {
   private onUpdate(): void {
     this.type.set(ModalTypes.update);
     this.formGroup()?.enable();
+
+    if (!this.isAdminRole()) {
+      this.formGroup()?.get('disable')?.disable({ emitEvent: false });
+    }
   }
 
   private createSupplier(payload: CreateSupplierRequest): void {
@@ -188,13 +205,34 @@ export class SupplierModal implements OnInit, OnDestroy {
   }
 
   private subscribeFormChanges(): void {
-    this.formGroup()
-      ?.get('processesIds')
-      ?.valueChanges.pipe(takeUntilDestroyed(this._destroyRef))
+    this._globalFormService
+      .subscribeFormChanges<ProcessDto>(this.formGroup, 'processesIds')
+      ?.pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe((selectedItem: ProcessDto) => {
         this._supplierComponentService.addSelectedProcessToList(selectedItem);
         this.formGroup()?.get('processesIds')?.setValue('', { emitEvent: false });
       });
+  }
+
+  private watchProcessListChanges(): void {
+    this._globalFormService
+      .subscribeFormChanges(this.formGroup, 'processesIds')
+      ?.pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe(() => {
+        const processes = this._supplierComponentService.selectedProcessList();
+        const hasProcess = (processes?.length ?? 0) > 0;
+        const disableField = this.formGroup()?.get('disable');
+
+        if (disableField) {
+          disableField.setValue(!hasProcess, { emitEvent: false });
+        }
+      });
+  }
+
+  private checkUserRole(): boolean {
+    const currentRole = this._userDataService.getUserRole();
+
+    return currentRole === Roles.admin;
   }
 
   protected closeCurrentModal(reloadPage?: boolean): void {

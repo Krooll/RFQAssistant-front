@@ -27,7 +27,14 @@ export class Dashboard {
       name: 'NAVBAR.applicationsList.projects.name',
       nameFallback: 'Projekty',
       route: RouteEndpoints.project,
-      expectedRoles: [Roles.admin, Roles.manager],
+      expectedRoles: [Roles.admin, Roles.manager, Roles.employee],
+    },
+    {
+      id: 'projects',
+      name: 'NAVBAR.applicationsList.projects.name',
+      nameFallback: 'Projekty',
+      route: RouteEndpoints.supplierProject,
+      expectedRoles: [Roles.supplier],
     },
     {
       id: 'supplier',
@@ -60,10 +67,9 @@ export class Dashboard {
   ];
 
   protected readonly validApplicationList: Signal<Application[]> = computed(() => {
-    const currentUserData = this._userDataService.getUserDataFromLocalStorage();
-    const currentUserRole = currentUserData?.user?.role;
+    const currentUserRole = this._userDataService.getUserRole();
 
-    if (!currentUserData || !currentUserRole) {
+    if (!currentUserRole) {
       return [];
     }
 

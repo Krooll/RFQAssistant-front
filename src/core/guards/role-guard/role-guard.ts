@@ -16,7 +16,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
     });
   }
 
-  const currentUserRole = currentUserData.user.role;
+  const currentUserRole = userDataService.getUserRole();
 
   if (!currentUserRole) {
     return router.createUrlTree([RouteEndpoints.unauthorized]);

@@ -59,6 +59,17 @@ export class UserDataService {
     return localStorage.getItem('refreshToken');
   }
 
+  public getUserRole(): string | null {
+    const userData = this.getUserDataFromLocalStorage();
+    const currentRole = userData?.user?.role;
+
+    if (!currentRole) {
+      return null;
+    }
+
+    return currentRole;
+  }
+
   private decodeAccessToken(accessToken: string): Token | null {
     try {
       return jwtDecode(accessToken);

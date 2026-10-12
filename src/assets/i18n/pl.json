@@ -50,7 +50,8 @@
       "create": "Dodaj nowego dostawcę",
       "edit": "Edytuj dostawcę",
       "delete": "Usuń dostawcę",
-      "info": "Więcej informacji"
+      "info": "Więcej informacji",
+      "fillData": "Uzupełnij dane aby korzystać z portalu"
     },
     "project": {
       "create": "Dodaj nowy projekt",

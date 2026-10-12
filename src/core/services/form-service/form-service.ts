@@ -2,6 +2,7 @@ import { DestroyRef, inject, Injectable, WritableSignal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup } from '@angular/forms';
 import { FormListService } from '@core/services/form-list-service/form-list-service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +27,12 @@ export class FormService {
         this._formListService.addSelectedItemToCurrentList(currentList, selectedItem);
         formGroup()?.get(inputField)?.setValue('', { emitEvent: false });
       });
+  }
+
+  public subscribeFormChanges<T>(
+    formGroup: WritableSignal<FormGroup | undefined>,
+    inputField: string,
+  ): Observable<T> | undefined {
+    return formGroup()?.get(inputField)?.valueChanges;
   }
 }

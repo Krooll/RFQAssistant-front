@@ -12,6 +12,7 @@ import { FormField } from '@shared/shared-ui/form-field/form-field';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { Role, Roles, RolesInterface } from '@core/core-dtos/roles/roles';
 import { NgClass } from '@angular/common';
+import { FormService } from '@core/services/form-service/form-service';
 
 @Component({
   selector: 'app-user-modal',
@@ -25,6 +26,7 @@ export class UserModal implements OnInit, OnDestroy {
   private readonly _modalData = inject<ModalDataConfiguration<UserDto>>(MAT_DIALOG_DATA);
   private readonly _notificationService = inject(NotificationService);
   private readonly _destroyRef = inject(DestroyRef);
+  private readonly _globalFormService = inject(FormService);
 
   protected formGroup = signal<FormGroup | undefined>(undefined);
 
@@ -185,27 +187,30 @@ export class UserModal implements OnInit, OnDestroy {
   }
 
   private subscribeRolesChanges(): void {
-    const roleControl = this.formGroup()?.get('role');
+    this._globalFormService
+      .subscribeFormChanges<Role>(this.formGroup, 'role')
+      ?.pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe((role: Role) => {
+        const roleControl = this.formGroup()?.get('role');
 
-    roleControl?.valueChanges.pipe(takeUntilDestroyed(this._destroyRef)).subscribe((role: Role) => {
-      if (!roleControl.dirty) {
-        return;
-      }
+        if (!roleControl?.dirty) {
+          return;
+        }
 
-      const isSupplier = role === Roles.supplier;
-      const passwordControl = this.formGroup()?.get('password');
-      const disableControl = this.formGroup()?.get('disable');
+        const isSupplier = role === Roles.supplier;
+        const passwordControl = this.formGroup()?.get('password');
+        const disableControl = this.formGroup()?.get('disable');
 
-      passwordControl?.patchValue(isSupplier ? 'admin' : '');
-      disableControl?.patchValue(isSupplier);
+        passwordControl?.patchValue(isSupplier ? 'admin' : '');
+        disableControl?.patchValue(isSupplier);
 
-      const opts = { emitEvent: false };
-      const action = isSupplier ? 'disable' : 'enable';
+        const opts = { emitEvent: false };
+        const action = isSupplier ? 'disable' : 'enable';
 
-      [passwordControl, disableControl].forEach((control) => {
-        control?.[action](opts);
+        [passwordControl, disableControl].forEach((control) => {
+          control?.[action](opts);
+        });
       });
-    });
   }
 
   protected closeCurrentModal(reloadPage?: boolean): void {
