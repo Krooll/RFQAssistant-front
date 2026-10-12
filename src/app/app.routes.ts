@@ -7,26 +7,13 @@ import { activateUserResolver } from '@features/activate-user-component/resolver
 import { ActivateUserService } from '@features/activate-user-component/activate-user-service';
 import { activateUserGuard } from '@core/guards/activate-user-guard/activate-user-guard';
 import { supplierProjectResolver } from '@features/supplier-project/resolver/supplier-project-resolver';
-import { inject } from '@angular/core';
-import { UserDataService } from '@core/services/user-data-service/user-data';
-
-const rootRedirect = () => {
-  const userData = inject(UserDataService).getUserDataFromLocalStorage();
-
-  return userData?.user?.id ? '/dashboard' : '/auth/login';
-};
-
-const dashboardRedirect = () => {
-  const userData = inject(UserDataService).getUserDataFromLocalStorage();
-
-  return userData?.user?.supplierId ? '/dashboard/supplier-project' : '/dashboard/project';
-};
+import { dashboardRedirectGuard } from '@core/guards/dashboard-redirect-guard/dashboard-redirect-guard';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: rootRedirect,
+    redirectTo: 'auth/login',
   },
   {
     path: 'auth/login',
@@ -54,7 +41,7 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: dashboardRedirect,
+        redirectTo: dashboardRedirectGuard,
       },
       {
         path: 'project',
@@ -81,25 +68,25 @@ export const routes: Routes = [
         path: 'user',
         loadComponent: () => import('@features/user-component/user/user').then((m) => m.User),
         canActivate: [roleGuard],
-        data: { roles: [Roles.admin] },
+        data: { roles: [Roles.admin, Roles.manager] },
       },
       {
         path: 'material',
         loadComponent: () => import('@features/material-component/material/material').then((m) => m.Material),
         canActivate: [roleGuard],
-        data: { roles: [Roles.admin] },
+        data: { roles: [Roles.admin, Roles.manager] },
       },
       {
         path: 'process',
         loadComponent: () => import('@features/process-component/process/process').then((m) => m.Process),
         canActivate: [roleGuard],
-        data: { roles: [Roles.admin] },
+        data: { roles: [Roles.admin, Roles.manager] },
       },
       {
         path: 'supplier',
         loadComponent: () => import('@features/supplier-component/supplier/supplier').then((m) => m.Supplier),
         canActivate: [roleGuard],
-        data: { roles: [Roles.admin] },
+        data: { roles: [Roles.admin, Roles.manager] },
       },
     ],
   },
