@@ -2,7 +2,7 @@
   <div class="d-flex align-items-center justify-content-between p-1">
     <h2>{{ 'USER_COMPONENT.componentTitle' | translateFallback: 'Użytkownicy' }}</h2>
     <app-button [buttonType]="ButtonTypes.button" (emitButtonClick)="onAddButtonClicked()">
-      {{ 'BUTTONS.add' | translateFallback: 'Dodaj' }}
+      <p>{{ 'BUTTONS.add' | translateFallback: 'Dodaj' }}</p>
     </app-button>
   </div>
   <div class="list-container">

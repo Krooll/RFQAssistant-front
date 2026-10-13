@@ -1,10 +1,9 @@
 <div class="d-flex flex-column navbar-menu text-align-center">
-  <div class="mt-4">
-    <h3>{{ 'APP.title' | translateFallback: 'RFQ Assistant' }}</h3>
-  </div>
+  <h2>{{ 'APP.title' | translateFallback: 'RFQ Assistant' }}</h2>
   <div class="upper-section d-flex flex-column p-1">
     @for (item of applicationList(); track item.id) {
     <app-button
+      [isActive]="isAppActive(item.id)"
       [buttonType]="ButtonTypes.button"
       [buttonConfiguration]="menuNavBarButtonConfig"
       [dataToEmit]="item.route"
@@ -19,13 +18,13 @@
       <app-button
         [buttonType]="ButtonTypes.button"
         (emitButtonClick)="onLangChangeButtonClick()"
-        [buttonConfiguration]="menuNavBarButtonConfig"
+        [buttonConfiguration]="menuNavBarLowerButtonConfig"
       >
         {{ 'BUTTONS.lang' | translateFallback: 'Język' }}
       </app-button>
       <app-button
         [buttonType]="ButtonTypes.button"
-        [buttonConfiguration]="menuNavBarButtonConfig"
+        [buttonConfiguration]="menuNavBarLowerButtonConfig"
         (emitButtonClick)="logOut()"
       >
         {{ 'BUTTONS.logout' | translateFallback: 'Wyloguj się' }}

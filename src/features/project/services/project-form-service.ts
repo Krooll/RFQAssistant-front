@@ -1,4 +1,4 @@
-import { inject, Injectable, Injector } from '@angular/core';
+import { inject, Injectable, Injector, signal } from '@angular/core';
 import { BaseHttpService } from '@core/services/base-http-service/base-http';
 import { ComponentDto, DocumentDto, ProjectDto, UpdateProjectRequest } from '@core/dtos';
 import { defaultIfEmpty, map, Observable, of, switchMap } from 'rxjs';
@@ -12,11 +12,19 @@ import { SectionButtons, SectionButtonsTypes } from '@features/project/types/sec
 import { ProjectStatuses } from '@features/project/types/project-status/project-status';
 import { ProjectMetricsModal } from '@features/project/project-metrics-modal/project-metrics-modal';
 import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
+import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
+import {
+  ButtonConfiguration,
+  ButtonSizes,
+  ButtonVariants,
+} from '@shared/model-ui/button-configuration/button-configuration';
 
 @Injectable()
 export class ProjectFormService {
   private readonly _baseHttpService = inject(BaseHttpService);
   private readonly _modalService = inject(ModalService);
+
+  public pageParams = signal<PageRequestParams>({ page: 0, size: 10 });
 
   public sectionButtonsList: SectionButtons[] = [
     {
@@ -30,6 +38,11 @@ export class ProjectFormService {
       labelTranslateFallback: 'Komponenty',
     },
   ];
+
+  pageButtonConfiguration: ButtonConfiguration = {
+    variant: ButtonVariants.secondary,
+    size: ButtonSizes.medium,
+  };
 
   public statusList: { value: string }[] = [
     {

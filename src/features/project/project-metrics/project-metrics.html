@@ -1,29 +1,30 @@
 <div class="d-flex flex-column">
-  <div class="d-flex justify-content-end">
+  <div class="d-flex justify-content-end p-1">
     <app-button [buttonDisabled]="isInputDisabled()" (emitButtonClick)="onMetricConfigButtonClick()">
-      {{ 'METRIC_COMPONENT.configButtonTitle' | translateFallback: 'Konfiguracja' }}
+      <p>{{ 'METRIC_COMPONENT.configButtonTitle' | translateFallback: 'Konfiguracja' }}</p>
     </app-button>
   </div>
   <h3>{{ 'METRIC_COMPONENT.form.title' | translateFallback: 'Metryka' }}</h3>
   @if (generatedMetricList().length > 0) {
-  <div class="table-container mt-3">
+  <div class="table-container d-flex align-items-center justify-content-center mt-3">
     <table>
       <thead>
         <tr>
           <th class="text-align-center">{{ 'METRIC_COMPONENT.yearTitle' | translateFallback: 'Rok'}}</th>
           @for (metric of generatedMetricList(); track $index) {
           <th class="text-align-center relative">
-            {{ metric.date | date:'yyyy' }}
-            <app-button
-              [buttonDisabled]="isInputDisabled()"
-              class="absolute absolute-close-button"
-              [buttonConfiguration]="deleteButtonConfiguration"
-              (emitButtonClick)="onDeleteCurrentSingleTable($index)"
-            >
-              x
-            </app-button>
+            <div>
+              <p>{{ metric.date | date:'yyyy' }}</p>
+              <app-button
+                [buttonDisabled]="isInputDisabled()"
+                class="absolute absolute-close-button"
+                [buttonConfiguration]="deleteButtonConfiguration"
+                (emitButtonClick)="onDeleteCurrentSingleTable($index)"
+              >
+                <i class="bi bi-x"></i>
+              </app-button>
+            </div>
           </th>
-
           }
         </tr>
       </thead>

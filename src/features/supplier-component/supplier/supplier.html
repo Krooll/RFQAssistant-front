@@ -1,64 +1,18 @@
 <div class="d-flex flex-column component-container">
-  <div class="d-flex align-items-center justify-content-between">
+  <div class="d-flex align-items-center justify-content-between p-1">
     <h2>{{ 'SUPPLIER_COMPONENT.componentTitle' | translateFallback: 'Dostawcy' }}</h2>
-    <app-button [buttonType]="ButtonTypes.button" (emitButtonClick)="onAddButtonClicked()">
-      {{ 'BUTTONS.add' | translateFallback: 'Dodaj' }}
-    </app-button>
+    <!--    <app-button [buttonType]="ButtonTypes.button" (emitButtonClick)="onAddButtonClicked()">-->
+    <!--      {{ 'BUTTONS.add' | translateFallback: 'Dodaj' }}-->
+    <!--    </app-button>-->
   </div>
   <div class="list-container">
-    @for(item of _supplierComponentService.supplierList(); track item.id) {
-    <app-item-list
-      (infoButtonClickedOutput)="onInfoButtonClicked(item.id)"
-      (deleteButtonClickedOutput)="onDeleteButtonCLicked(item.id)"
-    >
-      <div class="d-flex flex-column">
-        <p>
-          <span class="font-weight-bold">{{ 'SUPPLIER_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:</span>
-          {{ item.name }}
-        </p>
-        <p>
-          <span class="font-weight-bold">
-            {{ 'SUPPLIER_COMPONENT.form.labels.street' | translateFallback: 'Ulica'}}:
-          </span>
-          {{ item.street }}
-        </p>
-        <p>
-          <span class="font-weight-bold">
-            {{ 'SUPPLIER_COMPONENT.form.labels.city' | translateFallback: 'Miasto'}}:
-          </span>
-          {{ item.city }}
-        </p>
-        <p>
-          <span class="font-weight-bold">
-            {{ 'SUPPLIER_COMPONENT.form.labels.province' | translateFallback: 'Województwo'}}:
-          </span>
-          {{ item.province }}
-        </p>
-        <p>
-          <span class="font-weight-bold">
-            {{ 'SUPPLIER_COMPONENT.form.labels.country' | translateFallback: 'Kraj'}}:
-          </span>
-          {{ item.country }}
-        </p>
-        <p>
-          <span class="font-weight-bold">
-            {{ 'SUPPLIER_COMPONENT.form.labels.phoneNumber' | translateFallback: 'Numer telefonu'}}:
-          </span>
-          {{ item.phoneNumber }}
-        </p>
-        <p>
-          <span class="font-weight-bold">
-            {{ 'SUPPLIER_COMPONENT.form.labels.email' | translateFallback: 'Adres email'}}:
-          </span>
-          {{ item.emailAddress }}
-        </p>
-      </div>
-    </app-item-list>
-    }
+    <app-table
+      (deleteClick)="onDeleteButtonCLicked($event)"
+      (infoClick)="onInfoButtonClicked($event)"
+      (pageChange)="_supplierComponentService.updatePageParams($event)"
+      [dataSource]="_supplierComponentService.supplierList()"
+      [pageParams]="_supplierComponentService.pageParams()"
+      [totalElements]="_supplierComponentService.totalElements()"
+    ></app-table>
   </div>
-  <app-paginator
-    (pageChange)="_supplierComponentService.updatePageParams($event)"
-    [totalElements]="_supplierComponentService.totalElements()"
-    [pageParams]="_supplierComponentService.pageParams()"
-  ></app-paginator>
 </div>

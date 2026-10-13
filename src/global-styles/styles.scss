@@ -29,14 +29,6 @@ button {
   font-family: 'Roboto', sans-serif !important;
 }
 
-input {
-  font-family: 'Roboto', sans-serif !important;
-}
-
-select {
-  font-family: 'Roboto', sans-serif !important;
-}
-
 //THEMES
 .dark-mode {
   --main-background: #{map.get(colors.$colors, 'black100')};
@@ -134,6 +126,7 @@ p {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  border-radius: 0.5rem;
 }
 
 .modal-split-container {
@@ -145,18 +138,12 @@ p {
   overflow-y: auto;
 }
 
-//ITEMS
-.list-item {
-  border: 1px solid black;
-  border-radius: 0.25rem;
-}
-
 input,
 select,
 textarea {
-  font-family: 'Inter', sans-serif !important;
+  font-family: 'Roboto', sans-serif !important;
   min-height: 2rem;
   padding: 0.25rem;
   border-radius: 0.25rem;
-  border: 1px solid;
+  border: 1px solid color-mix(in srgb, #ffffff 95%, black 5%) !important;;
 }

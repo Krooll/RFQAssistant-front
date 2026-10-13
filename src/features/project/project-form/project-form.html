@@ -1,20 +1,24 @@
 <div class="component-container d-flex flex-column">
-  <div class="buttons-container d-flex justify-content-between">
+  <div class="buttons-container d-flex justify-content-between p-1">
     <div class="d-flex justify-content-start">
       @for(button of _projectFormService.sectionButtonsList; track $index) {
-      <app-button (emitButtonClick)="toggleFormSection(button.type)">
-        {{ button.label | translateFallback: button.labelTranslateFallback }}
+      <app-button
+        [isActive]="activeProjectFormSection() === button.type"
+        [buttonConfiguration]="_projectFormService.pageButtonConfiguration"
+        (emitButtonClick)="toggleFormSection(button.type)"
+      >
+        <p>{{ button.label | translateFallback: button.labelTranslateFallback }}</p>
       </app-button>
       }
     </div>
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-end p-1">
       @if(isEditButtonVisible()) {
       <app-button [buttonDisabled]="formGroup()?.invalid" (emitButtonClick)="onEdit()">
-        {{ 'BUTTONS.edit' | translateFallback: 'Edytuj' }}
+        <p>{{ 'BUTTONS.edit' | translateFallback: 'Edytuj' }}</p>
       </app-button>
       } @if(isAddComponentButtonVisible()) {
       <app-button (emitButtonClick)="onAddComponentButtonClick()">
-        {{ 'PROJECT_COMPONENT.form.addComponentButton' | translateFallback: 'Dodaj komponent' }}
+        <p>{{ 'PROJECT_COMPONENT.form.addComponentButton' | translateFallback: 'Dodaj komponent' }}</p>
       </app-button>
       }
     </div>
@@ -140,11 +144,13 @@
         (metricConfigButtonEmit)="onProjectMetricButtonClick()"
         (metricDeleteButtonEmit)="_metricService.deleteCurrentMetric($event)"
       ></app-project-metrics>
-      <div class="d-flex justify-content-end mt-1">
+      <div class="d-flex justify-content-end mt-1 p-1">
         @if(!formGroup()?.disabled) {
-        <app-button (emitButtonClick)="onAbort()">{{ 'BUTTONS.abort' | translateFallback: 'Anuluj' }}</app-button>
+        <app-button (emitButtonClick)="onAbort()">
+          <p>{{ 'BUTTONS.abort' | translateFallback: 'Anuluj' }}</p>
+        </app-button>
         <app-button [buttonDisabled]="formGroup()?.invalid" (emitButtonClick)="onSubmit()">
-          {{ 'BUTTONS.save' | translateFallback: 'Zapisz' }}
+          <p>{{ 'BUTTONS.save' | translateFallback: 'Zapisz' }}</p>
         </app-button>
         }
       </div>
@@ -153,43 +159,16 @@
   } @case (SectionButtonsTypes.component) {
   <h3>{{ 'PROJECT_COMPONENT.componentFormSectionTitle' | translateFallback: 'Komponenty' }}</h3>
   <div class="list-container">
-    @for(component of projectData()?.components; track component.id) {
-    <app-item-list
-      [documentButtonVisibility]="true"
-      (documentButtonClickedOutput)="onAddDocumentComponentButtonClick(component.id)"
-      (infoButtonClickedOutput)="onInfoComponentButtonClick(component.id)"
-      (deleteButtonClickedOutput)="onDeleteComponentButtonClick(component.id)"
-    >
-      <div class="d-flex flex-column w-100">
-        <p>
-          <span class="font-weight-bold">{{'PROJECT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:</span>
-          {{ component.name }}
-        </p>
-        <p>
-          <span class="font-weight-bold">
-            {{'PROJECT_COMPONENT.form.labels.description' | translateFallback: 'Opis'}}:
-          </span>
-          {{ component.description }}
-        </p>
-        <p class="font-weight-bold">
-          {{'PROJECT_COMPONENT.documentFormSectionTitle' | translateFallback: 'Dokumenty'}}:
-        </p>
-        <div class="d-flex flex-wrap mt-2">
-          @if(component.documents?.length) { @for(document of component.documents; track document.id) {
-          <app-document-card
-            (previewActionOutput)="onPreviewDocumentButtonClick(document?.id)"
-            (downloadActionOutput)="onDownloadDocumentButtonClick(document?.id)"
-            (deleteActionOutput)="onDeleteDocumentButtonClick(document?.id)"
-            [documentData]="document"
-          ></app-document-card>
-          } } @else {
-          <!-- prettier-ignore -->
-          <p>{{'PROJECT_COMPONENT.form.labels.emptyDocumentList' | translateFallback: 'Brak dodanych dokumentów...'}}</p>
-          }
-        </div>
-      </div>
-    </app-item-list>
-    }
+    <app-table
+      (deleteDocumentClick)="onDeleteDocumentButtonClick($event)"
+      (downloadClick)="onDownloadDocumentButtonClick($event)"
+      (previewClick)="onPreviewDocumentButtonClick($event)"
+      (deleteClick)="onDeleteComponentButtonClick($event)"
+      (infoClick)="onInfoComponentButtonClick($event)"
+      [pageParams]="_projectFormService.pageParams()"
+      [dataSource]="projectData()?.components ?? []"
+      [totalElements]="projectData()?.components?.length ?? 100"
+    ></app-table>
   </div>
   } }
 </div>

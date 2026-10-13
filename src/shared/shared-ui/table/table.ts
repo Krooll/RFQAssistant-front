@@ -23,11 +23,12 @@ import {
   ButtonVariants,
 } from '@shared/model-ui/button-configuration/button-configuration';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
-import { Role, Roles } from '@core/core-dtos/roles/roles';
-import { customPaginatorTranslate } from '@shared/shared-ui/table/custom-paginator-translate';
+import { Roles } from '@core/core-dtos/roles/roles';
+import { customPaginatorTranslate } from '@shared/shared-ui/table/fn/custom-paginator-translate';
 import { Button } from '@shared/shared-ui/button/button';
-import { DatePipe } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { ProjectStatuses } from '@features/project/types/project-status/project-status';
+import { TableActionButtons } from '@shared/model-ui/table-action-buttons/table-action-buttons';
 
 @Component({
   selector: 'app-table',
@@ -47,7 +48,6 @@ import { MatCheckbox } from '@angular/material/checkbox';
     MatSort,
     TranslateFallbackPipe,
     Button,
-    DatePipe,
     MatCheckbox,
   ],
   providers: [{ provide: MatPaginatorIntl, useFactory: customPaginatorTranslate, deps: [TranslateService] }],
@@ -60,11 +60,40 @@ export class Table<T> {
   public totalElements = input.required<number>();
   public pageSizeOptions = input<number[]>([5, 10, 15, 20, 25, 50, 100]);
 
-  displayedColumns = signal<string[] | []>([]);
+  protected displayedColumns = signal<string[] | []>([]);
 
   public pageChange = output<PageRequestParams>();
   public infoClick = output<number>();
   public deleteClick = output<number>();
+  public previewClick = output<number>();
+  public downloadClick = output<number>();
+  public deleteDocumentClick = output<number>();
+
+  protected actionButtons: TableActionButtons<T>[] = [
+    {
+      icon: 'bi bi-info-circle',
+      onClick: (element) => this.onInfoButtonClick(element),
+    },
+    {
+      icon: 'bi bi-trash3',
+      onClick: (element) => this.onDeleteClick(element),
+    },
+  ];
+
+  protected actionDocumentButtons: TableActionButtons<T>[] = [
+    {
+      icon: 'bi bi-eye',
+      onClick: (id) => this.onPreviewDocument(Number(id)),
+    },
+    {
+      icon: 'bi bi-download',
+      onClick: (id) => this.onDownloadDocument(Number(id)),
+    },
+    {
+      icon: 'bi bi-trash3',
+      onClick: (id) => this.onDeleteDocument(Number(id)),
+    },
+  ];
 
   actionButtonConfiguration: ButtonConfiguration = {
     variant: ButtonVariants.transparent,
@@ -93,11 +122,6 @@ export class Table<T> {
     }
   }
 
-  protected getSubArray(element: T, column: string): any[] {
-    const value = (element as Record<string, any>)[column];
-    return Array.isArray(value) ? value : [];
-  }
-
   protected onPageChange(event: PageEvent): void {
     this.pageChange.emit({
       ...this.pageParams(),
@@ -121,6 +145,18 @@ export class Table<T> {
     this.infoClick.emit(id);
   }
 
+  protected onPreviewDocument(id: number): void {
+    this.previewClick.emit(id);
+  }
+
+  protected onDownloadDocument(id: number): void {
+    this.downloadClick.emit(id);
+  }
+
+  protected onDeleteDocument(id: number): void {
+    this.deleteDocumentClick.emit(id);
+  }
+
   protected onDeleteClick(element: T): void {
     const id = Number((element as Record<string, any>)['id']);
     this.deleteClick.emit(id);
@@ -138,6 +174,23 @@ export class Table<T> {
     }
   }
 
+  protected getCellContent(element: T, column: string): any {
+    const value = (element as Record<string, any>)[column];
+
+    switch (true) {
+      case column === 'documents':
+        return Array.isArray(value) ? value : [];
+      case Array.isArray(value):
+        return value.map((v) => v.name || v).join(', ');
+      case this.isDateString(value):
+        return this.formatDate(value);
+      case Boolean(this.getEnumTranslationKey(value)):
+        return this.getEnumTranslationKey(value);
+      default:
+        return value;
+    }
+  }
+
   protected getColumnTranslationKey(column: string): string {
     if (column === 'actions') {
       return 'TABLE.actions';
@@ -146,7 +199,7 @@ export class Table<T> {
     return `TABLE.${column}`;
   }
 
-  protected getEnumTranslationKey(column: Role): string {
+  protected getEnumTranslationKey(column: string): string {
     switch (column) {
       case Roles.admin:
         return 'TABLE.admin';
@@ -156,6 +209,12 @@ export class Table<T> {
         return 'TABLE.employee';
       case Roles.supplier:
         return 'TABLE.supplier';
+      case ProjectStatuses.active:
+        return 'TABLE.active';
+      case ProjectStatuses.inactive:
+        return 'TABLE.inactive';
+      case ProjectStatuses.suspended:
+        return 'TABLE.suspended';
       default:
         return '';
     }
@@ -172,6 +231,34 @@ export class Table<T> {
     return typeof value === 'boolean';
   }
 
+  protected isColumnSortable(column: string): boolean {
+    if (column === 'actions') {
+      return false;
+    }
+
+    const dataSource = this.dataSource();
+    if (dataSource && dataSource.length > 0) {
+      const sampleItem = dataSource[0] as Record<string, any>;
+      const value = sampleItem[column];
+
+      if (Array.isArray(value)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  private formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}.${month}.${day}`;
+  }
+
   protected readonly ButtonTypes = ButtonTypes;
-  protected readonly Array = Array;
 }

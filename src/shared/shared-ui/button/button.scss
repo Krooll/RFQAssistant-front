@@ -4,6 +4,9 @@
 .btn {
   cursor: pointer;
   width: 100%;
+  padding: 0.15rem 0.5rem ;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
 
   &:disabled,
   &[disabled] {
@@ -29,7 +32,38 @@
   height: 4rem;
 }
 
+.primary {
+  transition: 0.2s ease-in;
+
+  &:hover {
+    border-color: color-mix(in srgb, #ffffff 75%, black 25%) !important;
+  }
+}
+
+.secondary {
+  background: color-mix(in srgb, #ffffff 95%, black 5%) !important;
+  transition: 0.2s ease-in;
+
+  &:hover {
+    background: none !important;
+    border-color: color-mix(in srgb, #ffffff 75%, black 25%) !important;
+  }
+
+  &.active {
+    background: none !important;
+  }
+}
+
 .transparent {
   background: none;
-  border: none;
+  transition: 0.2s ease-in;
+
+  &:hover {
+    border-color: color-mix(in srgb, #ffffff 75%, black 25%) !important;
+  }
+
+  &.active {
+    border: 1px solid transparent;
+    background: color-mix(in srgb, #ffffff 95%, black 5%) !important;
+  }
 }

@@ -23,7 +23,7 @@ export class ProjectService {
 
   public pageParams = signal<PageRequestParams>({ page: 0, size: 10 });
   public totalElements = signal<number>(0);
-  public projectList = signal<SimpleProjectDto[] | undefined>(undefined);
+  public projectList = signal<SimpleProjectDto[] | []>([]);
 
   private getProjects(
     pageParams: PageRequestParams,

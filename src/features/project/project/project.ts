@@ -1,15 +1,13 @@
 import { Component, inject, Injector, OnInit } from '@angular/core';
 import { Button } from '@shared/shared-ui/button/button';
-import { Paginator } from '@shared/shared-ui/paginator/paginator';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { ProjectService } from '@features/project/services/project-service';
-import { ItemList } from '@shared/shared-ui/item-list/item-list';
 import { ButtonTypes } from '@shared/model-ui/button-configuration/button-configuration';
-import { DatePipe } from '@angular/common';
+import { Table } from '@shared/shared-ui/table/table';
 
 @Component({
   selector: 'app-project',
-  imports: [Button, Paginator, TranslateFallbackPipe, ItemList, DatePipe],
+  imports: [Button, TranslateFallbackPipe, Table],
   providers: [ProjectService],
   templateUrl: './project.html',
   styleUrl: './project.scss',

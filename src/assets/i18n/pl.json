@@ -20,7 +20,27 @@
     "surname": "Nazwisko",
     "username": "Nazwa użytkownika",
     "supplierId": "Identyfikator dostawcy",
-    "description": "Opis"
+    "description": "Opis",
+    "city": "Miasto",
+    "country": "Kraj",
+    "emailAddress": "Adres email",
+    "phoneNumber": "Numer telefonu",
+    "processes": "Procesy",
+    "province": "Województwo",
+    "street": "Ulica",
+    "projectNumber": "Numer projektu",
+    "projectSOP": "SOP",
+    "status": "Status",
+    "validFrom": "Data od",
+    "validTo": "Data do",
+    "documents": "Dokumenty",
+    "materials": "Materiał",
+    "number": "Numer komponentu",
+    "revision": "Rewizja",
+    "usage": "Zużycie",
+    "active": "Aktywny",
+    "inactive": "Nieaktywny",
+    "suspended": "Zawieszony"
   },
   "NAVBAR": {
     "applicationsList": {

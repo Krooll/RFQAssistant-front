@@ -22,7 +22,7 @@ export class SupplierService {
   public pageParams = signal<PageRequestParams>({ page: 0, size: 10 });
   public processPageParams = signal<PageRequestParams>({ page: 0, size: 100 });
   public totalElements = signal<number>(0);
-  public supplierList = signal<SupplierDto[] | undefined>(undefined);
+  public supplierList = signal<SupplierDto[] | []>([]);
 
   public processList = signal<ProcessDto[] | undefined>(undefined);
   public selectedProcessList = signal<ProcessDto[] | undefined>(undefined);

@@ -3,7 +3,9 @@
     <div>
       <h3>{{modalTitle().title | translateFallback: modalTitle().titleFallback}}</h3>
     </div>
-    <app-button [buttonConfiguration]="closeButtonConfiguration" (emitButtonClick)="closeButtonClicked()">X</app-button>
+    <app-button [buttonConfiguration]="closeButtonConfiguration" (emitButtonClick)="closeButtonClicked()">
+      <i class="bi bi-x"></i>
+    </app-button>
   </div>
   <mat-dialog-content>
     <ng-content></ng-content>

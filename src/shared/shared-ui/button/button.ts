@@ -20,6 +20,7 @@ export class Button<T> {
   public buttonType = input<ButtonType>();
   public buttonConfiguration = input<ButtonConfiguration>({});
   public buttonDisabled = input<boolean>();
+  public isActive = input<boolean>(false);
 
   protected defaultButtonConfig: ButtonConfiguration = {
     variant: ButtonVariants.primary,
@@ -30,7 +31,9 @@ export class Button<T> {
 
   protected currentButtonClasses = computed(() => {
     const config = { ...this.defaultButtonConfig, ...this.buttonConfiguration() };
-    return [config.variant, config.size, config.margin, config.padding].filter(Boolean);
+
+    const classes = [config.variant, config.size, config.margin, config.padding, this.isActive() ? 'active' : ''];
+    return classes.filter(Boolean);
   });
 
   protected onButtonClick(): void {

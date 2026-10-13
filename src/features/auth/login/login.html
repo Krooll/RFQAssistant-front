@@ -29,7 +29,7 @@
       [buttonConfiguration]="loginButtonConfig"
       [buttonDisabled]="!formGroup()?.valid"
     >
-      {{ 'BUTTONS.login' | translateFallback: 'Zaloguj się' }}
+      <p>{{ 'BUTTONS.login' | translateFallback: 'Zaloguj się' }}</p>
     </app-button>
   </form>
 </div>

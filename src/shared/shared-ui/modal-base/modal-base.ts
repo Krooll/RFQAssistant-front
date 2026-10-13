@@ -3,7 +3,11 @@ import { MatDialogActions, MatDialogContent } from '@angular/material/dialog';
 import { Button } from '@shared/shared-ui/button/button';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
-import { ButtonConfiguration, ButtonVariants } from '@shared/model-ui/button-configuration/button-configuration';
+import {
+  ButtonConfiguration,
+  ButtonSizes,
+  ButtonVariants,
+} from '@shared/model-ui/button-configuration/button-configuration';
 
 @Component({
   selector: 'app-modal-base',
@@ -18,6 +22,7 @@ export class ModalBase {
 
   protected closeButtonConfiguration: ButtonConfiguration = {
     variant: ButtonVariants.transparent,
+    size: ButtonSizes.small,
   };
 
   protected submitOutput = output<void>();

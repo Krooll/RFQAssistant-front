@@ -1,14 +1,12 @@
 import { Component, inject, Injector, OnInit } from '@angular/core';
 import { SupplierService } from '@features/supplier-component/supplier-service';
-import { Paginator } from '@shared/shared-ui/paginator/paginator';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
-import { ItemList } from '@shared/shared-ui/item-list/item-list';
 import { ButtonTypes } from '@shared/model-ui/button-configuration/button-configuration';
-import { Button } from '@shared/shared-ui/button/button';
+import { Table } from '@shared/shared-ui/table/table';
 
 @Component({
   selector: 'app-supplier-component',
-  imports: [Paginator, TranslateFallbackPipe, ItemList, Button],
+  imports: [TranslateFallbackPipe, Table],
   providers: [SupplierService],
   templateUrl: './supplier.html',
   styleUrl: './supplier.scss',

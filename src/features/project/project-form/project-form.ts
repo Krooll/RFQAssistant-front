@@ -4,9 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { Button } from '@shared/shared-ui/button/button';
 import { ProjectFormService } from '@features/project/services/project-form-service';
-import { ItemList } from '@shared/shared-ui/item-list/item-list';
 import { FormField } from '@shared/shared-ui/form-field/form-field';
-import { DocumentCard } from '@shared/shared-ui/document-card/document-card';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SectionButtonsTypes } from '@features/project/types/section-buttons/section-buttons';
 import { DateService } from '@core/services/date-service/date-service';
@@ -14,19 +12,11 @@ import { DownloadService } from '@core/services/download-service/download-servic
 import { ProjectMetricService } from '@features/project/services/project-metric-service';
 import { ProjectMetrics } from '@features/project/project-metrics/project-metrics';
 import { NotificationService } from '@core/services/notification-service/notification-service';
+import { Table } from '@shared/shared-ui/table/table';
 
 @Component({
   selector: 'app-project-form',
-  imports: [
-    TranslateFallbackPipe,
-    FormsModule,
-    ReactiveFormsModule,
-    Button,
-    ItemList,
-    FormField,
-    DocumentCard,
-    ProjectMetrics,
-  ],
+  imports: [TranslateFallbackPipe, FormsModule, ReactiveFormsModule, Button, FormField, ProjectMetrics, Table],
   providers: [ProjectFormService, ProjectMetricService],
   templateUrl: './project-form.html',
   styleUrl: './project-form.scss',

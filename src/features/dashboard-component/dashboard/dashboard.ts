@@ -23,14 +23,14 @@ export class Dashboard {
 
   protected readonly applicationList: Application[] = [
     {
-      id: 'projects',
+      id: 'project',
       name: 'NAVBAR.applicationsList.projects.name',
       nameFallback: 'Projekty',
       route: RouteEndpoints.project,
       expectedRoles: [Roles.admin, Roles.manager, Roles.employee],
     },
     {
-      id: 'projects',
+      id: 'supplier-projects',
       name: 'NAVBAR.applicationsList.projects.name',
       nameFallback: 'Projekty',
       route: RouteEndpoints.supplierProject,
