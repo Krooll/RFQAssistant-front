@@ -5,7 +5,7 @@
 
 @use './colors' as colors;
 
-@import "bootstrap-icons/font/bootstrap-icons.css";
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 
 *,
 *::before,
@@ -145,5 +145,5 @@ textarea {
   min-height: 2rem;
   padding: 0.25rem;
   border-radius: 0.25rem;
-  border: 1px solid color-mix(in srgb, #ffffff 95%, black 5%) !important;;
+  border: 1px solid color-mix(in srgb, #ffffff 95%, black 5%) !important;
 }

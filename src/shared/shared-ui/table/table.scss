@@ -1,9 +1,10 @@
 tr:hover {
   cursor: pointer;
   background-color: color-mix(in srgb, #90caf9 15%, white 85%);
-  transition: background-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+  transition:
+    background-color 0.25s ease-in-out,
+    box-shadow 0.25s ease-in-out;
 }
-
 
 .action-button:hover {
   transition: 0.15s ease-in-out;
