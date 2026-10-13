@@ -2,6 +2,26 @@
   "APP": {
     "title": "RFQ Assistant"
   },
+  "TABLE": {
+    "paginator": "Elementów na stronę:",
+    "of": "z",
+    "actions": "Akcje",
+    "id": "Identyfikator",
+    "creationDate": "Data utworzenia",
+    "updateDate": "Data modyfikacji",
+    "disable": "Nieaktywny",
+    "admin": "Administrator",
+    "manager": "Menadżer",
+    "employee": "Specialista",
+    "supplier": "Dostawca",
+    "email": "Adres email",
+    "role": "Rola",
+    "name": "Nazwa",
+    "surname": "Nazwisko",
+    "username": "Nazwa użytkownika",
+    "supplierId": "Identyfikator dostawcy",
+    "description": "Opis"
+  },
   "NAVBAR": {
     "applicationsList": {
       "user": {

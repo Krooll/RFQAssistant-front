@@ -1,14 +1,13 @@
 import { Component, inject, Injector, OnInit } from '@angular/core';
 import { MaterialService } from '@features/material-component/material-service';
 import { Button } from '@shared/shared-ui/button/button';
-import { ItemList } from '@shared/shared-ui/item-list/item-list';
-import { Paginator } from '@shared/shared-ui/paginator/paginator';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { ButtonTypes } from '@shared/model-ui/button-configuration/button-configuration';
+import { Table } from '@shared/shared-ui/table/table';
 
 @Component({
   selector: 'app-material',
-  imports: [Button, ItemList, Paginator, TranslateFallbackPipe],
+  imports: [Button, TranslateFallbackPipe, Table],
   providers: [MaterialService],
   templateUrl: './material.html',
   styleUrl: './material.scss',

@@ -5,6 +5,8 @@
 
 @use './colors' as colors;
 
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
 *,
 *::before,
 *::after {
@@ -18,9 +20,21 @@ body {
   min-height: 100dvh;
   height: 100%;
   overflow: hidden;
-  font-family: 'Inter', sans-serif !important;
+  font-family: 'Roboto', sans-serif !important;
   background: var(--main-background);
   color: var(--text-color);
+}
+
+button {
+  font-family: 'Roboto', sans-serif !important;
+}
+
+input {
+  font-family: 'Roboto', sans-serif !important;
+}
+
+select {
+  font-family: 'Roboto', sans-serif !important;
 }
 
 //THEMES
@@ -30,6 +44,12 @@ body {
 
 .light-mode {
   --main-background: #{map.get(colors.$colors, 'light-gray100')};
+}
+
+//OPEN MODAL
+.cdk-overlay-backdrop.cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.6) !important;
+  transition: opacity 0.2s ease-in-out;
 }
 
 //SNACKBAR

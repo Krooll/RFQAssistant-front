@@ -21,7 +21,7 @@ export class ProcessService {
 
   public pageParams = signal<PageRequestParams>({ page: 0, size: 10 });
   public totalElements = signal<number>(0);
-  public processList = signal<ProcessDto[] | undefined>(undefined);
+  public processList = signal<ProcessDto[] | []>([]);
 
   private getProcesses(
     pageParams: PageRequestParams,

@@ -21,7 +21,7 @@ export class UserService {
 
   public pageParams = signal<PageRequestParams>({ page: 0, size: 10 });
   public totalElements = signal<number>(0);
-  public userList = signal<UserDto[] | undefined>(undefined);
+  public userList = signal<UserDto[] | []>([]);
 
   private getUsers(pageParams: PageRequestParams, extraPageParams: HttpParams): Observable<SpringPageable<UserDto>> {
     return this._baseHttpService.getPageData(Endpoints.user, pageParams, extraPageParams);

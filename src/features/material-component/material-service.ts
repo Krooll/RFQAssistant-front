@@ -21,7 +21,7 @@ export class MaterialService {
 
   public pageParams = signal<PageRequestParams>({ page: 0, size: 10 });
   public totalElements = signal<number>(0);
-  public materialList = signal<MaterialDto[] | undefined>(undefined);
+  public materialList = signal<MaterialDto[] | []>([]);
 
   private getMaterials(
     pageParams: PageRequestParams,

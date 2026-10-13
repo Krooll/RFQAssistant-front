@@ -2,13 +2,12 @@ import { Component, inject, Injector, OnInit } from '@angular/core';
 import { UserService } from '@features/user-component/user-service';
 import { Button } from '@shared/shared-ui/button/button';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
-import { Paginator } from '@shared/shared-ui/paginator/paginator';
-import { ItemList } from '@shared/shared-ui/item-list/item-list';
 import { ButtonTypes } from '@shared/model-ui/button-configuration/button-configuration';
+import { Table } from '@shared/shared-ui/table/table';
 
 @Component({
   selector: 'app-user',
-  imports: [Button, TranslateFallbackPipe, Paginator, ItemList],
+  imports: [Button, TranslateFallbackPipe, Table],
   providers: [UserService],
   templateUrl: './user.html',
   styleUrl: './user.scss',

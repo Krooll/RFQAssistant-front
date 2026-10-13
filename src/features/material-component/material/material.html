@@ -1,34 +1,18 @@
 <div class="d-flex flex-column component-container">
-  <div class="d-flex align-items-center justify-content-between">
+  <div class="d-flex align-items-center justify-content-between p-1">
     <h2>{{ 'MATERIAL_COMPONENT.componentTitle' | translateFallback: 'Materiały' }}</h2>
     <app-button [buttonType]="ButtonTypes.button" (emitButtonClick)="onAddButtonClicked()">
       {{ 'BUTTONS.add' | translateFallback: 'Dodaj' }}
     </app-button>
   </div>
   <div class="list-container">
-    @for(item of _materialComponentService.materialList(); track item.id) {
-    <app-item-list
-      (infoButtonClickedOutput)="onInfoButtonClicked(item.id)"
-      (deleteButtonClickedOutput)="onDeleteButtonCLicked(item.id)"
-    >
-      <div class="d-flex flex-column">
-        <p>
-          <span class="font-weight-bold">{{ 'MATERIAL_COMPONENT.form.labels.name' | translateFallback: 'Nazwa'}}:</span>
-          {{ item.name }}
-        </p>
-        <p>
-          <span class="font-weight-bold">
-            {{ 'MATERIAL_COMPONENT.form.labels.description' | translateFallback: 'Opis'}}:
-          </span>
-          {{ item.description }}
-        </p>
-      </div>
-    </app-item-list>
-    }
+    <app-table
+      (deleteClick)="onDeleteButtonCLicked($event)"
+      (infoClick)="onInfoButtonClicked($event)"
+      (pageChange)="_materialComponentService.updatePageParams($event)"
+      [dataSource]="_materialComponentService.materialList()"
+      [pageParams]="_materialComponentService.pageParams()"
+      [totalElements]="_materialComponentService.totalElements()"
+    ></app-table>
   </div>
-  <app-paginator
-    (pageChange)="_materialComponentService.updatePageParams($event)"
-    [totalElements]="_materialComponentService.totalElements()"
-    [pageParams]="_materialComponentService.pageParams()"
-  ></app-paginator>
 </div>
