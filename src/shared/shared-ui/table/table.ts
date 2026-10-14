@@ -1,4 +1,4 @@
-import { Component, effect, input, output, signal } from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import {
   MatCell,
   MatCellDef,
@@ -29,6 +29,7 @@ import { Button } from '@shared/shared-ui/button/button';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { ProjectStatuses } from '@features/project/types/project-status/project-status';
 import { TableActionButtons } from '@shared/model-ui/table-action-buttons/table-action-buttons';
+import { DateService } from '@core/services/date-service/date-service';
 
 @Component({
   selector: 'app-table',
@@ -55,6 +56,8 @@ import { TableActionButtons } from '@shared/model-ui/table-action-buttons/table-
   styleUrl: './table.scss',
 })
 export class Table<T> {
+  private readonly _dateService = inject(DateService);
+
   public dataSource = input.required<T[]>();
   public pageParams = input.required<PageRequestParams>();
   public totalElements = input.required<number>();
@@ -67,6 +70,7 @@ export class Table<T> {
   public deleteClick = output<number>();
   public previewClick = output<number>();
   public downloadClick = output<number>();
+  public uploadClick = output<number>();
   public deleteDocumentClick = output<number>();
 
   protected actionButtons: TableActionButtons<T>[] = [
@@ -81,6 +85,10 @@ export class Table<T> {
   ];
 
   protected actionDocumentButtons: TableActionButtons<T>[] = [
+    {
+      icon: 'bi bi-box-arrow-in-down',
+      onClick: (id) => this.onUploadDocument(Number(id)),
+    },
     {
       icon: 'bi bi-eye',
       onClick: (id) => this.onPreviewDocument(Number(id)),
@@ -153,6 +161,10 @@ export class Table<T> {
     this.downloadClick.emit(id);
   }
 
+  protected onUploadDocument(id: number): void {
+    this.uploadClick.emit(id);
+  }
+
   protected onDeleteDocument(id: number): void {
     this.deleteDocumentClick.emit(id);
   }
@@ -183,7 +195,7 @@ export class Table<T> {
       case Array.isArray(value):
         return value.map((v) => v.name || v).join(', ');
       case this.isDateString(value):
-        return this.formatDate(value);
+        return this._dateService.formatIsoToInputDate(value);
       case Boolean(this.getEnumTranslationKey(value)):
         return this.getEnumTranslationKey(value);
       default:
@@ -247,17 +259,6 @@ export class Table<T> {
     }
 
     return true;
-  }
-
-  private formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) return dateString;
-
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-
-    return `${year}.${month}.${day}`;
   }
 
   protected readonly ButtonTypes = ButtonTypes;

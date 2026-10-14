@@ -20,14 +20,14 @@
         (emitButtonClick)="onLangChangeButtonClick()"
         [buttonConfiguration]="menuNavBarLowerButtonConfig"
       >
-        {{ 'BUTTONS.lang' | translateFallback: 'Język' }}
+        <p>{{ 'BUTTONS.lang' | translateFallback: 'Język' }}</p>
       </app-button>
       <app-button
         [buttonType]="ButtonTypes.button"
         [buttonConfiguration]="menuNavBarLowerButtonConfig"
         (emitButtonClick)="logOut()"
       >
-        {{ 'BUTTONS.logout' | translateFallback: 'Wyloguj się' }}
+        <p>{{ 'BUTTONS.logout' | translateFallback: 'Wyloguj się' }}</p>
       </app-button>
     </div>
   </div>

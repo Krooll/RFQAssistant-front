@@ -14,24 +14,24 @@
     <div class="d-flex justify-content-between align-items-center ms-2 me-2 w-100">
       @switch (modalType()) { @case (ModalTypes.create) @case (ModalTypes.update) {
       <app-button (emitButtonClick)="closeButtonClicked()">
-        {{ 'BUTTONS.abort' | translateFallback: 'Anuluj' }}
+        <p>{{ 'BUTTONS.abort' | translateFallback: 'Anuluj' }}</p>
       </app-button>
       <app-button [buttonDisabled]="buttonDisabled()" (emitButtonClick)="submitButtonClicked()">
-        {{ 'BUTTONS.save' | translateFallback: 'Zapisz' }}
+        <p>{{ 'BUTTONS.save' | translateFallback: 'Zapisz' }}</p>
       </app-button>
       } @case (ModalTypes.info) {
       <app-button (emitButtonClick)="updateButtonClicked()">
-        {{ 'BUTTONS.edit' | translateFallback: 'Edytuj' }}
+        <p>{{ 'BUTTONS.edit' | translateFallback: 'Edytuj' }}</p>
       </app-button>
       <app-button (emitButtonClick)="closeButtonClicked()">
-        {{ 'BUTTONS.close' | translateFallback: 'Zamknij' }}
+        <p>{{ 'BUTTONS.close' | translateFallback: 'Zamknij' }}</p>
       </app-button>
       } @case (ModalTypes.delete) {
       <app-button (emitButtonClick)="closeButtonClicked()">
-        {{ 'BUTTONS.abort' | translateFallback: 'Anuluj' }}
+        <p>{{ 'BUTTONS.abort' | translateFallback: 'Anuluj' }}</p>
       </app-button>
       <app-button (emitButtonClick)="deleteButtonClicked()">
-        {{ 'BUTTONS.delete' | translateFallback: 'Usuń' }}
+        <p>{{ 'BUTTONS.delete' | translateFallback: 'Usuń' }}</p>
       </app-button>
       }@default { }}
     </div>

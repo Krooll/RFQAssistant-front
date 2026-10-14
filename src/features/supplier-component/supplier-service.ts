@@ -12,11 +12,13 @@ import { DeleteModal } from '@shared/shared-ui/delete-modal/delete-modal';
 import { PageRequestParams } from '@core/core-dtos/page-request-params/page-request-params';
 import { SpringPageable } from '@core/core-dtos/pageable/pageable';
 import { ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
+import { FormListService } from '@core/services/form-list-service/form-list-service';
 
 @Injectable()
 export class SupplierService {
   private readonly _baseHttpService = inject(BaseHttpService);
   private readonly _modalService = inject(ModalService);
+  private readonly _formListService = inject(FormListService);
   private readonly _destroyRef = inject(DestroyRef);
 
   public pageParams = signal<PageRequestParams>({ page: 0, size: 10 });
@@ -24,8 +26,8 @@ export class SupplierService {
   public totalElements = signal<number>(0);
   public supplierList = signal<SupplierDto[] | []>([]);
 
-  public processList = signal<ProcessDto[] | undefined>(undefined);
-  public selectedProcessList = signal<ProcessDto[] | undefined>(undefined);
+  public processList = signal<ProcessDto[] | []>([]);
+  public selectedProcessList = signal<ProcessDto[] | []>([]);
 
   private getProcesses(
     pageParamsService: PageRequestParams,
@@ -174,20 +176,12 @@ export class SupplierService {
       return;
     }
 
-    this.selectedProcessList.update((currentList = []) => {
-      const exists = currentList.some((process) => process.id === item.id);
-
-      if (exists) {
-        return currentList;
-      }
-
-      return [...currentList, item];
-    });
+    this._formListService.addSelectedItemToCurrentList<ProcessDto>(this.selectedProcessList, item);
   }
 
   public removeSelectedProcessFromList(id: number | undefined): void {
     if (!id) return;
-    this.selectedProcessList.update((currentList) => (currentList ?? []).filter((process) => process.id !== id));
+    this._formListService.removeSelectedItemFromCurrentList(this.selectedProcessList, id);
   }
 
   public closeCurrentModal(reloadPage?: boolean): void {

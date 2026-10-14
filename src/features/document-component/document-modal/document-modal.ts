@@ -21,11 +21,10 @@ import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe
 export class DocumentModal implements OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _documentComponentService = inject(DocumentService);
+  private readonly _notificationService = inject(NotificationService);
+  private readonly _destroyRef = inject(DestroyRef);
   private readonly _modalData =
     inject<ModalDataConfiguration<{ componentId: number; data: DocumentDto | null }>>(MAT_DIALOG_DATA);
-  private readonly _notificationService = inject(NotificationService);
-
-  private readonly _destroyRef = inject(DestroyRef);
 
   protected formGroup = signal<FormGroup | undefined>(undefined);
 

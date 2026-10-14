@@ -1,9 +1,9 @@
 <div class="d-flex flex-column component-container">
   <div class="d-flex align-items-center justify-content-between p-1">
     <h2>{{ 'SUPPLIER_COMPONENT.componentTitle' | translateFallback: 'Dostawcy' }}</h2>
-    <!--    <app-button [buttonType]="ButtonTypes.button" (emitButtonClick)="onAddButtonClicked()">-->
-    <!--      {{ 'BUTTONS.add' | translateFallback: 'Dodaj' }}-->
-    <!--    </app-button>-->
+    <app-button [buttonType]="ButtonTypes.button" (emitButtonClick)="onAddButtonClicked()">
+      {{ 'BUTTONS.add' | translateFallback: 'Dodaj' }}
+    </app-button>
   </div>
   <div class="list-container">
     <app-table

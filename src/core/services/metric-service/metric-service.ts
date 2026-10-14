@@ -2,8 +2,10 @@ import { inject, Injectable, signal } from '@angular/core';
 import { MetricsDto } from '@core/dtos';
 import { NotificationService } from '@core/services/notification-service/notification-service';
 
-@Injectable()
-export class ProjectMetricService {
+@Injectable({
+  providedIn: 'root',
+})
+export class MetricService {
   private readonly _notificationService = inject(NotificationService);
 
   public generatedMetricList = signal<MetricsDto[]>([]);

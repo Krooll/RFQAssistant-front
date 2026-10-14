@@ -28,12 +28,12 @@ import { FormService } from '@core/services/form-service/form-service';
 })
 export class SupplierModal implements OnInit, OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
-  readonly _supplierComponentService = inject(SupplierService);
   private readonly _modalData = inject<ModalDataConfiguration<SupplierDto>>(MAT_DIALOG_DATA);
   private readonly _notificationService = inject(NotificationService);
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _userDataService = inject(UserDataService);
   private readonly _globalFormService = inject(FormService);
+  readonly _supplierComponentService = inject(SupplierService);
 
   protected formGroup = signal<FormGroup | undefined>(undefined);
 
@@ -73,9 +73,9 @@ export class SupplierModal implements OnInit, OnDestroy {
 
     effect(() => {
       const supplierData: SupplierDto | undefined = this.data();
-      this._supplierComponentService.selectedProcessList.set(supplierData?.processes);
 
-      if (supplierData?.id) {
+      if (supplierData?.id && supplierData.processes) {
+        this._supplierComponentService.selectedProcessList.set(supplierData?.processes);
         this.updateStateAndPatchForm();
       }
     });

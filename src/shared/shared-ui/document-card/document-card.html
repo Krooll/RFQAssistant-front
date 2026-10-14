@@ -4,7 +4,7 @@
       [buttonConfiguration]="closeButtonConfiguration"
       (emitButtonClick)="onActionButtonClick(documentCardActions.delete, documentData().id)"
     >
-      x
+      <i class="bi bi-x"></i>
     </app-button>
   </div>
   <div class="d-flex flex-column">
@@ -22,13 +22,13 @@
       [buttonConfiguration]="buttonConfiguration"
       (emitButtonClick)="onActionButtonClick(documentCardActions.download, documentData().id)"
     >
-      {{ 'BUTTONS.download' | translateFallback: 'Pobierz'}}
+      <p>{{ 'BUTTONS.download' | translateFallback: 'Pobierz'}}</p>
     </app-button>
     <app-button
       [buttonConfiguration]="buttonConfiguration"
       (emitButtonClick)="onActionButtonClick(documentCardActions.preview, documentData().id)"
     >
-      {{ 'BUTTONS.preview' | translateFallback: 'Podgląd' }}
+      <p>{{ 'BUTTONS.preview' | translateFallback: 'Podgląd' }}</p>
     </app-button>
   </div>
 </div>

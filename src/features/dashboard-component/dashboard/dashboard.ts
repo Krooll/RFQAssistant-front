@@ -30,7 +30,7 @@ export class Dashboard {
       expectedRoles: [Roles.admin, Roles.manager, Roles.employee],
     },
     {
-      id: 'supplier-projects',
+      id: 'supplier-project',
       name: 'NAVBAR.applicationsList.projects.name',
       nameFallback: 'Projekty',
       route: RouteEndpoints.supplierProject,

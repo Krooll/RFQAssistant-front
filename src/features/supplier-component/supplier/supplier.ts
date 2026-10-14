@@ -3,10 +3,11 @@ import { SupplierService } from '@features/supplier-component/supplier-service';
 import { TranslateFallbackPipe } from '@core/pipes/translate-pipe/translate-pipe';
 import { ButtonTypes } from '@shared/model-ui/button-configuration/button-configuration';
 import { Table } from '@shared/shared-ui/table/table';
+import { Button } from '@shared/shared-ui/button/button';
 
 @Component({
   selector: 'app-supplier-component',
-  imports: [TranslateFallbackPipe, Table],
+  imports: [TranslateFallbackPipe, Table, Button],
   providers: [SupplierService],
   templateUrl: './supplier.html',
   styleUrl: './supplier.scss',

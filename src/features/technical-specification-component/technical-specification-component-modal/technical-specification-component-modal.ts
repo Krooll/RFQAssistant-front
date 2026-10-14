@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ComponentDto, CreateComponentRequest, UpdateComponentRequest } from '@core/dtos';
 import { ModalType, ModalTypes } from '@shared/model-ui/modal-configuration/modal-types/modal-types';
@@ -30,11 +30,11 @@ import { FormService } from '@core/services/form-service/form-service';
 export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _modalData = inject<ModalDataConfiguration<ComponentDto>>(MAT_DIALOG_DATA);
-  readonly _technicalSpecificationComponentService = inject(TechnicalSpecificationComponentService);
   private readonly _notificationService = inject(NotificationService);
   private readonly _activatedRoute = inject(ActivatedRoute);
   private readonly _formListService = inject(FormListService);
   private readonly _formService = inject(FormService);
+  readonly _technicalSpecificationComponentService = inject(TechnicalSpecificationComponentService);
 
   private readonly _destroyRef = inject(DestroyRef);
   protected formGroup = signal<FormGroup | undefined>(undefined);
@@ -113,8 +113,8 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
         const createComponentRequest: CreateComponentRequest = {
           ...formValue,
           projectId: this.currentProjectId(),
-          processesIds: this.extractProcessesIds(),
-          materialIds: this.extractMaterialsIds(),
+          processesIds: this.extractIds(this._technicalSpecificationComponentService.selectedProcessList),
+          materialIds: this.extractIds(this._technicalSpecificationComponentService.selectedMaterialList),
         };
 
         this.createComponent(createComponentRequest);
@@ -125,8 +125,8 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
         const updateComponentRequest: UpdateComponentRequest = {
           ...formValue,
           id: this.data()?.id,
-          processesIds: this.extractProcessesIds(),
-          materialIds: this.extractMaterialsIds(),
+          processesIds: this.extractIds(this._technicalSpecificationComponentService.selectedProcessList),
+          materialIds: this.extractIds(this._technicalSpecificationComponentService.selectedMaterialList),
         };
         this.updateComponent(updateComponentRequest);
         break;
@@ -191,16 +191,8 @@ export class TechnicalSpecificationComponentModal implements OnInit, OnDestroy {
     }
   }
 
-  private extractProcessesIds(): number[] | undefined {
-    return this._formListService.extractItemsIdFromCurrentList(
-      this._technicalSpecificationComponentService.selectedProcessList,
-    );
-  }
-
-  private extractMaterialsIds(): number[] | undefined {
-    return this._formListService.extractItemsIdFromCurrentList(
-      this._technicalSpecificationComponentService.selectedMaterialList,
-    );
+  private extractIds<T extends { id?: number }>(currentList: WritableSignal<T[]>): number[] | undefined {
+    return this._formListService.extractItemsIdFromCurrentList(currentList);
   }
 
   private subscribeProcessFormField(): void {

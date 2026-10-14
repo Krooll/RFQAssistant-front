@@ -10,7 +10,7 @@
       @for (column of displayedColumns(); track column) {
       <ng-container [matColumnDef]="column" [stickyEnd]="column === 'actions'">
         <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column ?? ''" [disabled]="!isColumnSortable(column)">
-          @if (column === 'actions') { {{ 'BUTTONS.actions' | translateFallback: 'Akcje' }} } @else { {{
+          @if (column === 'actions') { {{ 'TABLE.actions' | translateFallback: 'Akcje' }} } @else { {{
           getColumnTranslationKey(column) | translateFallback: column }} }
         </th>
 

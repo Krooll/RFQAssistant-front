@@ -10,18 +10,18 @@ import { AuthorizationService } from '@core/services/auth-service/authorization'
 export const supplierProjectResolver: ResolveFn<SupplierDto> = () => {
   const resolverService = inject(ResolverService);
   const userDataService = inject(UserDataService);
-  const authorizationServiceAccount = inject(AuthorizationService);
+  const authorizationService = inject(AuthorizationService);
 
   const userData = userDataService.getUserDataFromLocalStorage();
 
   if (!userData?.user?.supplierId) {
-    authorizationServiceAccount.logout();
+    authorizationService.logout();
     return EMPTY;
   }
 
   return resolverService.getById<SupplierDto>(Endpoints.supplier, userData?.user?.supplierId).pipe(
     catchError(() => {
-      authorizationServiceAccount.logout();
+      authorizationService.logout();
       return EMPTY;
     }),
   );

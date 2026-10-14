@@ -9,27 +9,27 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SectionButtonsTypes } from '@features/project/types/section-buttons/section-buttons';
 import { DateService } from '@core/services/date-service/date-service';
 import { DownloadService } from '@core/services/download-service/download-service';
-import { ProjectMetricService } from '@features/project/services/project-metric-service';
 import { ProjectMetrics } from '@features/project/project-metrics/project-metrics';
 import { NotificationService } from '@core/services/notification-service/notification-service';
 import { Table } from '@shared/shared-ui/table/table';
+import { MetricService } from '@core/services/metric-service/metric-service';
 
 @Component({
   selector: 'app-project-form',
   imports: [TranslateFallbackPipe, FormsModule, ReactiveFormsModule, Button, FormField, ProjectMetrics, Table],
-  providers: [ProjectFormService, ProjectMetricService],
+  providers: [ProjectFormService, MetricService],
   templateUrl: './project-form.html',
   styleUrl: './project-form.scss',
 })
 export class ProjectForm implements OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
-  readonly _projectFormService = inject(ProjectFormService);
   private readonly _dateService = inject(DateService);
-  readonly _metricService = inject(ProjectMetricService);
   private readonly _downloadService = inject(DownloadService);
   private readonly _injector = inject(Injector);
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _notificationService = inject(NotificationService);
+  readonly _metricService = inject(MetricService);
+  readonly _projectFormService = inject(ProjectFormService);
 
   protected projectData = model<ProjectDto>();
 

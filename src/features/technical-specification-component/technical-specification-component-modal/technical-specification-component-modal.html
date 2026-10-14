@@ -110,9 +110,9 @@
             class="ms-2"
             [buttonConfiguration]="buttonConfiguration"
             [buttonDisabled]="formGroup()?.disabled"
-            (emitButtonClick)="_technicalSpecificationComponentService.removeSelectedProcessFromList(item.id)"
+            (emitButtonClick)="_technicalSpecificationComponentService.removeSelectedItemFromCurrentList(_technicalSpecificationComponentService.selectedProcessList, item.id)"
           >
-            x
+            <i class="bi bi-x"></i>
           </app-button>
         </div>
         }
@@ -154,9 +154,9 @@
             class="ms-2"
             [buttonConfiguration]="buttonConfiguration"
             [buttonDisabled]="formGroup()?.disabled"
-            (emitButtonClick)="_technicalSpecificationComponentService.removeSelectedMaterialFromList(item.id)"
+            (emitButtonClick)="_technicalSpecificationComponentService.removeSelectedItemFromCurrentList(_technicalSpecificationComponentService.selectedMaterialList, item.id)"
           >
-            x
+            <i class="bi bi-x"></i>
           </app-button>
         </div>
         }

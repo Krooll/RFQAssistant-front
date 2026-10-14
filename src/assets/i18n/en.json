@@ -1,4 +1,47 @@
 {
+  "APP": {
+    "title": "RFQ Assistant"
+  },
+  "TABLE": {
+    "paginator": "Items per page:",
+    "of": "of",
+    "actions": "Actions",
+    "id": "Identifier",
+    "creationDate": "Creation date",
+    "updateDate": "Modification date",
+    "disable": "Inactive",
+    "admin": "Administrator",
+    "manager": "Manager",
+    "employee": "Specialist",
+    "supplier": "Supplier",
+    "email": "Email address",
+    "role": "Role",
+    "name": "Name",
+    "surname": "Surname",
+    "username": "Username",
+    "supplierId": "Supplier identifier",
+    "description": "Description",
+    "city": "City",
+    "country": "Country",
+    "emailAddress": "Email address",
+    "phoneNumber": "Phone number",
+    "processes": "Processes",
+    "province": "Province",
+    "street": "Street",
+    "projectNumber": "Project number",
+    "projectSOP": "SOP",
+    "status": "Status",
+    "validFrom": "Valid from",
+    "validTo": "Valid to",
+    "documents": "Documents",
+    "materials": "Material",
+    "number": "Component number",
+    "revision": "Revision",
+    "usage": "Usage",
+    "active": "Active",
+    "inactive": "Inactive",
+    "suspended": "Suspended"
+  },
   "NAVBAR": {
     "applicationsList": {
       "user": {
@@ -47,7 +90,8 @@
       "create": "Add new supplier",
       "edit": "Edit supplier",
       "delete": "Delete supplier",
-      "info": "More information"
+      "info": "More information",
+      "fillData": "Fill in the data to use the portal"
     },
     "project": {
       "create": "Add new project",
@@ -107,9 +151,9 @@
   "FORM_VALIDATION_TEXTS": {
     "required": "This field is required...",
     "email": "Invalid email address format...",
-    "minlength": "Minimum length is ${errors['minlength'].requiredLength} characters...",
-    "maxlength": "Maximum length is ${errors['maxlength'].requiredLength} characters...",
-    "pattern": "Entered value format is invalid...",
+    "minlength": "Minimum number of characters is ${errors['minlength'].requiredLength}...",
+    "maxlength": "Maximum number of characters is ${errors['maxlength'].requiredLength}...",
+    "pattern": "The entered value has an invalid format...",
     "nullValidator": "Field validation error...",
     "default": "Field contains errors..."
   },
@@ -127,6 +171,7 @@
   },
   "USER_COMPONENT": {
     "componentTitle": "Users",
+    "activationUserTitle": "Account activation",
     "form": {
       "labels": {
         "username": "Username",
@@ -168,7 +213,7 @@
         "name": "Name",
         "street": "Street",
         "city": "City",
-        "province": "State / Province",
+        "province": "Province",
         "country": "Country",
         "phoneNumber": "Phone number",
         "email": "Email address",
@@ -183,7 +228,7 @@
         "name": "Enter name...",
         "street": "Enter street...",
         "city": "Enter city...",
-        "province": "Enter state / province...",
+        "province": "Enter province...",
         "country": "Enter country...",
         "phoneNumber": "Enter phone number...",
         "email": "Enter email address...",
@@ -220,7 +265,7 @@
         "emptyDocumentList": "No documents added...",
         "emptyProcessList": "No processes selected...",
         "metricsYears": "Years",
-        "metricsPercent": "Percentage"
+        "metricsPercent": "Percentages"
       },
       "placeholders": {
         "validFrom": "Select date from...",
