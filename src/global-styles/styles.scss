@@ -25,17 +25,56 @@ body {
   color: var(--text-color);
 }
 
+//THEMES
+.dark {
+  --main-background: #{map.get(colors.$colors, 'black100')};
+}
+
+.light {
+  --main-background: #{map.get(colors.$colors, 'main-white')};
+  --main-border: #{map.get(colors.$colors, 'darken-main-gray')};
+
+  --table-header-bg: #{map.get(colors.$colors, 'main-gray')};
+  --table-hover-color: #{map.get(colors.$colors, 'main-blue')};
+  --table-text-color: #{map.get(colors.$colors, 'main-black')};
+  --primary-button-background: #{map.get(colors.$colors, 'main-gray')};
+  --tertiary-button-background: #{map.get(colors.$colors, 'main-gray')};
+  --tertiary-button-border: #{map.get(colors.$colors, 'darken-main-gray')};
+  --input-disable-background: #{map.get(colors.$colors, 'main-gray')};
+  --input-border: #{map.get(colors.$colors, 'darken-main-gray')};
+  --input-background: #{map.get(colors.$colors, 'white')};
+}
+
+//INPUT/SELECT/TEXTAREA
+input,
+select,
+textarea,
 button {
   font-family: 'Roboto', sans-serif !important;
 }
 
-//THEMES
-.dark-mode {
-  --main-background: #{map.get(colors.$colors, 'black100')};
+input,
+select,
+textarea {
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--main-border) !important;
 }
 
-.light-mode {
-  --main-background: #{map.get(colors.$colors, 'light-gray100')};
+input,
+select{
+  min-height: 2.2rem;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background-color: var(--input-disable-background);
+  cursor: not-allowed;
+}
+
+textarea {
+  min-height: 3.5rem;
 }
 
 //OPEN MODAL
@@ -93,20 +132,14 @@ p {
   margin: 0.15rem;
 }
 
-.overflow-auto {
-  overflow: auto;
-}
 
 .text-align-center {
   text-align: center;
 }
 
-.font-weight-bold {
-  font-weight: bold;
-}
-
 //CONTAINERS
 .body-container {
+  padding: 0 0.5rem 0 0.5rem;
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -138,12 +171,6 @@ p {
   overflow-y: auto;
 }
 
-input,
-select,
-textarea {
-  font-family: 'Roboto', sans-serif !important;
-  min-height: 2rem;
-  padding: 0.25rem;
-  border-radius: 0.25rem;
-  border: 1px solid color-mix(in srgb, #ffffff 95%, black 5%) !important;
-}
+
+
+

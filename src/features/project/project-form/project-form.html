@@ -24,12 +24,12 @@
     </div>
   </div>
   @switch(activeProjectFormSection()) { @case (SectionButtonsTypes.general) {
-  <h3>{{ 'PROJECT_COMPONENT.projectFormSectionTitle' | translateFallback: 'Projekt' }}</h3>
+  <h2>{{ 'PROJECT_COMPONENT.projectFormSectionTitle' | translateFallback: 'Projekt' }}</h2>
   <div class="list-container">
     <form [formGroup]="formGroup()!">
       <div class="d-flex justify-content-between">
         <div class="p-1 w-100">
-          <div class="d-flex flex-column mt-4">
+          <div class="d-flex flex-column mt-3">
             @let projectNumber = 'projectNumber';
             <label [for]="projectNumber">
               {{ 'PROJECT_COMPONENT.form.labels.projectNumber' | translateFallback: 'Numer projektu' }}
@@ -44,7 +44,7 @@
               />
             </app-form-field>
           </div>
-          <div class="d-flex flex-column mt-4">
+          <div class="d-flex flex-column mt-3">
             @let name = 'name';
             <label [for]="name">{{ 'PROJECT_COMPONENT.form.labels.name' | translateFallback: 'Nazwa projektu' }}</label>
             <app-form-field>
@@ -57,7 +57,7 @@
               />
             </app-form-field>
           </div>
-          <div class="d-flex flex-column mt-4">
+          <div class="d-flex flex-column mt-3">
             @let description = 'description';
             <label [for]="description">
               {{ 'PROJECT_COMPONENT.form.labels.description' | translateFallback: 'Opis projektu' }}
@@ -72,7 +72,7 @@
               ></textarea>
             </app-form-field>
           </div>
-          <div class="d-flex flex-column mt-4">
+          <div class="d-flex flex-column mt-3">
             @let status = 'status';
             <label [for]="status">
               {{ 'PROJECT_COMPONENT.form.labels.status' | translateFallback: 'Status projektu' }}
@@ -90,7 +90,7 @@
           </div>
         </div>
         <div class="w-100 p-1">
-          <div class="d-flex flex-column mt-4">
+          <div class="d-flex flex-column mt-3">
             @let validFrom = 'validFrom';
             <label [for]="validFrom">
               {{ 'PROJECT_COMPONENT.form.labels.validFrom' | translateFallback: 'Data od' }}
@@ -105,7 +105,7 @@
               />
             </app-form-field>
           </div>
-          <div class="d-flex flex-column mt-4">
+          <div class="d-flex flex-column mt-3">
             @let validTo = 'validTo';
             <label [for]="validTo">{{ 'PROJECT_COMPONENT.form.labels.validTo' | translateFallback: 'Data do' }}</label>
             <app-form-field>
@@ -118,7 +118,7 @@
               />
             </app-form-field>
           </div>
-          <div class="d-flex flex-column mt-4">
+          <div class="d-flex flex-column mt-3">
             @let projectSOP = 'projectSOP';
             <label [for]="projectSOP">
               {{ 'PROJECT_COMPONENT.form.labels.projectSOP' | translateFallback: 'SOP projektu' }}
@@ -157,7 +157,7 @@
     </form>
   </div>
   } @case (SectionButtonsTypes.component) {
-  <h3>{{ 'PROJECT_COMPONENT.componentFormSectionTitle' | translateFallback: 'Komponenty' }}</h3>
+  <h2>{{ 'PROJECT_COMPONENT.componentFormSectionTitle' | translateFallback: 'Komponenty' }}</h2>
   <div class="list-container">
     <app-table
       (deleteDocumentClick)="onDeleteDocumentButtonClick($event)"

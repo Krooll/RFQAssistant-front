@@ -40,7 +40,7 @@ export class ProjectFormService {
   ];
 
   pageButtonConfiguration: ButtonConfiguration = {
-    variant: ButtonVariants.secondary,
+    variant: ButtonVariants.transparent,
     size: ButtonSizes.medium,
   };
 

@@ -1,9 +1,5 @@
-tr:hover {
-  cursor: pointer;
-  background-color: color-mix(in srgb, #90caf9 15%, white 85%);
-  transition:
-    background-color 0.25s ease-in-out,
-    box-shadow 0.25s ease-in-out;
+.overflow-auto {
+  overflow: auto;
 }
 
 .action-button:hover {
@@ -11,11 +7,22 @@ tr:hover {
   transform: scale(1.3);
 }
 
+tr:hover {
+  cursor: pointer;
+  background: var(--table-hover-color) !important;;
+  transition: 0.25s ease-in-out;
+}
+
+td{
+  border-bottom: 1px solid var(--table-header-bg);
+  color: var(--table-text-color);
+}
+
 ::ng-deep .mat-mdc-header-cell {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: color-mix(in srgb, #ffffff 97%, black 3%) !important;
+  background: var(--table-header-bg) !important;
 }
 
 ::ng-deep .mat-mdc-header-cell.mat-column-actions,
@@ -23,7 +30,7 @@ tr:hover {
   position: sticky !important;
   right: 0;
   z-index: 100;
-  background: color-mix(in srgb, #ffffff 97%, black 3%) !important;
+  background: var(--table-header-bg) !important;
 }
 
 ::ng-deep .mat-mdc-paginator-container {
@@ -32,7 +39,6 @@ tr:hover {
 
 ::ng-deep .mat-mdc-paginator {
   .mat-mdc-text-field-wrapper {
-
     height: 2rem !important;
     width: auto !important;
     padding-left: 8px !important;
